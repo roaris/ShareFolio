@@ -9,8 +9,8 @@ const Post = (props) => {
     <div>
       <Card>
         <CardContent>
-          <Typography style={{ fontSize: '25px' }}>{props.title}</Typography>
-          <Typography style={{ wordWrap: "break-word" }}>{props.content}</Typography>
+          <Typography style={{ fontSize: '25px' }}>{props.post.title}</Typography>
+          <Typography style={{ wordWrap: "break-word" }}>{props.post.content}</Typography>
         </CardContent>
         <CardActions>
           <Button

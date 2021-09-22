@@ -23,7 +23,7 @@ const App = () => {
         <Grid container spacing={4}>
           {posts.map(post =>
             <Grid item xs={4} key={post.id}>
-              <Post title={post.title} content={post.content} />
+              <Post post={post} />
             </Grid>
           )}
         </Grid>
