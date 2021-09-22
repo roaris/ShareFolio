@@ -1,10 +1,16 @@
+import React, { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import PostModal from './PostModal';
 
 const Post = (props) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
   return (
     <div>
       <Card>
@@ -14,7 +20,8 @@ const Post = (props) => {
         </CardContent>
         <CardActions>
           <Button
-            variant='contained'>
+            variant='contained'
+            onClick={openModal}>
             Detail
           </Button>
           <Button
@@ -29,6 +36,11 @@ const Post = (props) => {
           </Button>
         </CardActions>
       </Card>
+      <PostModal
+        post={props.post}
+        open={modalOpen}
+        handleClose={closeModal}
+      />
     </div>
   )
 };
