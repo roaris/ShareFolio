@@ -71,7 +71,7 @@ const Post = (props) => {
         updatePost={updatePost}
         post={props.post} />}
     </div>
-  )
+  );
 };
 
 export default Post;

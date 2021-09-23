@@ -23,7 +23,7 @@ const App = () => {
     const newInputValue = Object.assign({}, inputValue);
     newInputValue[itemName] = e.target.value;
     setInputValue(newInputValue)
-  }
+  };
 
   const submitPost = () => {
     fetch(`${process.env.REACT_APP_DEV_API_URL}/posts`, {
@@ -38,12 +38,10 @@ const App = () => {
         const newPosts = posts.slice();
         newPosts.push(res);
         setPosts(newPosts);
-        setInputValue(
-          {
-            title: '',
-            content: '',
-          }
-        );
+        setInputValue({
+          title: '',
+          content: '',
+        });
       })
   };
 
@@ -81,6 +79,6 @@ const App = () => {
       </Box>
     </div>
   );
-}
+};
 
 export default App;
