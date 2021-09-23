@@ -50,6 +50,23 @@ const App = () => {
       })
   };
 
+  const updatePost = (postId, updateValue) => {
+    fetch(`${process.env.REACT_APP_DEV_API_URL}/posts/${postId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updateValue)
+    })
+      .then(res => res.json())
+      .then(res => {
+        const newPosts = posts.slice();
+        const index = newPosts.findIndex((post) => post.id === postId);
+        newPosts.splice(index, 1, res);
+        setPosts(newPosts);
+      })
+  };
+
   return (
     <div>
       <CreateForm
@@ -60,7 +77,7 @@ const App = () => {
         <Grid container spacing={4}>
           {posts.map(post =>
             <Grid item xs={4} key={post.id}>
-              <Post post={post} />
+              <Post post={post} updatePost={updatePost} />
             </Grid>
           )}
         </Grid>

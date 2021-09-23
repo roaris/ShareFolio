@@ -5,11 +5,33 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PostModal from './PostModal';
+import EditForm from './EditForm';
 
 const Post = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+  const [editFormOpen, setEditFormOpen] = useState(false);
+  const [inputValue, setInputValue] = useState({ title: '', content: '' });
+
+  const toggleEditFormOpen = () => {
+    setEditFormOpen(!editFormOpen);
+  }
+
+  const changeInputValue = (itemName, e) => {
+    const newInputValue = Object.assign({}, inputValue);
+    newInputValue[itemName] = e.target.value;
+    setInputValue(newInputValue);
+  };
+
+  const updatePost = () => {
+    props.updatePost(props.post.id, inputValue);
+    toggleEditFormOpen();
+    setInputValue({
+      title: '',
+      content: '',
+    })
+  };
 
   return (
     <div>
@@ -26,7 +48,8 @@ const Post = (props) => {
           </Button>
           <Button
             variant='contained'
-            color='primary'>
+            color='primary'
+            onClick={toggleEditFormOpen}>
             Edit
           </Button>
           <Button
@@ -41,6 +64,12 @@ const Post = (props) => {
         open={modalOpen}
         handleClose={closeModal}
       />
+      {editFormOpen &&
+      <EditForm
+        inputValue={inputValue}
+        changeInputValue={changeInputValue}
+        updatePost={updatePost}
+        post={props.post} />}
     </div>
   )
 };
