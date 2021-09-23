@@ -10,10 +10,7 @@ const App = () => {
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_DEV_API_URL}/posts`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
+      method: 'GET'
     })
       .then(res => res.json())
       .then(setPosts)
