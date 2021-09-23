@@ -62,6 +62,18 @@ const App = () => {
       })
   };
 
+  const deletePost = postId => {
+    fetch(`${process.env.REACT_APP_DEV_API_URL}/posts/${postId}`, {
+      method: 'DELETE'
+    })
+      .then(() => {
+        const newPosts = posts.slice();
+        const index = newPosts.findIndex(post => post.id === postId);
+        newPosts.splice(index, 1);
+        setPosts(newPosts);
+      })
+  };
+
   return (
     <div>
       <CreateForm
@@ -72,7 +84,10 @@ const App = () => {
         <Grid container spacing={4}>
           {posts.map(post =>
             <Grid item xs={4} key={post.id}>
-              <Post post={post} updatePost={updatePost} />
+              <Post
+                post={post}
+                updatePost={updatePost}
+                deletePost={deletePost} />
             </Grid>
           )}
         </Grid>

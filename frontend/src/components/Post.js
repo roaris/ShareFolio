@@ -54,7 +54,8 @@ const Post = (props) => {
           </Button>
           <Button
             variant='contained'
-            color='secondary'>
+            color='secondary'
+            onClick={() => props.deletePost(props.post.id)}>
             Delete
           </Button>
         </CardActions>
