@@ -9,7 +9,7 @@ const App = () => {
   const [inputValue, setInputValue] = useState({ title: '', content: '' });
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_DEV_API_URL}/posts`, {
+    fetch(`${process.env.REACT_APP_API_URL}/posts`, {
       method: 'GET'
     })
       .then(res => res.json())
@@ -23,7 +23,7 @@ const App = () => {
   };
 
   const submitPost = () => {
-    fetch(`${process.env.REACT_APP_DEV_API_URL}/posts`, {
+    fetch(`${process.env.REACT_APP_API_URL}/posts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ const App = () => {
   };
 
   const updatePost = (postId, updateValue) => {
-    fetch(`${process.env.REACT_APP_DEV_API_URL}/posts/${postId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/posts/${postId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const App = () => {
   };
 
   const deletePost = postId => {
-    fetch(`${process.env.REACT_APP_DEV_API_URL}/posts/${postId}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/posts/${postId}`, {
       method: 'DELETE'
     })
       .then(() => {
