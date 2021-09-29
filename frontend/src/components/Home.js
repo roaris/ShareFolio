@@ -28,7 +28,7 @@ const App = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(inputValue)
+      body: JSON.stringify({post: inputValue})
     })
       .then(res => res.json())
       .then(res => {
@@ -48,7 +48,7 @@ const App = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updateValue)
+      body: JSON.stringify({post: updateValue})
     })
       .then(res => res.json())
       .then(res => {
