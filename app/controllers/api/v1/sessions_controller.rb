@@ -11,6 +11,10 @@ module Api
           render status: 401
         end
       end
+
+      def logged_in?
+        render json: { logged_in: !current_user.nil? }
+      end
     end
   end
 end
