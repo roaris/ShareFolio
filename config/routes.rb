@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       resources :sessions
+      get 'logged_in', to: 'sessions#logged_in?'
       resources :posts
     end
   end

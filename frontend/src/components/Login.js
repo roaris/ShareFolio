@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -12,6 +13,7 @@ const Login = () => {
   });
   const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
+  const setLoggedIn = useContext(AuthContext).setLoggedIn;
 
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
@@ -25,11 +27,16 @@ const Login = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ session: inputValue })
+      body: JSON.stringify({ session: inputValue }),
+      credentials: 'include'
     })
       .then(res => {
-        if (res.status === 204) history.push('/home')
-        else if (res.status === 401) setErrorMessage('Invalid email/password combination');
+        if (res.status === 204) {
+          setLoggedIn(true);
+          history.push('/home');
+        } else if (res.status === 401) {
+          setErrorMessage('Invalid email/password combination');
+        }
       })
   };
 
