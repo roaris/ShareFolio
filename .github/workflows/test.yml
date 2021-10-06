@@ -42,6 +42,8 @@ jobs:
       run: |
         bundle exec rails db:create
         bundle exec rails db:migrate
+      env:
+        FRONTEND_ORIGIN: hoge
     - name: Run tests
       run: |
         bundle exec rspec
