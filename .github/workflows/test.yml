@@ -1,0 +1,44 @@
+name: test
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: mysql:5.7
+        env:
+          MYSQL_USERNAME: dbuser
+          MYSQL_ROOT_PASSWORD: dbpass
+    container:
+      image: ruby:2.6
+      env:
+        RAILS_ENV: test
+        MYSQL_HOST: db
+        MYSQL_USERNAME: dbuser
+        MYSQL_ROOT_PASSWORD: dbpass
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: bundle-${{ hashFiles('**/Gemfile.lock') }}
+    - uses: actions/cache@v1
+      with:
+        path: node_modules
+        key: yarn-${{ hashFiles('**/yarn.lock') }}
+    - name: Setup yarn and node
+      run: |
+        curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+        echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+        apt-get update -qq
+        apt-get install -y nodejs yarn
+        yarn install
+    - name: Setup bundles
+      run: bundle install
+    - name: Setup Database
+      run: |
+        bundle exec rails db:create
+        bundle exec rails db:migrate
+    - name: Run tests
+      run: |
+        bundle exec rspec
