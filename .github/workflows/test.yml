@@ -35,6 +35,7 @@ jobs:
         yarn install
     - name: Setup bundles
       run: |
+        gem install bundler
         bundle update --bundler
         bundle install
     - name: Setup Database
