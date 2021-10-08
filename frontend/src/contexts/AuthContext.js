@@ -8,7 +8,10 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/logged_in`, {
       method: 'GET',
-      credentials: 'include'
+      credentials: 'include',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      }
     })
       .then(res => res.json())
       .then(res => {

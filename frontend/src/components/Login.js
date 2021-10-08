@@ -26,6 +26,7 @@ const Login = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
       },
       body: JSON.stringify({ session: inputValue }),
       credentials: 'include'
