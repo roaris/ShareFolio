@@ -10,7 +10,8 @@ const App = () => {
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/posts`, {
-      method: 'GET'
+      method: 'GET',
+      credentials: 'include'
     })
       .then(res => res.json())
       .then(setPosts)
@@ -25,6 +26,7 @@ const App = () => {
   const submitPost = () => {
     fetch(`${process.env.REACT_APP_API_URL}/posts`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -45,6 +47,7 @@ const App = () => {
   const updatePost = (postId, updateValue) => {
     fetch(`${process.env.REACT_APP_API_URL}/posts/${postId}`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -61,7 +64,8 @@ const App = () => {
 
   const deletePost = postId => {
     fetch(`${process.env.REACT_APP_API_URL}/posts/${postId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      credentials: 'include'
     })
       .then(() => {
         const newPosts = posts.slice();
