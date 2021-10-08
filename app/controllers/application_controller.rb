@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
 
+  before_action :check_xhr_header
+
   def fallback_index_html
     respond_to do |format|
       format.html { render body: Rails.root.join('public/index.html').read }
@@ -14,5 +16,10 @@ class ApplicationController < ActionController::API
   def require_login
     return if current_user
     render status: 401
+  end
+
+  def check_xhr_header
+    return if request.xhr?
+    render status: 403
   end
 end

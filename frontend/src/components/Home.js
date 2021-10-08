@@ -11,7 +11,10 @@ const App = () => {
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/posts`, {
       method: 'GET',
-      credentials: 'include'
+      credentials: 'include',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      },
     })
       .then(res => res.json())
       .then(setPosts)
@@ -29,6 +32,7 @@ const App = () => {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
       },
       body: JSON.stringify({post: inputValue})
     })
@@ -50,6 +54,7 @@ const App = () => {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
       },
       body: JSON.stringify({post: updateValue})
     })
@@ -65,7 +70,10 @@ const App = () => {
   const deletePost = postId => {
     fetch(`${process.env.REACT_APP_API_URL}/posts/${postId}`, {
       method: 'DELETE',
-      credentials: 'include'
+      credentials: 'include',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      },
     })
       .then(() => {
         const newPosts = posts.slice();
