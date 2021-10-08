@@ -38,8 +38,8 @@ RSpec.describe User, type: :model do
   end
 
   it 'is invalid with a duplicated email address' do
-    user1 = FactoryBot.create(:user)
-    user2 = FactoryBot.build(:user)
+    user1 = FactoryBot.create(:user, email: 'test@example.com')
+    user2 = FactoryBot.build(:user, email: 'test@example.com')
     expect(user2).to be_invalid
   end
 
