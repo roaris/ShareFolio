@@ -5,35 +5,36 @@ module Api
 
       def index
         posts = Post.all.order(:id)
-        render json: posts
+        render status: 200, json: posts
       end
 
       def show
         post = Post.find(params[:id])
-        render json: post
+        render staus: 200, json: post
       end
 
       def create
         post = current_user.posts.build(post_params)
         if post.save
-          render json: post
+          render status: 201, json: post
         else
-          render json: post.errors
+          render status: 400, json: post.errors
         end
       end
 
       def update
         post = Post.find(params[:id])
         if post.update(post_params)
-          render json: post
+          render status: 200, json: post
         else
-          render json: post.errors
+          render status: 400, json: post.errors
         end
       end
 
       def destroy
         post = Post.find(params[:id])
         post.destroy
+        render status: 204
       end
 
       private
