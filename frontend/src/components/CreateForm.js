@@ -12,6 +12,8 @@ const CreateForm = (props) => {
           label='title'
           fullWidth
           value={props.inputValue.title}
+          error={props.validationMessage.title !== ''}
+          helperText={props.validationMessage.title}
           onChange={e => props.changeInputValue('title', e)} />
       </Grid>
       <Grid item xs={4} />
@@ -22,6 +24,8 @@ const CreateForm = (props) => {
           multiline
           fullWidth
           value={props.inputValue.content}
+          error={props.validationMessage.content !== ''}
+          helperText={props.validationMessage.content}
           onChange={e => props.changeInputValue('content', e)} />
       </Grid>
       <Grid item xs={3} />

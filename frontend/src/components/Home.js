@@ -7,6 +7,7 @@ import Post from './Post';
 const App = () => {
   const [posts, setPosts] = useState([]);
   const [inputValue, setInputValue] = useState({ title: '', content: '' });
+  const [validationMessage, setValidationMessage] = useState({ title: '', content: '' });
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/posts`, {
@@ -36,15 +37,27 @@ const App = () => {
       },
       body: JSON.stringify({post: inputValue})
     })
-      .then(res => res.json())
       .then(res => {
-        const newPosts = posts.slice();
-        newPosts.push(res);
-        setPosts(newPosts);
-        setInputValue({
-          title: '',
-          content: '',
-        });
+        if (res.status === 201) {
+          res.json().then(res => {
+            const newPosts = posts.slice();
+            newPosts.push(res);
+            setPosts(newPosts);
+            setInputValue({
+              title: '',
+              content: '',
+            });
+            setValidationMessage({ title: '', content: '' });
+          })
+        } else if (res.status === 400) {
+          res.json().then(err => {
+            const newValidationMessage = { title: '', content: '' };
+            for (const property in err) {
+              newValidationMessage[property] = err[property][0];
+            }
+            setValidationMessage(newValidationMessage);
+          })
+        }
       })
   };
 
@@ -88,7 +101,8 @@ const App = () => {
       <CreateForm
         inputValue={inputValue}
         changeInputValue={changeInputValue}
-        submitPost={submitPost} />
+        submitPost={submitPost}
+        validationMessage={validationMessage} />
       <Box p={3}>
         <Grid container spacing={4}>
           {posts.map(post =>
