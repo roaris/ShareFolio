@@ -13,6 +13,7 @@ const Post = (props) => {
   const closeModal = () => setModalOpen(false);
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [inputValue, setInputValue] = useState({ title: '', content: '' });
+  const [validationMessage, setValidationMessage] = useState({ title: '', content: '' });
 
   const toggleEditFormOpen = () => {
     setEditFormOpen(!editFormOpen);
@@ -25,12 +26,19 @@ const Post = (props) => {
   };
 
   const updatePost = () => {
+    const newValidationMessage = { title: '', content: '' };
+    if (inputValue.title === '') newValidationMessage.title = "can't be blank";
+    if (inputValue.content === '') newValidationMessage.content = "can't be blank";
+    setValidationMessage(newValidationMessage);
+    if (inputValue.title === '' || inputValue.content === '') return;
+
     props.updatePost(props.post.id, inputValue);
     toggleEditFormOpen();
     setInputValue({
       title: '',
       content: '',
     })
+    setValidationMessage({ title: '', content: '' });
   };
 
   return (
@@ -70,7 +78,8 @@ const Post = (props) => {
         inputValue={inputValue}
         changeInputValue={changeInputValue}
         updatePost={updatePost}
-        post={props.post} />}
+        post={props.post}
+        validationMessage={validationMessage} />}
     </div>
   );
 };
