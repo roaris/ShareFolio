@@ -49,6 +49,7 @@ jobs:
       run: |
         bundle exec rubocop
         cd frontend
+        npm install
         npm run fix
       env:
         FRONTEND_ORIGIN: hoge
