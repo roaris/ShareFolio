@@ -15,21 +15,21 @@ const WaitInitialize = ({ children }) => {
   return <>{children}</>;
 };
 
-const PublicRoute = ({...props}) => {
+const PublicRoute = ({ ...props }) => {
   const loggedIn = useContext(AuthContext).loggedIn;
   if (loggedIn) {
-    return <Redirect to='/home' />
+    return <Redirect to='/home' />;
   } else {
-    return <Route {...props} />
+    return <Route {...props} />;
   }
 };
 
-const PrivateRoute = ({...props}) => {
+const PrivateRoute = ({ ...props }) => {
   const loggedIn = useContext(AuthContext).loggedIn;
   if (loggedIn) {
-    return <Route {...props} />
+    return <Route {...props} />;
   } else {
-    return <Redirect to='/login' />
+    return <Redirect to='/login' />;
   }
 };
 

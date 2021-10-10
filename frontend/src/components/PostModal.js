@@ -1,6 +1,6 @@
-import Modal from '@material-ui/core/Modal'
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
+import Modal from '@material-ui/core/Modal';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 
 const PostModal = (props) => {
   const style = {
@@ -19,7 +19,9 @@ const PostModal = (props) => {
     <Modal open={props.open} onClose={props.handleClose}>
       <Box sx={style}>
         <Typography style={{ fontSize: '25px' }}>{props.post.title}</Typography>
-        <Typography style={{ wordWrap: 'break-word' }}>{props.post.content}</Typography>
+        <Typography style={{ wordWrap: 'break-word' }}>
+          {props.post.content}
+        </Typography>
         <Typography>作成日時: {props.post.created_at}</Typography>
         <Typography>更新日時: {props.post.updated_at}</Typography>
       </Box>

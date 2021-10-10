@@ -14,7 +14,8 @@ const CreateForm = (props) => {
           value={props.inputValue.title}
           error={props.validationMessage.title !== ''}
           helperText={props.validationMessage.title}
-          onChange={e => props.changeInputValue('title', e)} />
+          onChange={(e) => props.changeInputValue('title', e)}
+        />
       </Grid>
       <Grid item xs={4} />
       <Grid item xs={3} />
@@ -26,14 +27,12 @@ const CreateForm = (props) => {
           value={props.inputValue.content}
           error={props.validationMessage.content !== ''}
           helperText={props.validationMessage.content}
-          onChange={e => props.changeInputValue('content', e)} />
+          onChange={(e) => props.changeInputValue('content', e)}
+        />
       </Grid>
       <Grid item xs={3} />
       <Box mt={5}>
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={props.submitPost}>
+        <Button variant='contained' color='primary' onClick={props.submitPost}>
           Create
         </Button>
       </Box>

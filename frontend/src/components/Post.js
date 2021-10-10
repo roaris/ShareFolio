@@ -13,11 +13,14 @@ const Post = (props) => {
   const closeModal = () => setModalOpen(false);
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [inputValue, setInputValue] = useState({ title: '', content: '' });
-  const [validationMessage, setValidationMessage] = useState({ title: '', content: '' });
+  const [validationMessage, setValidationMessage] = useState({
+    title: '',
+    content: '',
+  });
 
   const toggleEditFormOpen = () => {
     setEditFormOpen(!editFormOpen);
-  }
+  };
 
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
@@ -27,8 +30,12 @@ const Post = (props) => {
 
   const updatePost = () => {
     const newValidationMessage = { title: '', content: '' };
-    if (inputValue.title === '') newValidationMessage.title = "can't be blank";
-    if (inputValue.content === '') newValidationMessage.content = "can't be blank";
+    if (inputValue.title === '') {
+      newValidationMessage.title = "can't be blank";
+    }
+    if (inputValue.content === '') {
+      newValidationMessage.content = "can't be blank";
+    }
     setValidationMessage(newValidationMessage);
     if (inputValue.title === '' || inputValue.content === '') return;
 
@@ -37,7 +44,7 @@ const Post = (props) => {
     setInputValue({
       title: '',
       content: '',
-    })
+    });
     setValidationMessage({ title: '', content: '' });
   };
 
@@ -45,41 +52,43 @@ const Post = (props) => {
     <div>
       <Card>
         <CardContent>
-          <Typography style={{ fontSize: '25px' }}>{props.post.title}</Typography>
-          <Typography style={{ wordWrap: "break-word" }}>{props.post.content}</Typography>
+          <Typography style={{ fontSize: '25px' }}>
+            {props.post.title}
+          </Typography>
+          <Typography style={{ wordWrap: 'break-word' }}>
+            {props.post.content}
+          </Typography>
         </CardContent>
         <CardActions>
-          <Button
-            variant='contained'
-            onClick={openModal}>
+          <Button variant='contained' onClick={openModal}>
             Detail
           </Button>
           <Button
             variant='contained'
             color='primary'
-            onClick={toggleEditFormOpen}>
+            onClick={toggleEditFormOpen}
+          >
             Edit
           </Button>
           <Button
             variant='contained'
             color='secondary'
-            onClick={() => props.deletePost(props.post.id)}>
+            onClick={() => props.deletePost(props.post.id)}
+          >
             Delete
           </Button>
         </CardActions>
       </Card>
-      <PostModal
-        post={props.post}
-        open={modalOpen}
-        handleClose={closeModal}
-      />
-      {editFormOpen &&
-      <EditForm
-        inputValue={inputValue}
-        changeInputValue={changeInputValue}
-        updatePost={updatePost}
-        post={props.post}
-        validationMessage={validationMessage} />}
+      <PostModal post={props.post} open={modalOpen} handleClose={closeModal} />
+      {editFormOpen && (
+        <EditForm
+          inputValue={inputValue}
+          changeInputValue={changeInputValue}
+          updatePost={updatePost}
+          post={props.post}
+          validationMessage={validationMessage}
+        />
+      )}
     </div>
   );
 };

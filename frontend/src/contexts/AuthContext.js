@@ -11,19 +11,19 @@ export const AuthContextProvider = ({ children }) => {
       credentials: 'include',
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
-      }
+      },
     })
-      .then(res => res.json())
-      .then(res => {
-        setLoggedIn(res.logged_in)
-      })
-  }, [])
+      .then((res) => res.json())
+      .then((res) => {
+        setLoggedIn(res.logged_in);
+      });
+  }, []);
 
   return (
     <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
       {children}
     </AuthContext.Provider>
-  )
+  );
 };
 
 export default AuthContextProvider;

@@ -13,7 +13,7 @@ const Top = () => {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 'calc(15px + 2vmin)',
-    color: 'white'
+    color: 'white',
   };
 
   return (
@@ -26,14 +26,16 @@ const Top = () => {
           component={Link}
           variant='contained'
           color='primary'
-          style={{marginRight: 10}}>
+          style={{ marginRight: 10 }}
+        >
           新規登録
         </Button>
         <Button
           to='/login'
           component={Link}
           variant='contained'
-          color='primary'>
+          color='primary'
+        >
           ログイン
         </Button>
       </div>
