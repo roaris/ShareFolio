@@ -5,6 +5,7 @@ module Api
         user = User.new(user_params)
 
         if user.save
+          session[:user_id] = user.id
           render json: user, status: 201
         else
           render json: user.errors, status: 400
