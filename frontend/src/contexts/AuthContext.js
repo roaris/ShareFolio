@@ -6,7 +6,7 @@ export const AuthContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(null);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/logged_in`, {
+    fetch(`${process.env.REACT_APP_API_URL}/sessions/logged_in`, {
       method: 'GET',
       credentials: 'include',
       headers: {

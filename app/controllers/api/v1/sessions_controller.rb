@@ -12,7 +12,7 @@ module Api
         end
       end
 
-      def logged_in?
+      def logged_in
         render json: { logged_in: !current_user.nil? }
       end
     end
