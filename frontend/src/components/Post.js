@@ -30,9 +30,12 @@ const Post = (props) => {
 
   const updatePost = () => {
     const newValidationMessage = { title: '', content: '' };
-    if (inputValue.title === '') newValidationMessage.title = "can't be blank";
-    if (inputValue.content === '')
+    if (inputValue.title === '') {
+      newValidationMessage.title = "can't be blank";
+    }
+    if (inputValue.content === '') {
       newValidationMessage.content = "can't be blank";
+    }
     setValidationMessage(newValidationMessage);
     if (inputValue.title === '' || inputValue.content === '') return;
 
