@@ -3,8 +3,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users
-      resources :sessions
-      get 'logged_in', to: 'sessions#logged_in?'
+      resources :sessions do
+        collection do
+          get :logged_in
+        end
+      end
       resources :posts
     end
   end
