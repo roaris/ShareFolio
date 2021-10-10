@@ -11,7 +11,7 @@ const NotFound = () => {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 'calc(15px + 2vmin)',
-    color: 'white'
+    color: 'white',
   };
 
   return (

@@ -10,13 +10,13 @@ const Signup = () => {
     name: '',
     email: '',
     password: '',
-    password_confirmation: ''
+    password_confirmation: '',
   });
   const [validationMessage, setValidationMessage] = useState({
     name: '',
     email: '',
     password: '',
-    password_confirmation: ''
+    password_confirmation: '',
   });
   const history = useHistory();
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
@@ -36,32 +36,31 @@ const Signup = () => {
       },
       body: JSON.stringify({ user: inputValue }),
       credentials: 'include',
-    })
-      .then(res => {
-        if (res.status === 201) {
-          setLoggedIn(true);
-          history.push('/home');
-        } else if (res.status === 400) {
-          res.json().then(err => {
-            const newValidationMessage = {
-              name: '',
-              email: '',
-              password: '',
-              password_confirmation: ''
-            };
-            for (const property in err) {
-              newValidationMessage[property] = err[property][0];
-            }
-            setValidationMessage(newValidationMessage);
-          })
-        }
-      })
+    }).then((res) => {
+      if (res.status === 201) {
+        setLoggedIn(true);
+        history.push('/home');
+      } else if (res.status === 400) {
+        res.json().then((err) => {
+          const newValidationMessage = {
+            name: '',
+            email: '',
+            password: '',
+            password_confirmation: '',
+          };
+          for (const property in err) {
+            newValidationMessage[property] = err[property][0];
+          }
+          setValidationMessage(newValidationMessage);
+        });
+      }
+    });
   };
 
   const style = {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh'
+    minHeight: '100vh',
   };
 
   return (
@@ -73,7 +72,8 @@ const Signup = () => {
         value={inputValue.name}
         error={validationMessage.name !== ''}
         helperText={validationMessage.name}
-        onChange={e => changeInputValue('name', e)} />
+        onChange={(e) => changeInputValue('name', e)}
+      />
       <TextField
         label='メールアドレス'
         variant='outlined'
@@ -81,7 +81,8 @@ const Signup = () => {
         value={inputValue.email}
         error={validationMessage.email !== ''}
         helperText={validationMessage.email}
-        onChange={e => changeInputValue('email', e)} />
+        onChange={(e) => changeInputValue('email', e)}
+      />
       <TextField
         label='パスワード'
         type='password'
@@ -90,7 +91,8 @@ const Signup = () => {
         value={inputValue.password}
         error={validationMessage.password !== ''}
         helperText={validationMessage.password}
-        onChange={e => changeInputValue('password', e)} />
+        onChange={(e) => changeInputValue('password', e)}
+      />
       <TextField
         label='パスワード(確認)'
         type='password'
@@ -99,11 +101,9 @@ const Signup = () => {
         value={inputValue.password_confirmation}
         error={validationMessage.password_confirmation !== ''}
         helperText={validationMessage.password_confirmation}
-        onChange={e => changeInputValue('password_confirmation', e)} />
-      <Button
-        variant='contained'
-        color='primary'
-        onClick={createUser}>
+        onChange={(e) => changeInputValue('password_confirmation', e)}
+      />
+      <Button variant='contained' color='primary' onClick={createUser}>
         新規登録
       </Button>
     </Grid>

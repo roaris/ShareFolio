@@ -29,28 +29,26 @@ const Login = () => {
         'X-Requested-With': 'XMLHttpRequest',
       },
       body: JSON.stringify({ session: inputValue }),
-      credentials: 'include'
-    })
-      .then(res => {
-        if (res.status === 204) {
-          setLoggedIn(true);
-          history.push('/home');
-        } else if (res.status === 401) {
-          setErrorMessage('Invalid email/password combination');
-        }
-      })
+      credentials: 'include',
+    }).then((res) => {
+      if (res.status === 204) {
+        setLoggedIn(true);
+        history.push('/home');
+      } else if (res.status === 401) {
+        setErrorMessage('Invalid email/password combination');
+      }
+    });
   };
 
   const style = {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh'
+    minHeight: '100vh',
   };
 
   return (
     <Grid container alignItems='center' justifyContent='center' style={style}>
-      <Typography
-        style={{ color: 'red', marginBottom: 30 }}>
+      <Typography style={{ color: 'red', marginBottom: 30 }}>
         {errorMessage}
       </Typography>
       <TextField
@@ -58,18 +56,17 @@ const Login = () => {
         variant='outlined'
         style={{ width: '40ch', marginBottom: 30 }}
         value={inputValue.email}
-        onChange={e => changeInputValue('email', e)} />
+        onChange={(e) => changeInputValue('email', e)}
+      />
       <TextField
         label='パスワード'
         type='password'
         variant='outlined'
         style={{ width: '40ch', marginBottom: 30 }}
         value={inputValue.password}
-        onChange={e => changeInputValue('password', e)} />
-      <Button
-        variant='contained'
-        color='primary'
-        onClick={login}>
+        onChange={(e) => changeInputValue('password', e)}
+      />
+      <Button variant='contained' color='primary' onClick={login}>
         ログイン
       </Button>
     </Grid>
