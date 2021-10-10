@@ -14,4 +14,15 @@ module TestHelper
   def json(response)
     JSON.parse(response.body)
   end
+
+  def default_user_params
+    {
+      user: {
+        name: 'test',
+        email: 'test@example.com',
+        password: 'password',
+        password_confirmation: 'password'
+      }
+    }
+  end
 end
