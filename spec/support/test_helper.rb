@@ -15,6 +15,15 @@ module TestHelper
     JSON.parse(response.body)
   end
 
+  def default_post_params
+    {
+      post: {
+        title: 'test_title',
+        content: 'test_content'
+      }
+    }
+  end
+
   def default_user_params
     {
       user: {

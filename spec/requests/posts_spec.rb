@@ -50,9 +50,8 @@ RSpec.describe '/api/v1/posts', type: :request do
   describe 'create' do
     it 'accept a valid post' do
       log_in_as(user)
-      post_params = { title: 'test_title', content: 'test_content' }
       expect do
-        post '/api/v1/posts', params: post_params.to_json, headers: xhr_header.merge(json_header)
+        post '/api/v1/posts', params: default_post_params.to_json, headers: xhr_header.merge(json_header)
       end.to change(Post, :count).by(1)
       expect(response.status).to eq(201)
       expect(json(response)['title']).to eq('test_title')
@@ -61,28 +60,28 @@ RSpec.describe '/api/v1/posts', type: :request do
 
     it 'reject a post with an empty title' do
       log_in_as(user)
-      post_params = { title: '', content: 'test_content' }
-      post '/api/v1/posts', params: post_params.to_json, headers: xhr_header.merge(json_header)
+      invalid_post_params = default_post_params
+      invalid_post_params[:post][:title] = ''
+      post '/api/v1/posts', params: invalid_post_params.to_json, headers: xhr_header.merge(json_header)
       expect(response.status).to eq(400)
     end
 
     it 'reject a post with an empty content' do
       log_in_as(user)
-      post_params = { title: 'test_content', content: '' }
-      post '/api/v1/posts', params: post_params.to_json, headers: xhr_header.merge(json_header)
+      invalid_post_params = default_post_params
+      invalid_post_params[:post][:content] = ''
+      post '/api/v1/posts', params: invalid_post_params.to_json, headers: xhr_header.merge(json_header)
       expect(response.status).to eq(400)
     end
 
     it 'reject an unauth user' do
-      post_params = { title: 'test_title', content: 'test_content' }
-      post '/api/v1/posts', params: post_params.to_json, headers: xhr_header.merge(json_header)
+      post '/api/v1/posts', params: default_post_params.to_json, headers: xhr_header.merge(json_header)
       expect(response.status).to eq(401)
     end
 
     it 'protect from CSRF' do
       log_in_as(user)
-      post_params = { title: 'test_title', content: 'test_content' }
-      post '/api/v1/posts', params: post_params.to_json, headers: json_header
+      post '/api/v1/posts', params: default_post_params.to_json, headers: json_header
       expect(response.status).to eq(403)
     end
   end
@@ -92,8 +91,7 @@ RSpec.describe '/api/v1/posts', type: :request do
 
     it 'accept a valid update' do
       log_in_as(user)
-      update_params = { title: 'test_title', content: 'test_content' }
-      patch "/api/v1/posts/#{post.id}", params: update_params.to_json, headers: xhr_header.merge(json_header)
+      patch "/api/v1/posts/#{post.id}", params: default_post_params.to_json, headers: xhr_header.merge(json_header)
       expect(response.status).to eq(200)
       expect(json(response)['title']).to eq('test_title')
       expect(json(response)['content']).to eq('test_content')
@@ -101,28 +99,28 @@ RSpec.describe '/api/v1/posts', type: :request do
 
     it 'reject an update with an empty title' do
       log_in_as(user)
-      update_params = { title: '', content: 'test_content' }
-      patch "/api/v1/posts/#{post.id}", params: update_params.to_json, headers: xhr_header.merge(json_header)
+      invalid_update_params = default_post_params
+      invalid_update_params[:post][:title] = ''
+      patch "/api/v1/posts/#{post.id}", params: invalid_update_params.to_json, headers: xhr_header.merge(json_header)
       expect(response.status).to eq(400)
     end
 
     it 'reject an update with an empty content' do
       log_in_as(user)
-      update_params = { title: 'test_title', content: '' }
-      patch "/api/v1/posts/#{post.id}", params: update_params.to_json, headers: xhr_header.merge(json_header)
+      invalid_update_params = default_post_params
+      invalid_update_params[:post][:content] = ''
+      patch "/api/v1/posts/#{post.id}", params: invalid_update_params.to_json, headers: xhr_header.merge(json_header)
       expect(response.status).to eq(400)
     end
 
     it 'reject an unauth user' do
-      update_params = { title: 'test_title', content: 'test_content' }
-      patch "/api/v1/posts/#{post.id}", params: update_params.to_json, headers: xhr_header.merge(json_header)
+      patch "/api/v1/posts/#{post.id}", params: default_post_params.to_json, headers: xhr_header.merge(json_header)
       expect(response.status).to eq(401)
     end
 
     it 'protect from CSRF' do
       log_in_as(user)
-      update_params = { title: 'test_title', content: 'test_content' }
-      patch "/api/v1/posts/#{post.id}", params: update_params.to_json, headers: json_header
+      patch "/api/v1/posts/#{post.id}", params: default_post_params.to_json, headers: json_header
       expect(response.status).to eq(403)
     end
   end
