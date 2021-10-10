@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -18,6 +19,7 @@ const Signup = () => {
     password_confirmation: ''
   });
   const history = useHistory();
+  const setLoggedIn = useContext(AuthContext).setLoggedIn;
 
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
@@ -32,11 +34,14 @@ const Signup = () => {
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
       },
-      body: JSON.stringify({ user: inputValue })
+      body: JSON.stringify({ user: inputValue }),
+      credentials: 'include',
     })
       .then(res => {
-        if (res.status === 201) history.push('/home');
-        else if (res.status === 400) {
+        if (res.status === 201) {
+          setLoggedIn(true);
+          history.push('/home');
+        } else if (res.status === 400) {
           res.json().then(err => {
             const newValidationMessage = {
               name: '',
