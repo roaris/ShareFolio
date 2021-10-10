@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class PostsController < ApplicationController
@@ -5,7 +7,7 @@ module Api
 
       def index
         posts = Post.all.order(:id)
-        render status: 200, json: posts
+        render status: :ok, json: posts
       end
 
       def show
@@ -16,32 +18,32 @@ module Api
       def create
         post = current_user.posts.build(post_params)
         if post.save
-          render status: 201, json: post
+          render status: :created, json: post
         else
-          render status: 400, json: post.errors
+          render status: :bad_request, json: post.errors
         end
       end
 
       def update
         post = Post.find(params[:id])
         if post.update(post_params)
-          render status: 200, json: post
+          render status: :ok, json: post
         else
-          render status: 400, json: post.errors
+          render status: :bad_request, json: post.errors
         end
       end
 
       def destroy
         post = Post.find(params[:id])
         post.destroy
-        render status: 204
+        render status: :no_content
       end
 
       private
-        def post_params
-          params.require(:post).permit(:title, :content)
-        end
 
+      def post_params
+        params.require(:post).permit(:title, :content)
+      end
     end
   end
 end

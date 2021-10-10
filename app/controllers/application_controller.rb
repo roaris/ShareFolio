@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
 
@@ -15,11 +17,13 @@ class ApplicationController < ActionController::API
 
   def require_login
     return if current_user
-    render status: 401
+
+    render status: :unauthorized
   end
 
   def check_xhr_header
     return if request.xhr?
-    render status: 403
+
+    render status: :forbidden
   end
 end

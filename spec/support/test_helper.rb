@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TestHelper
   def log_in_as(user)
     allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return({ user_id: user.id })
@@ -19,8 +21,8 @@ module TestHelper
     {
       post: {
         title: 'test_title',
-        content: 'test_content'
-      }
+        content: 'test_content',
+      },
     }
   end
 
@@ -30,8 +32,8 @@ module TestHelper
         name: 'test',
         email: 'test@example.com',
         password: 'password',
-        password_confirmation: 'password'
-      }
+        password_confirmation: 'password',
+      },
     }
   end
 end
