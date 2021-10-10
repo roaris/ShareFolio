@@ -26,12 +26,13 @@ jobs:
       with:
         path: node_modules
         key: yarn-${{ hashFiles('**/yarn.lock') }}
-    - name: Setup yarn and node
+    - name: Setup npm, yarn and node
       run: |
         curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
         echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
         apt-get update -qq
-        apt-get install -y nodejs yarn
+        apt-get install -y nodejs npm yarn
+        npm install
         yarn install
     - name: Setup bundles
       run: |
@@ -47,6 +48,7 @@ jobs:
     - name: Run tests
       run: |
         bundle exec rubocop
-        npm install
+        cd frontend
+        npm run fix
       env:
         FRONTEND_ORIGIN: hoge
