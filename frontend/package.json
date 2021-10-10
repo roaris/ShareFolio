@@ -17,7 +17,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier --write ./src/App.js && prettier --write ./src/components/*.js && prettier --write ./src/contexts/*.js",
+    "lint": "eslint --fix ./src/App.js && eslint --fix ./src/components/*.js && eslint --fix ./src/contexts/*.js",
+    "fix": "npm run format && npm run lint"
   },
   "eslintConfig": {
     "extends": [
