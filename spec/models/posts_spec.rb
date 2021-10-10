@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
@@ -16,7 +18,7 @@ RSpec.describe Post, type: :model do
   end
 
   it 'is invalid with a too long title' do
-    post = build(:post, title: 'a'*31)
+    post = build(:post, title: 'a' * 31)
     expect(post).to be_invalid
   end
 
@@ -26,15 +28,15 @@ RSpec.describe Post, type: :model do
   end
 
   it 'is invalid with a too long content' do
-    post = build(:post, content: 'a'*141)
+    post = build(:post, content: 'a' * 141)
     expect(post).to be_invalid
   end
 
   it 'is deleted when an owner is deleted' do
     user = create(:user)
-    post = create(:post, user_id: user.id)
+    create(:post, user_id: user.id)
     expect do
       user.destroy
-    end.to change(Post, :count).by(-1)
+    end.to change(described_class, :count).by(-1)
   end
 end

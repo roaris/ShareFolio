@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -12,7 +14,7 @@ RSpec.describe User, type: :model do
   end
 
   it 'is invalid with a too long name' do
-    user = build(:user, name: 'a'*21)
+    user = build(:user, name: 'a' * 21)
     expect(user).to be_invalid
   end
 
@@ -38,9 +40,9 @@ RSpec.describe User, type: :model do
   end
 
   it 'is invalid with a duplicated email address' do
-    user1 = create(:user, email: 'test@example.com')
-    user2 = build(:user, email: 'test@example.com')
-    expect(user2).to be_invalid
+    create(:user, email: 'test@example.com')
+    user = build(:user, email: 'test@example.com')
+    expect(user).to be_invalid
   end
 
   it 'is invalid with an empty password' do
