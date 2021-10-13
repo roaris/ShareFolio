@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
 
-  before_action :check_xhr_header
+  before_action :check_xhr_header, except: :fallback_index_html
 
   def fallback_index_html
     respond_to do |format|
