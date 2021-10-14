@@ -20,6 +20,8 @@ const Post = (props) => {
 
   const toggleEditFormOpen = () => {
     setEditFormOpen(!editFormOpen);
+    const newValidationMessage = { title: '', content: '' };
+    setValidationMessage(newValidationMessage);
   };
 
   const changeInputValue = (itemName, e) => {
