@@ -10,7 +10,8 @@
     "sourceType": "module"
   },
   "globals": {
-    "fetch": false
+    "fetch": false,
+    "FileReader": false
   },
   "rules": {
     "react/prop-types": "off",

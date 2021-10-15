@@ -5,6 +5,7 @@ import Top from './components/Top';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Home from './components/Home';
+import Setting from './components/Setting';
 import NotFound from './components/NotFound';
 
 const WaitInitialize = ({ children }) => {
@@ -43,6 +44,7 @@ const App = () => {
             <PublicRoute path='/signup' component={Signup} />
             <PublicRoute path='/login' component={Login} />
             <PrivateRoute path='/home' component={Home} />
+            <PrivateRoute path='/setting' component={Setting} />
             <Route component={NotFound} />
           </Switch>
         </BrowserRouter>
