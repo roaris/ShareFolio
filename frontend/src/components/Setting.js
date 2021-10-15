@@ -60,25 +60,24 @@ const Setting = () => {
       direction='column'
       alignItems='center'
       justifyContent='center'
-      style={{ marginTop: 100}}
+      style={{ marginTop: 100 }}
     >
-      <Grid
-        container
-        alignItems='center'
-        justifyContent='center'
-      >
+      <Grid container alignItems='center' justifyContent='center'>
         <Grid item xs={12} sm={12} md={6} lg={5}>
-          <ImageRenderer imageData={imageData} onImageChange={onImageChange} removeImage={removeImage} />
+          <ImageRenderer
+            imageData={imageData}
+            onImageChange={onImageChange}
+            removeImage={removeImage}
+          />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={5}>
-          <InfoRenderer inputValue={inputValue} changeInputValue={changeInputValue} />
+          <InfoRenderer
+            inputValue={inputValue}
+            changeInputValue={changeInputValue}
+          />
         </Grid>
       </Grid>
-      <Button
-        variant='contained'
-        color='primary'
-        style={{ width: 300 }}
-      >
+      <Button variant='contained' color='primary' style={{ width: 300 }}>
         Update
       </Button>
     </Grid>
@@ -178,6 +177,6 @@ const InfoRenderer = (props) => {
       />
     </Grid>
   );
-}
+};
 
 export default Setting;
