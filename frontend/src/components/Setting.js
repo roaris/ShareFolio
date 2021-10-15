@@ -107,48 +107,6 @@ const Setting = () => {
     );
   };
 
-  const InfoRenderer = () => {
-    return (
-      <Grid
-        container
-        direction='column'
-        alignItems='center'
-        justifyContent='center'
-      >
-        <TextField
-          label='ユーザー名'
-          variant='outlined'
-          style={{ width: '40ch', marginBottom: 30 }}
-          value={inputValue.name}
-          onChange={(e) => changeInputValue('name', e)}
-        />
-        <TextField
-          label='メールアドレス'
-          variant='outlined'
-          style={{ width: '40ch', marginBottom: 30 }}
-          value={inputValue.email}
-          onChange={(e) => changeInputValue('email', e)}
-        />
-        <TextField
-          label='パスワード変更'
-          type='password'
-          variant='outlined'
-          style={{ width: '40ch', marginBottom: 30 }}
-          value={inputValue.password}
-          onChange={(e) => changeInputValue('password', e)}
-        />
-        <TextField
-          label='パスワード変更(確認)'
-          type='password'
-          variant='outlined'
-          style={{ width: '40ch', marginBottom: 30 }}
-          value={inputValue.password_confirmation}
-          onChange={(e) => changeInputValue('password_confirmation', e)}
-        />
-      </Grid>
-    );
-  };
-
   return (
     <Grid
       container
@@ -166,7 +124,7 @@ const Setting = () => {
           <ImageRenderer />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={5}>
-          <InfoRenderer />
+          <InfoRenderer inputValue={inputValue} changeInputValue={changeInputValue} />
         </Grid>
       </Grid>
       <Button
@@ -179,5 +137,47 @@ const Setting = () => {
     </Grid>
   );
 };
+
+const InfoRenderer = (props) => {
+  return (
+    <Grid
+      container
+      direction='column'
+      alignItems='center'
+      justifyContent='center'
+    >
+      <TextField
+        label='ユーザー名'
+        variant='outlined'
+        style={{ width: '40ch', marginBottom: 30 }}
+        value={props.inputValue.name}
+        onChange={(e) => props.changeInputValue('name', e)}
+      />
+      <TextField
+        label='メールアドレス'
+        variant='outlined'
+        style={{ width: '40ch', marginBottom: 30 }}
+        value={props.inputValue.email}
+        onChange={(e) => props.changeInputValue('email', e)}
+      />
+      <TextField
+        label='パスワード変更'
+        type='password'
+        variant='outlined'
+        style={{ width: '40ch', marginBottom: 30 }}
+        value={props.inputValue.password}
+        onChange={(e) => props.changeInputValue('password', e)}
+      />
+      <TextField
+        label='パスワード変更(確認)'
+        type='password'
+        variant='outlined'
+        style={{ width: '40ch', marginBottom: 30 }}
+        value={props.inputValue.password_confirmation}
+        onChange={(e) => props.changeInputValue('password_confirmation', e)}
+      />
+    </Grid>
+  );
+}
 
 export default Setting;
