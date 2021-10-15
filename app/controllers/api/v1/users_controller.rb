@@ -3,6 +3,8 @@
 module Api
   module V1
     class UsersController < ApplicationController
+      before_action :require_login, only: :me
+
       def create
         user = User.new(user_params)
 
@@ -12,6 +14,10 @@ module Api
         else
           render json: user.errors, status: :bad_request
         end
+      end
+
+      def me
+        render json: current_user, status: :ok
       end
 
       private

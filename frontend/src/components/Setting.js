@@ -1,0 +1,183 @@
+import React, { useState, useEffect } from 'react';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Icon from '../logo.svg';
+
+const Setting = () => {
+  const [inputValue, setInputValue] = useState({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+  });
+  const [imageData, setImageData] = useState(null);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const newInputValue = {
+          name: '',
+          email: '',
+          password: '',
+          password_confirmation: '',
+        };
+        newInputValue.name = res.name;
+        newInputValue.email = res.email;
+        setInputValue(newInputValue);
+      });
+  }, []);
+
+  const changeInputValue = (itemName, e) => {
+    const newInputValue = Object.assign({}, inputValue);
+    newInputValue[itemName] = e.target.value;
+    setInputValue(newInputValue);
+  };
+
+  const onImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImageData(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removeImage = () => {
+    setImageData(null);
+  };
+
+  const ImageRenderer = () => {
+    return (
+      <Grid
+        container
+        direction='column'
+        alignItems='center'
+        justifyContent='center'
+      >
+        <img
+          src={imageData ? imageData : Icon}
+          style={{
+            border: 'solid 1px',
+            borderRadius: '50%',
+            height: 300,
+            width: 300,
+            marginBottom: 20,
+          }}
+        />
+        <Button
+          variant='contained'
+          component='label'
+          color='primary'
+          style={{
+            width: 200,
+            marginLeft: 10,
+            marginBottom: 10,
+          }}
+        >
+          Upload
+          <input
+            type='file'
+            accept='image/*'
+            hidden
+            onChange={(e) => onImageChange(e)}
+          />
+        </Button>
+        <Button
+          variant='contained'
+          component='label'
+          color='secondary'
+          style={{
+            width: 200,
+            marginLeft: 10,
+            marginBottom: 30,
+          }}
+          onClick={removeImage}
+        >
+          Remove
+        </Button>
+      </Grid>
+    );
+  };
+
+  const InfoRenderer = () => {
+    return (
+      <Grid
+        container
+        direction='column'
+        alignItems='center'
+        justifyContent='center'
+      >
+        <TextField
+          label='ユーザー名'
+          variant='outlined'
+          style={{ width: '40ch', marginBottom: 30 }}
+          value={inputValue.name}
+          onChange={(e) => changeInputValue('name', e)}
+        />
+        <TextField
+          label='メールアドレス'
+          variant='outlined'
+          style={{ width: '40ch', marginBottom: 30 }}
+          value={inputValue.email}
+          onChange={(e) => changeInputValue('email', e)}
+        />
+        <TextField
+          label='パスワード変更'
+          type='password'
+          variant='outlined'
+          style={{ width: '40ch', marginBottom: 30 }}
+          value={inputValue.password}
+          onChange={(e) => changeInputValue('password', e)}
+        />
+        <TextField
+          label='パスワード変更(確認)'
+          type='password'
+          variant='outlined'
+          style={{ width: '40ch', marginBottom: 30 }}
+          value={inputValue.password_confirmation}
+          onChange={(e) => changeInputValue('password_confirmation', e)}
+        />
+      </Grid>
+    );
+  };
+
+  return (
+    <Grid
+      container
+      direction='column'
+      alignItems='center'
+      justifyContent='center'
+      style={{ marginTop: 100}}
+    >
+      <Grid
+        container
+        alignItems='center'
+        justifyContent='center'
+      >
+        <Grid item xs={12} sm={12} md={6} lg={5}>
+          <ImageRenderer />
+        </Grid>
+        <Grid item xs={12} sm={12} md={6} lg={5}>
+          <InfoRenderer />
+        </Grid>
+      </Grid>
+      <Button
+        variant='contained'
+        color='primary'
+        style={{ width: 300 }}
+      >
+        Update
+      </Button>
+    </Grid>
+  );
+};
+
+export default Setting;
