@@ -54,59 +54,6 @@ const Setting = () => {
     setImageData(null);
   };
 
-  const ImageRenderer = () => {
-    return (
-      <Grid
-        container
-        direction='column'
-        alignItems='center'
-        justifyContent='center'
-      >
-        <img
-          src={imageData ? imageData : Icon}
-          style={{
-            border: 'solid 1px',
-            borderRadius: '50%',
-            height: 300,
-            width: 300,
-            marginBottom: 20,
-          }}
-        />
-        <Button
-          variant='contained'
-          component='label'
-          color='primary'
-          style={{
-            width: 200,
-            marginLeft: 10,
-            marginBottom: 10,
-          }}
-        >
-          Upload
-          <input
-            type='file'
-            accept='image/*'
-            hidden
-            onChange={(e) => onImageChange(e)}
-          />
-        </Button>
-        <Button
-          variant='contained'
-          component='label'
-          color='secondary'
-          style={{
-            width: 200,
-            marginLeft: 10,
-            marginBottom: 30,
-          }}
-          onClick={removeImage}
-        >
-          Remove
-        </Button>
-      </Grid>
-    );
-  };
-
   return (
     <Grid
       container
@@ -121,7 +68,7 @@ const Setting = () => {
         justifyContent='center'
       >
         <Grid item xs={12} sm={12} md={6} lg={5}>
-          <ImageRenderer />
+          <ImageRenderer imageData={imageData} onImageChange={onImageChange} removeImage={removeImage} />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={5}>
           <InfoRenderer inputValue={inputValue} changeInputValue={changeInputValue} />
@@ -133,6 +80,59 @@ const Setting = () => {
         style={{ width: 300 }}
       >
         Update
+      </Button>
+    </Grid>
+  );
+};
+
+const ImageRenderer = (props) => {
+  return (
+    <Grid
+      container
+      direction='column'
+      alignItems='center'
+      justifyContent='center'
+    >
+      <img
+        src={props.imageData ? props.imageData : Icon}
+        style={{
+          border: 'solid 1px',
+          borderRadius: '50%',
+          height: 300,
+          width: 300,
+          marginBottom: 20,
+        }}
+      />
+      <Button
+        variant='contained'
+        component='label'
+        color='primary'
+        style={{
+          width: 200,
+          marginLeft: 10,
+          marginBottom: 10,
+        }}
+      >
+        Upload
+        <input
+          type='file'
+          accept='image/*'
+          hidden
+          onChange={(e) => props.onImageChange(e)}
+        />
+      </Button>
+      <Button
+        variant='contained'
+        component='label'
+        color='secondary'
+        style={{
+          width: 200,
+          marginLeft: 10,
+          marginBottom: 30,
+        }}
+        onClick={props.removeImage}
+      >
+        Remove
       </Button>
     </Grid>
   );
