@@ -51,5 +51,6 @@ jobs:
         cd frontend
         npm install
         yarn format:scan
+        yarn lint:scan
       env:
         FRONTEND_ORIGIN: hoge
