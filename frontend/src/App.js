@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import AuthContextProvider, { AuthContext } from './contexts/AuthContext';
 import Top from './components/Top';
