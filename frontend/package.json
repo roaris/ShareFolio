@@ -18,12 +18,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format:check": "prettier --check ./src/App.js && prettier --check ./src/components/*.js && prettier --check ./src/contexts/*.js",
+    "format:scan": "prettier --check ./src/App.js && prettier --check ./src/components/*.js && prettier --check ./src/contexts/*.js",
     "format:fix": "prettier --write ./src/App.js && prettier --write ./src/components/*.js && prettier --write ./src/contexts/*.js",
-    "lint:check": "eslint ./src/App.js && eslint ./src/components/*.js && eslint ./src/contexts/*.js",
+    "lint:scan": "eslint ./src/App.js && eslint ./src/components/*.js && eslint ./src/contexts/*.js",
     "lint:fix": "eslint --fix ./src/App.js && eslint --fix ./src/components/*.js && eslint --fix ./src/contexts/*.js",
-    "check": "npm run format:check & npm run lint:check",
-    "fix": "npm run format:fix && npm run lint:fix"
+    "scan": "yarn format:scan & yarn lint:scan",
+    "fix": "yarn format:fix && yarn lint:fix"
   },
   "eslintConfig": {
     "extends": [
