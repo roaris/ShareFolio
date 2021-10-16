@@ -10,7 +10,6 @@
     "sourceType": "module"
   },
   "globals": {
-    "fetch": false,
     "FileReader": false
   },
   "rules": {
