@@ -50,6 +50,7 @@ jobs:
         bundle exec rubocop
         cd frontend
         npm install
-        npm run fix
+        yarn format:scan
+        yarn lint:scan
       env:
         FRONTEND_ORIGIN: hoge
