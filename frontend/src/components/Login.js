@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
 
 const Login = () => {
   const [inputValue, setInputValue] = useState({
@@ -66,9 +67,15 @@ const Login = () => {
         value={inputValue.password}
         onChange={(e) => changeInputValue('password', e)}
       />
-      <Button variant='contained' color='primary' onClick={login}>
+      <Button
+        variant='contained'
+        color='primary'
+        onClick={login}
+        style={{ marginBottom: 30 }}
+      >
         ログイン
       </Button>
+      <Link href='/signup'>新規登録はこちら</Link>
     </Grid>
   );
 };
