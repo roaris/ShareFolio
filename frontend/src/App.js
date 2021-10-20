@@ -9,6 +9,7 @@ import Home from './components/Home';
 import Setting from './components/Setting';
 import PostForm from './components/PostForm';
 import NotFound from './components/NotFound';
+import Footer from './components/Footer';
 
 const WaitInitialize = ({ children }) => {
   const initialized = useContext(AuthContext);
@@ -41,16 +42,23 @@ const App = () => {
     <AuthContextProvider>
       <WaitInitialize>
         <BrowserRouter>
-          <Header />
-          <Switch>
-            <PublicRoute exact path='/' component={Top} />
-            <PublicRoute path='/signup' component={Signup} />
-            <PublicRoute path='/login' component={Login} />
-            <PrivateRoute path='/home' component={Home} />
-            <PrivateRoute path='/setting' component={Setting} />
-            <PrivateRoute path='/posts/new' component={PostForm} />
-            <Route component={NotFound} />
-          </Switch>
+          <div
+            style={{ display: 'flex', flexFlow: 'column', minHeight: '100vh' }}
+          >
+            <Header />
+            <div style={{ flex: 1 }}>
+              <Switch>
+                <PublicRoute exact path='/' component={Top} />
+                <PublicRoute path='/signup' component={Signup} />
+                <PublicRoute path='/login' component={Login} />
+                <PrivateRoute path='/home' component={Home} />
+                <PrivateRoute path='/setting' component={Setting} />
+                <PrivateRoute path='/posts/new' component={PostForm} />
+                <Route component={NotFound} />
+              </Switch>
+            </div>
+            <Footer />
+          </div>
         </BrowserRouter>
       </WaitInitialize>
     </AuthContextProvider>
