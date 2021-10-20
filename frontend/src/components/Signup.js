@@ -20,6 +20,7 @@ const Signup = () => {
   });
   const history = useHistory();
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
+  const setUserName = useContext(AuthContext).setUserName;
 
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
@@ -38,8 +39,11 @@ const Signup = () => {
       credentials: 'include',
     }).then((res) => {
       if (res.status === 201) {
-        setLoggedIn(true);
-        history.push('/home');
+        res.json().then((res) => {
+          setLoggedIn(true);
+          setUserName(res.name);
+          history.push('/home');
+        });
       } else if (res.status === 400) {
         res.json().then((err) => {
           const newValidationMessage = {
@@ -60,7 +64,7 @@ const Signup = () => {
   const style = {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh',
+    paddingTop: 200,
   };
 
   return (

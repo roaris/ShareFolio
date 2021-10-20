@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :sessions do
         collection do
           get :logged_in
+          delete :logout
         end
       end
       resources :posts
