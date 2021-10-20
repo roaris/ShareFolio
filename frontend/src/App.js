@@ -40,8 +40,8 @@ const App = () => {
   return (
     <AuthContextProvider>
       <WaitInitialize>
-        <Header />
         <BrowserRouter>
+          <Header />
           <Switch>
             <PublicRoute exact path='/' component={Top} />
             <PublicRoute path='/signup' component={Signup} />

@@ -1,10 +1,30 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import Link from '@material-ui/core/Link';
 
 const Header = () => {
   const loggedIn = useContext(AuthContext).loggedIn;
+  const setLoggedIn = useContext(AuthContext).setLoggedIn;
   const userName = useContext(AuthContext).userName;
+  const setUserName = useContext(AuthContext).setUserName;
+  const history = useHistory();
+
+  const logout = () => {
+    fetch(`${process.env.REACT_APP_API_URL}/sessions`, {
+      method: 'DELETE',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      credentials: 'include',
+    }).then(res => {
+      if (res.status == 204) {
+        setLoggedIn(false);
+        setUserName(null);
+        history.push('/login');
+      }
+    })
+  };
 
   const headerStyle = {
     alignItems: 'center',
@@ -45,7 +65,9 @@ const Header = () => {
               <span>{userName}</span>
             </Link>
           </li>
-          <li style={listItemStyle}>ログアウト</li>
+          <li style={listItemStyle} onClick={logout}>
+            <span style={{cursor: 'pointer'}}>ログアウト</span>
+          </li>
         </ul>
       ) : (
         <ul>
