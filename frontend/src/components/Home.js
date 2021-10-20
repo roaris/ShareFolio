@@ -98,7 +98,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div style={{paddingTop: 100}}>
       <CreateForm
         inputValue={inputValue}
         changeInputValue={changeInputValue}

@@ -60,7 +60,7 @@ const Setting = () => {
       direction='column'
       alignItems='center'
       justifyContent='center'
-      style={{ marginTop: 100 }}
+      style={{ paddingTop: 100 }}
     >
       <Grid container alignItems='center' justifyContent='center'>
         <Grid item xs={12} sm={12} md={6} lg={5}>
