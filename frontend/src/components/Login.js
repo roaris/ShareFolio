@@ -15,6 +15,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
+  const setUserName = useContext(AuthContext).setUserName;
 
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
@@ -32,9 +33,12 @@ const Login = () => {
       body: JSON.stringify({ session: inputValue }),
       credentials: 'include',
     }).then((res) => {
-      if (res.status === 204) {
-        setLoggedIn(true);
-        history.push('/home');
+      if (res.status === 200) {
+        res.json().then((res) => {
+          setLoggedIn(true);
+          setUserName(res.user_name);
+          history.push('/home');
+        });
       } else if (res.status === 401) {
         setErrorMessage('Invalid email/password combination');
       }

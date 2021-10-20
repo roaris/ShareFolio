@@ -4,6 +4,7 @@ import Link from '@material-ui/core/Link';
 
 const Header = () => {
   const loggedIn = useContext(AuthContext).loggedIn;
+  const userName = useContext(AuthContext).userName;
 
   const headerStyle = {
     alignItems: 'center',
@@ -40,8 +41,11 @@ const Header = () => {
       {loggedIn ? (
         <ul>
           <li style={listItemStyle}>
-            ログアウト
+            <Link href='/setting' style={linkStyle}>
+              <span>{userName}</span>
+            </Link>
           </li>
+          <li style={listItemStyle}>ログアウト</li>
         </ul>
       ) : (
         <ul>

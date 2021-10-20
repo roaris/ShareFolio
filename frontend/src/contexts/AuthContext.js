@@ -4,6 +4,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(null);
+  const [userName, setUserName] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/sessions/logged_in`, {
@@ -12,15 +13,20 @@ export const AuthContextProvider = ({ children }) => {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
       },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setLoggedIn(res.logged_in);
-      });
+    }).then((res) => {
+      if (res.status == 200) {
+        res.json().then((res) => {
+          setLoggedIn(res.logged_in);
+          setUserName(res.user_name);
+        });
+      }
+    });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
+    <AuthContext.Provider
+      value={{ loggedIn, setLoggedIn, userName, setUserName }}
+    >
       {children}
     </AuthContext.Provider>
   );

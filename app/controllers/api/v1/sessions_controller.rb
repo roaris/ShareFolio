@@ -8,14 +8,18 @@ module Api
 
         if user&.authenticate(params[:session][:password])
           session[:user_id] = user.id
-          render status: :no_content
+          render status: :ok, json: { user_name: user.name }
         else
           render status: :unauthorized
         end
       end
 
       def logged_in
-        render json: { logged_in: !current_user.nil? }
+        if current_user.nil?
+          render status: :ok, json: { logged_in: false }
+        else
+          render status: :ok, json: { logged_in: true, user_name: current_user.name }
+        end
       end
     end
   end
