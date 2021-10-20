@@ -17,13 +17,13 @@ const Header = () => {
         'X-Requested-With': 'XMLHttpRequest',
       },
       credentials: 'include',
-    }).then(res => {
+    }).then((res) => {
       if (res.status == 204) {
         setLoggedIn(false);
         setUserName(null);
         history.push('/login');
       }
-    })
+    });
   };
 
   const headerStyle = {
@@ -66,7 +66,7 @@ const Header = () => {
             </Link>
           </li>
           <li style={listItemStyle} onClick={logout}>
-            <span style={{cursor: 'pointer'}}>ログアウト</span>
+            <span style={{ cursor: 'pointer' }}>ログアウト</span>
           </li>
         </ul>
       ) : (

@@ -77,7 +77,11 @@ const Setting = () => {
           />
         </Grid>
       </Grid>
-      <Button variant='contained' color='primary' style={{ width: 300, marginBottom: 30 }}>
+      <Button
+        variant='contained'
+        color='primary'
+        style={{ width: 300, marginBottom: 30 }}
+      >
         Update
       </Button>
     </Grid>
