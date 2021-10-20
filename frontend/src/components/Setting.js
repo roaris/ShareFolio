@@ -60,7 +60,7 @@ const Setting = () => {
       direction='column'
       alignItems='center'
       justifyContent='center'
-      style={{ paddingTop: 100 }}
+      style={{ paddingTop: 150 }}
     >
       <Grid container alignItems='center' justifyContent='center'>
         <Grid item xs={12} sm={12} md={6} lg={5}>
@@ -77,7 +77,7 @@ const Setting = () => {
           />
         </Grid>
       </Grid>
-      <Button variant='contained' color='primary' style={{ width: 300 }}>
+      <Button variant='contained' color='primary' style={{ width: 300, marginBottom: 30 }}>
         Update
       </Button>
     </Grid>

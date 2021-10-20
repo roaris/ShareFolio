@@ -48,7 +48,7 @@ const Login = () => {
   const style = {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh',
+    paddingTop: 250,
   };
 
   return (

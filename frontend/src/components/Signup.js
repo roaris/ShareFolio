@@ -60,7 +60,7 @@ const Signup = () => {
   const style = {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh',
+    paddingTop: 200,
   };
 
   return (
