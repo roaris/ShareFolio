@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import AuthContextProvider, { AuthContext } from './contexts/AuthContext';
+import Header from './components/Header';
 import Top from './components/Top';
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -39,6 +40,7 @@ const App = () => {
   return (
     <AuthContextProvider>
       <WaitInitialize>
+        <Header />
         <BrowserRouter>
           <Switch>
             <PublicRoute exact path='/' component={Top} />
