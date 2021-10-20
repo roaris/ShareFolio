@@ -25,9 +25,9 @@ module Api
       def logout
         if session[:user_id]
           session.delete(:user_id) if session[:user_id]
-          render status: 204
+          render status: :no_content
         else
-          render status: 400
+          render status: :bad_request
         end
       end
     end
