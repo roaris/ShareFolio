@@ -11,8 +11,8 @@ Rails.application.routes.draw do
       end
       resources :sessions do
         collection do
-          delete :destroy
           get :logged_in
+          delete :logout
         end
       end
       resources :posts

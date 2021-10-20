@@ -14,17 +14,17 @@ module Api
         end
       end
 
-      def destroy
-        session.delete(:user_id) if session[:user_id]
-        render status: 204
-      end
-
       def logged_in
         if current_user.nil?
           render status: :ok, json: { logged_in: false }
         else
           render status: :ok, json: { logged_in: true, user_name: current_user.name }
         end
+      end
+
+      def logout
+        session.delete(:user_id) if session[:user_id]
+        render status: 204
       end
     end
   end

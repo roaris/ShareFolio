@@ -11,7 +11,7 @@ const Header = () => {
   const history = useHistory();
 
   const logout = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/sessions`, {
+    fetch(`${process.env.REACT_APP_API_URL}/sessions/logout`, {
       method: 'DELETE',
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
