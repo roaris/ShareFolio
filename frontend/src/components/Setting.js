@@ -36,6 +36,24 @@ const Setting = () => {
       });
   }, []);
 
+  const updateProfile = () => {
+    const formData = new FormData();
+    formData.append('user[name]', inputValue.name);
+    formData.append('user[email]', inputValue.email);
+    formData.append('user[password]', inputValue.password);
+    formData.append('user[password_confirmation]', inputValue.password_confirmation);
+    if (icon) formData.append('user[icon]', icon);
+
+    fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: formData
+    });
+  };
+
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
     newInputValue[itemName] = e.target.value;
@@ -77,6 +95,7 @@ const Setting = () => {
         variant='contained'
         color='primary'
         style={{ width: 300, marginBottom: 30 }}
+        onClick={updateProfile}
       >
         Update
       </Button>
