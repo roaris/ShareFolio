@@ -11,6 +11,12 @@ const Setting = () => {
     password: '',
     password_confirmation: '',
   });
+  const [validationMessage, setValidationMessage] = useState({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+  });
   const [icon, setIcon] = useState(null);
 
   useEffect(() => {
@@ -51,6 +57,34 @@ const Setting = () => {
         'X-Requested-With': 'XMLHttpRequest',
       },
       body: formData
+    }).then((res)=>{
+      if (res.status === 200) {
+        const newInputValue = Object.assign({}, inputValue);
+        newInputValue.password = '';
+        newInputValue.password_confirmation = '';
+        setInputValue(newInputValue);
+        const newValidationMessage = {
+          name: '',
+          email: '',
+          password: '',
+          password_confirmation: '',
+        };
+        setValidationMessage(newValidationMessage);
+      } else if (res.status === 400) {
+        res.json().then((err) => {
+          const newValidationMessage = {
+            name: '',
+            email: '',
+            password: '',
+            password_confirmation: '',
+          };
+          for (const property in err) {
+            newValidationMessage[property] = err[property][0];
+          }
+          console.log(newValidationMessage)
+          setValidationMessage(newValidationMessage);
+        })
+      }
     });
   };
 
@@ -88,6 +122,7 @@ const Setting = () => {
           <InfoRenderer
             inputValue={inputValue}
             changeInputValue={changeInputValue}
+            validationMessage={validationMessage}
           />
         </Grid>
       </Grid>
@@ -165,6 +200,8 @@ const InfoRenderer = (props) => {
         style={{ width: '40ch', marginBottom: 30 }}
         value={props.inputValue.name}
         onChange={(e) => props.changeInputValue('name', e)}
+        error={props.validationMessage.name !== ''}
+        helperText={props.validationMessage.name}
       />
       <TextField
         label='メールアドレス'
@@ -172,6 +209,8 @@ const InfoRenderer = (props) => {
         style={{ width: '40ch', marginBottom: 30 }}
         value={props.inputValue.email}
         onChange={(e) => props.changeInputValue('email', e)}
+        error={props.validationMessage.email !== ''}
+        helperText={props.validationMessage.email}
       />
       <TextField
         label='パスワード変更'
@@ -180,6 +219,8 @@ const InfoRenderer = (props) => {
         style={{ width: '40ch', marginBottom: 30 }}
         value={props.inputValue.password}
         onChange={(e) => props.changeInputValue('password', e)}
+        error={props.validationMessage.password !== ''}
+        helperText={props.validationMessage.password}
       />
       <TextField
         label='パスワード変更(確認)'
@@ -188,6 +229,8 @@ const InfoRenderer = (props) => {
         style={{ width: '40ch', marginBottom: 30 }}
         value={props.inputValue.password_confirmation}
         onChange={(e) => props.changeInputValue('password_confirmation', e)}
+        error={props.validationMessage.password_confirmation !== ''}
+        helperText={props.validationMessage.password_confirmation}
       />
     </Grid>
   );
