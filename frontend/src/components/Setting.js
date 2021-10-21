@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Icon from '../logo.svg';
+import defaultIcon from '../logo.svg';
 
 const Setting = () => {
   const [inputValue, setInputValue] = useState({
@@ -12,7 +12,7 @@ const Setting = () => {
     password_confirmation: '',
   });
   const [icon, setIcon] = useState(null);
-  const [imageData, setImageData] = useState(null);
+  const [updateIcon, setUpdateIcon] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
@@ -47,13 +47,13 @@ const Setting = () => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
-      setImageData(e.target.result);
+      setUpdateIcon(e.target.result);
     };
     reader.readAsDataURL(file);
   };
 
   const removeImage = () => {
-    setImageData(null);
+    setUpdateIcon(null);
   };
 
   return (
@@ -68,7 +68,7 @@ const Setting = () => {
         <Grid item xs={12} sm={12} md={6} lg={5}>
           <ImageRenderer
             icon={icon}
-            imageData={imageData}
+            updateIcon={updateIcon}
             onImageChange={onImageChange}
             removeImage={removeImage}
           />
@@ -93,7 +93,11 @@ const Setting = () => {
 
 const ImageRenderer = (props) => {
   const imageSource = () => {
-    return props.imageData ? props.imageData : props.icon ? props.icon : Icon;
+    return props.updateIcon
+      ? props.updateIcon
+      : props.icon
+      ? props.icon
+      : defaultIcon;
   };
 
   return (
