@@ -4,11 +4,9 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace :api do
     namespace :v1 do
-      resources :users do
-        collection do
-          get :me
-        end
-      end
+      post '/users', to: 'users#create'
+      get '/users/me', to: 'users#show_me'
+      patch '/users/me', to: 'users#update_me'
       resources :sessions do
         collection do
           get :logged_in

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Icon from '../logo.svg';
+import defaultIcon from '../logo.svg';
 
 const Setting = () => {
   const [inputValue, setInputValue] = useState({
@@ -11,7 +11,13 @@ const Setting = () => {
     password: '',
     password_confirmation: '',
   });
-  const [imageData, setImageData] = useState(null);
+  const [validationMessage, setValidationMessage] = useState({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+  });
+  const [icon, setIcon] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
@@ -32,8 +38,57 @@ const Setting = () => {
         newInputValue.name = res.name;
         newInputValue.email = res.email;
         setInputValue(newInputValue);
+        setIcon(res.icon);
       });
   }, []);
+
+  const updateProfile = () => {
+    const formData = new FormData();
+    formData.append('user[name]', inputValue.name);
+    formData.append('user[email]', inputValue.email);
+    formData.append('user[password]', inputValue.password);
+    formData.append(
+      'user[password_confirmation]',
+      inputValue.password_confirmation
+    );
+    if (icon) formData.append('user[icon]', icon);
+
+    fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: formData,
+    }).then((res) => {
+      if (res.status === 200) {
+        const newInputValue = Object.assign({}, inputValue);
+        newInputValue.password = '';
+        newInputValue.password_confirmation = '';
+        setInputValue(newInputValue);
+        const newValidationMessage = {
+          name: '',
+          email: '',
+          password: '',
+          password_confirmation: '',
+        };
+        setValidationMessage(newValidationMessage);
+      } else if (res.status === 400) {
+        res.json().then((err) => {
+          const newValidationMessage = {
+            name: '',
+            email: '',
+            password: '',
+            password_confirmation: '',
+          };
+          for (const property in err) {
+            newValidationMessage[property] = err[property][0];
+          }
+          setValidationMessage(newValidationMessage);
+        });
+      }
+    });
+  };
 
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
@@ -45,13 +100,9 @@ const Setting = () => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
-      setImageData(e.target.result);
+      setIcon(e.target.result);
     };
     reader.readAsDataURL(file);
-  };
-
-  const removeImage = () => {
-    setImageData(null);
   };
 
   return (
@@ -64,16 +115,13 @@ const Setting = () => {
     >
       <Grid container alignItems='center' justifyContent='center'>
         <Grid item xs={12} sm={12} md={6} lg={5}>
-          <ImageRenderer
-            imageData={imageData}
-            onImageChange={onImageChange}
-            removeImage={removeImage}
-          />
+          <ImageRenderer icon={icon} onImageChange={onImageChange} />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={5}>
           <InfoRenderer
             inputValue={inputValue}
             changeInputValue={changeInputValue}
+            validationMessage={validationMessage}
           />
         </Grid>
       </Grid>
@@ -81,6 +129,7 @@ const Setting = () => {
         variant='contained'
         color='primary'
         style={{ width: 300, marginBottom: 30 }}
+        onClick={updateProfile}
       >
         Update
       </Button>
@@ -97,7 +146,7 @@ const ImageRenderer = (props) => {
       justifyContent='center'
     >
       <img
-        src={props.imageData ? props.imageData : Icon}
+        src={props.icon ? props.icon : defaultIcon}
         style={{
           border: 'solid 1px',
           borderRadius: '50%',
@@ -113,7 +162,7 @@ const ImageRenderer = (props) => {
         style={{
           width: 200,
           marginLeft: 10,
-          marginBottom: 10,
+          marginBottom: 30,
         }}
       >
         Upload
@@ -123,19 +172,6 @@ const ImageRenderer = (props) => {
           hidden
           onChange={(e) => props.onImageChange(e)}
         />
-      </Button>
-      <Button
-        variant='contained'
-        component='label'
-        color='secondary'
-        style={{
-          width: 200,
-          marginLeft: 10,
-          marginBottom: 30,
-        }}
-        onClick={props.removeImage}
-      >
-        Remove
       </Button>
     </Grid>
   );
@@ -155,6 +191,8 @@ const InfoRenderer = (props) => {
         style={{ width: '40ch', marginBottom: 30 }}
         value={props.inputValue.name}
         onChange={(e) => props.changeInputValue('name', e)}
+        error={props.validationMessage.name !== ''}
+        helperText={props.validationMessage.name}
       />
       <TextField
         label='メールアドレス'
@@ -162,6 +200,8 @@ const InfoRenderer = (props) => {
         style={{ width: '40ch', marginBottom: 30 }}
         value={props.inputValue.email}
         onChange={(e) => props.changeInputValue('email', e)}
+        error={props.validationMessage.email !== ''}
+        helperText={props.validationMessage.email}
       />
       <TextField
         label='パスワード変更'
@@ -170,6 +210,8 @@ const InfoRenderer = (props) => {
         style={{ width: '40ch', marginBottom: 30 }}
         value={props.inputValue.password}
         onChange={(e) => props.changeInputValue('password', e)}
+        error={props.validationMessage.password !== ''}
+        helperText={props.validationMessage.password}
       />
       <TextField
         label='パスワード変更(確認)'
@@ -178,6 +220,8 @@ const InfoRenderer = (props) => {
         style={{ width: '40ch', marginBottom: 30 }}
         value={props.inputValue.password_confirmation}
         onChange={(e) => props.changeInputValue('password_confirmation', e)}
+        error={props.validationMessage.password_confirmation !== ''}
+        helperText={props.validationMessage.password_confirmation}
       />
     </Grid>
   );

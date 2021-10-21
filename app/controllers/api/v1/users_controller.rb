@@ -3,7 +3,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :require_login, only: :me
+      before_action :require_login, only: :show_me
 
       def create
         user = User.new(user_params)
@@ -16,8 +16,16 @@ module Api
         end
       end
 
-      def me
+      def show_me
         render json: current_user, status: :ok
+      end
+
+      def update_me
+        if current_user.update(user_params)
+          render status: :ok, json: current_user
+        else
+          render status: :bad_request, json: current_user.errors
+        end
       end
 
       private
@@ -28,6 +36,7 @@ module Api
           :email,
           :password,
           :password_confirmation,
+          :icon,
         )
       end
     end
