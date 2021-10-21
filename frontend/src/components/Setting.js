@@ -138,14 +138,6 @@ const Setting = () => {
 };
 
 const ImageRenderer = (props) => {
-  const imageSource = () => {
-    return props.updateIcon
-      ? props.updateIcon
-      : props.icon
-      ? props.icon
-      : defaultIcon;
-  };
-
   return (
     <Grid
       container
@@ -154,7 +146,7 @@ const ImageRenderer = (props) => {
       justifyContent='center'
     >
       <img
-        src={imageSource()}
+        src={props.icon ? props.icon : defaultIcon}
         style={{
           border: 'solid 1px',
           borderRadius: '50%',
