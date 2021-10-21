@@ -25,6 +25,8 @@ gem 'rack-cors'
 
 gem 'dotenv-rails'
 gem "factory_bot_rails"
+gem 'carrierwave'
+gem 'mini_magick'
 
 group :development, :test do
   gem 'sqlite3', '~> 1.4'
@@ -44,6 +46,7 @@ end
 
 group :production do
   gem 'pg'
+  gem 'fog'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
