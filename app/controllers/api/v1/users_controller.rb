@@ -20,6 +20,14 @@ module Api
         render json: current_user, status: :ok
       end
 
+      def update_me
+        if current_user.update(user_params)
+          render status: :ok, json: current_user
+        else
+          render status: :bad_request, json: current_user.errors
+        end
+      end
+
       private
 
       def user_params
@@ -28,6 +36,7 @@ module Api
           :email,
           :password,
           :password_confirmation,
+          :icon
         )
       end
     end
