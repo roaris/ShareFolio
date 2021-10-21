@@ -11,6 +11,7 @@ const Setting = () => {
     password: '',
     password_confirmation: '',
   });
+  const [icon, setIcon] = useState(null);
   const [imageData, setImageData] = useState(null);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const Setting = () => {
         newInputValue.name = res.name;
         newInputValue.email = res.email;
         setInputValue(newInputValue);
+        setIcon(res.icon);
       });
   }, []);
 
@@ -65,6 +67,7 @@ const Setting = () => {
       <Grid container alignItems='center' justifyContent='center'>
         <Grid item xs={12} sm={12} md={6} lg={5}>
           <ImageRenderer
+            icon={icon}
             imageData={imageData}
             onImageChange={onImageChange}
             removeImage={removeImage}
@@ -89,6 +92,10 @@ const Setting = () => {
 };
 
 const ImageRenderer = (props) => {
+  const imageSource = () => {
+    return props.imageData ? props.imageData : props.icon ? props.icon : Icon;
+  };
+
   return (
     <Grid
       container
@@ -97,7 +104,7 @@ const ImageRenderer = (props) => {
       justifyContent='center'
     >
       <img
-        src={props.imageData ? props.imageData : Icon}
+        src={imageSource()}
         style={{
           border: 'solid 1px',
           borderRadius: '50%',
