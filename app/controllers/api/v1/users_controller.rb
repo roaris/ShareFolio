@@ -36,7 +36,7 @@ module Api
           :email,
           :password,
           :password_confirmation,
-          :icon
+          :icon,
         )
       end
     end

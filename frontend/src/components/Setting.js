@@ -47,7 +47,10 @@ const Setting = () => {
     formData.append('user[name]', inputValue.name);
     formData.append('user[email]', inputValue.email);
     formData.append('user[password]', inputValue.password);
-    formData.append('user[password_confirmation]', inputValue.password_confirmation);
+    formData.append(
+      'user[password_confirmation]',
+      inputValue.password_confirmation
+    );
     if (icon) formData.append('user[icon]', icon);
 
     fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
@@ -56,8 +59,8 @@ const Setting = () => {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
       },
-      body: formData
-    }).then((res)=>{
+      body: formData,
+    }).then((res) => {
       if (res.status === 200) {
         const newInputValue = Object.assign({}, inputValue);
         newInputValue.password = '';
@@ -81,9 +84,8 @@ const Setting = () => {
           for (const property in err) {
             newValidationMessage[property] = err[property][0];
           }
-          console.log(newValidationMessage)
           setValidationMessage(newValidationMessage);
-        })
+        });
       }
     });
   };
@@ -113,10 +115,7 @@ const Setting = () => {
     >
       <Grid container alignItems='center' justifyContent='center'>
         <Grid item xs={12} sm={12} md={6} lg={5}>
-          <ImageRenderer
-            icon={icon}
-            onImageChange={onImageChange}
-          />
+          <ImageRenderer icon={icon} onImageChange={onImageChange} />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={5}>
           <InfoRenderer
