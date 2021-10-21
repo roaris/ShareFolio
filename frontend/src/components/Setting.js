@@ -12,7 +12,6 @@ const Setting = () => {
     password_confirmation: '',
   });
   const [icon, setIcon] = useState(null);
-  const [updateIcon, setUpdateIcon] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
@@ -47,13 +46,9 @@ const Setting = () => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
-      setUpdateIcon(e.target.result);
+      setIcon(e.target.result);
     };
     reader.readAsDataURL(file);
-  };
-
-  const removeImage = () => {
-    setUpdateIcon(null);
   };
 
   return (
@@ -68,9 +63,7 @@ const Setting = () => {
         <Grid item xs={12} sm={12} md={6} lg={5}>
           <ImageRenderer
             icon={icon}
-            updateIcon={updateIcon}
             onImageChange={onImageChange}
-            removeImage={removeImage}
           />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={5}>
@@ -124,7 +117,7 @@ const ImageRenderer = (props) => {
         style={{
           width: 200,
           marginLeft: 10,
-          marginBottom: 10,
+          marginBottom: 30,
         }}
       >
         Upload
@@ -134,19 +127,6 @@ const ImageRenderer = (props) => {
           hidden
           onChange={(e) => props.onImageChange(e)}
         />
-      </Button>
-      <Button
-        variant='contained'
-        component='label'
-        color='secondary'
-        style={{
-          width: 200,
-          marginLeft: 10,
-          marginBottom: 30,
-        }}
-        onClick={props.removeImage}
-      >
-        Remove
       </Button>
     </Grid>
   );
