@@ -18,6 +18,7 @@ const Setting = () => {
     password_confirmation: '',
   });
   const [icon, setIcon] = useState(null);
+  const [preview, setPreview] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
@@ -38,7 +39,7 @@ const Setting = () => {
         newInputValue.name = res.name;
         newInputValue.email = res.email;
         setInputValue(newInputValue);
-        setIcon(res.icon);
+        setPreview(res.icon.url);
       });
   }, []);
 
@@ -98,9 +99,10 @@ const Setting = () => {
 
   const onImageChange = (e) => {
     const file = e.target.files[0];
+    setIcon(file);
     const reader = new FileReader();
     reader.onload = (e) => {
-      setIcon(e.target.result);
+      setPreview(e.target.result);
     };
     reader.readAsDataURL(file);
   };
@@ -115,7 +117,7 @@ const Setting = () => {
     >
       <Grid container alignItems='center' justifyContent='center'>
         <Grid item xs={12} sm={12} md={6} lg={5}>
-          <ImageRenderer icon={icon} onImageChange={onImageChange} />
+          <ImageRenderer preview={preview} onImageChange={onImageChange} />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={5}>
           <InfoRenderer
@@ -146,7 +148,7 @@ const ImageRenderer = (props) => {
       justifyContent='center'
     >
       <img
-        src={props.icon ? props.icon : defaultIcon}
+        src={props.preview ? props.preview : defaultIcon}
         style={{
           border: 'solid 1px',
           borderRadius: '50%',
