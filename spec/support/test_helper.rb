@@ -20,8 +20,10 @@ module TestHelper
   def default_post_params
     {
       post: {
-        title: 'test_title',
-        content: 'test_content',
+        app_name: 'test_app',
+        app_url: 'test_app_url',
+        repo_url: 'test_repo_url',
+        description: 'test_description',
       },
     }
   end

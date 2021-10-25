@@ -42,7 +42,7 @@ module Api
       private
 
       def post_params
-        params.require(:post).permit(:title, :content)
+        params.require(:post).permit(:app_name, :app_url, :repo_url, :description)
       end
     end
   end

@@ -33,8 +33,10 @@ RSpec.describe '/api/v1/posts', type: :request do
       log_in_as(user)
       get "/api/v1/posts/#{post.id}", headers: xhr_header
       expect(response.status).to eq(200)
-      expect(json(response)['title']).to eq(post.title)
-      expect(json(response)['content']).to eq(post.content)
+      expect(json(response)['app_name']).to eq(post.app_name)
+      expect(json(response)['app_url']).to eq(post.app_url)
+      expect(json(response)['repo_url']).to eq(post.repo_url)
+      expect(json(response)['description']).to eq(post.description)
     end
 
     it 'reject an unauth user' do
@@ -56,22 +58,40 @@ RSpec.describe '/api/v1/posts', type: :request do
         post '/api/v1/posts', params: default_post_params.to_json, headers: xhr_header.merge(json_header)
       end.to change(Post, :count).by(1)
       expect(response.status).to eq(201)
-      expect(json(response)['title']).to eq('test_title')
-      expect(json(response)['content']).to eq('test_content')
+      expect(json(response)['app_name']).to eq('test_app')
+      expect(json(response)['app_url']).to eq('test_app_url')
+      expect(json(response)['repo_url']).to eq('test_repo_url')
+      expect(json(response)['description']).to eq('test_description')
     end
 
-    it 'reject a post with an empty title' do
+    it 'reject a post with an empty app_name' do
       log_in_as(user)
       invalid_post_params = default_post_params
-      invalid_post_params[:post][:title] = ''
+      invalid_post_params[:post][:app_name] = ''
       post '/api/v1/posts', params: invalid_post_params.to_json, headers: xhr_header.merge(json_header)
       expect(response.status).to eq(400)
     end
 
-    it 'reject a post with an empty content' do
+    it 'reject a post with an empty app_url' do
       log_in_as(user)
       invalid_post_params = default_post_params
-      invalid_post_params[:post][:content] = ''
+      invalid_post_params[:post][:app_url] = ''
+      post '/api/v1/posts', params: invalid_post_params.to_json, headers: xhr_header.merge(json_header)
+      expect(response.status).to eq(400)
+    end
+
+    it 'accept a post with no repo_url' do
+      log_in_as(user)
+      invalid_post_params = default_post_params
+      invalid_post_params[:post][:repo_url] = nil
+      post '/api/v1/posts', params: invalid_post_params.to_json, headers: xhr_header.merge(json_header)
+      expect(response.status).to eq(201)
+    end
+
+    it 'reject a post with an empty description' do
+      log_in_as(user)
+      invalid_post_params = default_post_params
+      invalid_post_params[:post][:description] = ''
       post '/api/v1/posts', params: invalid_post_params.to_json, headers: xhr_header.merge(json_header)
       expect(response.status).to eq(400)
     end
@@ -95,22 +115,40 @@ RSpec.describe '/api/v1/posts', type: :request do
       log_in_as(user)
       patch "/api/v1/posts/#{post.id}", params: default_post_params.to_json, headers: xhr_header.merge(json_header)
       expect(response.status).to eq(200)
-      expect(json(response)['title']).to eq('test_title')
-      expect(json(response)['content']).to eq('test_content')
+      expect(json(response)['app_name']).to eq('test_app')
+      expect(json(response)['app_url']).to eq('test_app_url')
+      expect(json(response)['repo_url']).to eq('test_repo_url')
+      expect(json(response)['description']).to eq('test_description')
     end
 
-    it 'reject an update with an empty title' do
+    it 'reject an update with an empty app_name' do
       log_in_as(user)
       invalid_update_params = default_post_params
-      invalid_update_params[:post][:title] = ''
+      invalid_update_params[:post][:app_name] = ''
       patch "/api/v1/posts/#{post.id}", params: invalid_update_params.to_json, headers: xhr_header.merge(json_header)
       expect(response.status).to eq(400)
     end
 
-    it 'reject an update with an empty content' do
+    it 'reject an update with an empty app_url' do
       log_in_as(user)
       invalid_update_params = default_post_params
-      invalid_update_params[:post][:content] = ''
+      invalid_update_params[:post][:app_url] = ''
+      patch "/api/v1/posts/#{post.id}", params: invalid_update_params.to_json, headers: xhr_header.merge(json_header)
+      expect(response.status).to eq(400)
+    end
+
+    it 'accept an update with no repo_url' do
+      log_in_as(user)
+      invalid_update_params = default_post_params
+      invalid_update_params[:post][:repo_url] = nil
+      patch "/api/v1/posts/#{post.id}", params: invalid_update_params.to_json, headers: xhr_header.merge(json_header)
+      expect(response.status).to eq(200)
+    end
+
+    it 'reject an update with an empty description' do
+      log_in_as(user)
+      invalid_update_params = default_post_params
+      invalid_update_params[:post][:description] = ''
       patch "/api/v1/posts/#{post.id}", params: invalid_update_params.to_json, headers: xhr_header.merge(json_header)
       expect(response.status).to eq(400)
     end

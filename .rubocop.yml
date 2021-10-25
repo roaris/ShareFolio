@@ -156,4 +156,4 @@ RSpec/AnyInstance:
     - 'spec/support/test_helper.rb'
 
 RSpec/MultipleExpectations:
-  Max: 4
+  Max: 6
