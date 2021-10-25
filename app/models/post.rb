@@ -2,7 +2,8 @@
 
 class Post < ApplicationRecord
   belongs_to :user
-  validates :title, presence: true, length: { maximum: 30 }
-  validates :content, presence: true, length: { maximum: 140 }
-  validates :user_id, presence: true
+  validates :app_name, presence: true, length: { maximum: 50 }
+  validates :app_url, presence: true, length: { maximum: 255 }
+  validates :repo_url, length: { maximum: 255 }
+  validates :description, presence: true, length: { maximum: 10000 }
 end
