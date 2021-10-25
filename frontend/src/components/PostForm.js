@@ -9,7 +9,7 @@ const PostForm = () => {
   const style = {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh',
+    paddingTop: 100,
   };
 
   const [markdown, setMarkdown] = useState();
@@ -24,7 +24,7 @@ const PostForm = () => {
       <TextField variant='outlined' style={{ width: 400, marginBottom: 30 }} />
       4. アプリの概要や工夫点を入力してください。
       <SimpleMDE value={markdown} onChange={(e) => setMarkdown(e)} />
-      <Button variant='contained' color='primary'>
+      <Button variant='contained' color='primary' style={{ marginBottom: 30 }}>
         送信
       </Button>
     </Grid>
