@@ -1,96 +1,93 @@
-import React, { useState } from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import PostModal from './PostModal';
-import EditForm from './EditForm';
+import { makeStyles } from '@material-ui/core/styles';
+import defaultIcon from '../logo.svg';
 
 const Post = (props) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
-  const [editFormOpen, setEditFormOpen] = useState(false);
-  const [inputValue, setInputValue] = useState({ title: '', content: '' });
-  const [validationMessage, setValidationMessage] = useState({
-    title: '',
-    content: '',
+  const post = props.postAndUser.post;
+  const appName = post.app_name;
+  const description = post.description;
+  const date = post.created_at.split('T')[0];
+
+  const user = props.postAndUser.user;
+  const userName = user.name;
+  const userIconUrl = user.icon.url;
+
+  const previewDescription = (description) => {
+    let result = '';
+    for (let i = 0; i < description.length; i++) {
+      const c = description[i];
+      if (c == ' ' || c == '#') continue;
+      result += c;
+      if (result.length > 150) {
+        result += '...';
+        break;
+      }
+    }
+    return result;
+  };
+
+  const styles = makeStyles({
+    post: {
+      border: 'solid 1px',
+      borderRadius: '10px',
+      boxShadow: '0 0 3px gray',
+      margin: 10,
+      padding: 10,
+    },
+    appName: {
+      fontSize: 30,
+      textDecoration: 'none',
+    },
+    description: {
+      fontSize: 15,
+      overflowWrap: 'break-word',
+    },
+    postFooter: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+    },
+    icon: {
+      border: 'solid 1px',
+      borderRadius: '50%',
+      height: 25,
+      width: 25,
+    },
+    date: {
+      marginRight: 5,
+      marginTop: 2,
+      position: 'relative',
+    },
+    userName: {
+      marginLeft: 5,
+      marginTop: 2,
+      position: 'relative',
+    },
   });
 
-  const toggleEditFormOpen = () => {
-    setEditFormOpen(!editFormOpen);
-    const newValidationMessage = { title: '', content: '' };
-    setValidationMessage(newValidationMessage);
-  };
-
-  const changeInputValue = (itemName, e) => {
-    const newInputValue = Object.assign({}, inputValue);
-    newInputValue[itemName] = e.target.value;
-    setInputValue(newInputValue);
-  };
-
-  const updatePost = () => {
-    const newValidationMessage = { title: '', content: '' };
-    if (inputValue.title === '') {
-      newValidationMessage.title = "can't be blank";
-    }
-    if (inputValue.content === '') {
-      newValidationMessage.content = "can't be blank";
-    }
-    setValidationMessage(newValidationMessage);
-    if (inputValue.title === '' || inputValue.content === '') return;
-
-    props.updatePost(props.post.id, inputValue);
-    toggleEditFormOpen();
-    setInputValue({
-      title: '',
-      content: '',
-    });
-    setValidationMessage({ title: '', content: '' });
-  };
+  const classes = styles();
 
   return (
-    <div>
-      <Card>
-        <CardContent>
-          <Typography style={{ fontSize: '25px' }}>
-            {props.post.title}
-          </Typography>
-          <Typography style={{ wordWrap: 'break-word' }}>
-            {props.post.content}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button variant='contained' onClick={openModal}>
-            Detail
-          </Button>
-          <Button
-            variant='contained'
-            color='primary'
-            onClick={toggleEditFormOpen}
-          >
-            Edit
-          </Button>
-          <Button
-            variant='contained'
-            color='secondary'
-            onClick={() => props.deletePost(props.post.id)}
-          >
-            Delete
-          </Button>
-        </CardActions>
-      </Card>
-      <PostModal post={props.post} open={modalOpen} handleClose={closeModal} />
-      {editFormOpen && (
-        <EditForm
-          inputValue={inputValue}
-          changeInputValue={changeInputValue}
-          updatePost={updatePost}
-          post={props.post}
-          validationMessage={validationMessage}
+    <div className={classes.post}>
+      <Link className={classes.appName} href='/'>
+        {appName}
+      </Link>
+      <Typography className={classes.description}>
+        {previewDescription(description)}
+      </Typography>
+      <div className={classes.postFooter}>
+        <Typography className={classes.date}>{date}に</Typography>
+        <img
+          src={userIconUrl ? userIconUrl : defaultIcon}
+          className={classes.icon}
         />
-      )}
+        <Typography className={classes.userName}>
+          <Link style={{ textDecoration: 'none' }} href='/'>
+            {userName}
+          </Link>
+          が投稿
+        </Typography>
+      </div>
     </div>
   );
 };
