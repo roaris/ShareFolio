@@ -7,7 +7,11 @@ module Api
 
       def index
         posts = Post.all.order(:id)
-        render status: :ok, json: posts
+        posts_and_users = []
+        posts.each do |post|
+          posts_and_users.push({ post: post, user: post.user })
+        end
+        render status: :ok, json: posts_and_users
       end
 
       def show
