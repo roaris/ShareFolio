@@ -6,7 +6,7 @@ module Api
       before_action :require_login
 
       def index
-        posts = Post.all.order(:id)
+        posts = Post.all.includes(:user).order(:id)
         posts_and_users = []
         posts.each do |post|
           posts_and_users.push({ post: post, user: post.user })
