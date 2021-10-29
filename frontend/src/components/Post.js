@@ -29,9 +29,8 @@ const Post = (props) => {
 
   const styles = makeStyles({
     post: {
-      border: 'solid 1px',
+      border: 'solid 1px #bbb',
       borderRadius: '10px',
-      boxShadow: '0 0 3px gray',
       margin: 10,
       padding: 10,
     },
@@ -48,7 +47,7 @@ const Post = (props) => {
       justifyContent: 'flex-end',
     },
     icon: {
-      border: 'solid 1px',
+      border: 'solid 1px #bbb',
       borderRadius: '50%',
       height: 25,
       width: 25,

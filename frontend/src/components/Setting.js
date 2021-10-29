@@ -150,7 +150,7 @@ const ImageRenderer = (props) => {
       <img
         src={props.preview ? props.preview : defaultIcon}
         style={{
-          border: 'solid 1px',
+          border: 'solid 1px #bbb',
           borderRadius: '50%',
           height: 300,
           width: 300,
