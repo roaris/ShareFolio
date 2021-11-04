@@ -95,7 +95,10 @@ const PostDetail = (props) => {
       <Grid item xs={10} sm={10} md={6} lg={6}>
         <Grid container>
           <Grid item xs={12} lg={1} className={classes.postDetailLeft}>
-            <img src={userIconUrl ? userIconUrl : logo} className={classes.icon} />
+            <img
+              src={userIconUrl ? userIconUrl : logo}
+              className={classes.icon}
+            />
             <span className={classes.userName}>{userName}</span>
           </Grid>
           <Grid item xs={12} lg={11} className={classes.postDetailRight}>
