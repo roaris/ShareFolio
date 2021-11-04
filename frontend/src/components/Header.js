@@ -57,7 +57,7 @@ const Header = () => {
 
   return (
     <header style={headerStyle}>
-      <div style={logoStyle}>ポトみる！</div>
+      <div style={logoStyle}>ShareFolio</div>
       {loggedIn ? (
         <ul>
           <li style={listItemStyle}>
