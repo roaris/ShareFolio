@@ -41,6 +41,7 @@ const PostDetail = (props) => {
       marginTop: 100,
     },
     icon: {
+      border: 'solid 1px #bbb',
       borderRadius: '50%',
       height: 50,
       margin: '0 auto',
