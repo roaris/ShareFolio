@@ -6,6 +6,7 @@ import Top from './components/Top';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Home from './components/Home';
+import PostDetail from './components/PostDetail';
 import Setting from './components/Setting';
 import PostForm from './components/PostForm';
 import NotFound from './components/NotFound';
@@ -54,6 +55,7 @@ const App = () => {
                 <PrivateRoute path='/home' component={Home} />
                 <PrivateRoute path='/setting' component={Setting} />
                 <PrivateRoute path='/posts/new' component={PostForm} />
+                <PrivateRoute path='/posts/:id' component={PostDetail} />
                 <Route component={NotFound} />
               </Switch>
             </div>
