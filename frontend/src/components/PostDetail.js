@@ -43,15 +43,18 @@ const PostDetail = (props) => {
     icon: {
       borderRadius: '50%',
       height: 50,
+      margin: '0 auto',
       marginTop: 20,
       width: 50,
     },
     userName: {
-      marginLeft: 7,
+      overflowWrap: 'break-word',
     },
     postDetailLeft: {
       display: 'flex',
       flexDirection: 'column',
+      paddingRight: 5,
+      textAlign: 'center',
     },
     postDetailRight: {
       border: 'solid 1px #bbb',
