@@ -16,7 +16,7 @@ module Api
 
       def show
         post = Post.find(params[:id])
-        render staus: 200, json: post
+        render staus: :ok, json: { post: post, user: post.user }
       end
 
       def create

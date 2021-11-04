@@ -68,7 +68,7 @@ const Post = (props) => {
 
   return (
     <div className={classes.post}>
-      <Link className={classes.appName} href='/'>
+      <Link className={classes.appName} href={`/posts/${post.id}`}>
         {appName}
       </Link>
       <Typography className={classes.description}>

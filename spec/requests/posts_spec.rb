@@ -33,10 +33,11 @@ RSpec.describe '/api/v1/posts', type: :request do
       log_in_as(user)
       get "/api/v1/posts/#{post.id}", headers: xhr_header
       expect(response.status).to eq(200)
-      expect(json(response)['app_name']).to eq(post.app_name)
-      expect(json(response)['app_url']).to eq(post.app_url)
-      expect(json(response)['repo_url']).to eq(post.repo_url)
-      expect(json(response)['description']).to eq(post.description)
+      expect(json(response)['post']['app_name']).to eq(post.app_name)
+      expect(json(response)['post']['app_url']).to eq(post.app_url)
+      expect(json(response)['post']['repo_url']).to eq(post.repo_url)
+      expect(json(response)['post']['description']).to eq(post.description)
+      expect(json(response)['user']['name']).to eq(user.name)
     end
 
     it 'reject an unauth user' do
