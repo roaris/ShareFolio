@@ -1,9 +1,9 @@
-# react_rails(仮名)
+# ShareFolio
 
-[![test](https://github.com/roaris/react_rails/actions/workflows/test.yml/badge.svg)](https://github.com/roaris/react_rails/actions/workflows/test.yml)
-[![lint](https://github.com/roaris/react_rails/actions/workflows/lint.yml/badge.svg)](https://github.com/roaris/react_rails/actions/workflows/lint.yml)
+[![test](https://github.com/roaris/ShareFolio/actions/workflows/test.yml/badge.svg)](https://github.com/roaris/ShareFolio/actions/workflows/test.yml)
+[![lint](https://github.com/roaris/ShareFolio/actions/workflows/lint.yml/badge.svg)](https://github.com/roaris/ShareFolio/actions/workflows/lint.yml)
 
-ReactとRailsでTwitterライクなWebアプリを作っています。  
+ReactとRailsでポートフォリオを共有することができるWebアプリを作っています。  
 使用技術
 - フロントエンド
   - React
