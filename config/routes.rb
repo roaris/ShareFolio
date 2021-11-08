@@ -13,7 +13,9 @@ Rails.application.routes.draw do
           delete :logout
         end
       end
-      resources :posts
+      resources :posts do
+        resources :comments, only: [:create]
+      end
     end
   end
 
