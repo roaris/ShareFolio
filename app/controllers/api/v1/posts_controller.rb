@@ -16,7 +16,11 @@ module Api
 
       def show
         post = Post.find(params[:id])
-        render staus: :ok, json: { post: post, user: post.user }
+        comments_and_users = []
+        post.comments.includes(:user).each do |comment|
+          comments_and_users.push({ comment: comment, user: comment.user })
+        end
+        render staus: :ok, json: { post: post, user: post.user, comments_and_users: comments_and_users }
       end
 
       def create
