@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Post from './Post';
+import PostList from './PostList';
 
 const App = () => {
   const [postAndUsers, setPostAndUsers] = useState([]);
@@ -23,7 +23,7 @@ const App = () => {
         <Grid container key={postAndUser.post.id}>
           <Grid item xs={1} sm={1} md={3} lg={4} />
           <Grid item xs={10} sm={10} md={6} lg={4}>
-            <Post postAndUser={postAndUser} />
+            <PostList postAndUser={postAndUser} />
           </Grid>
           <Grid item xs={1} sm={1} md={3} lg={4} />
         </Grid>
