@@ -13,7 +13,7 @@ Rails.application.routes.draw do
           delete :logout
         end
       end
-      resources :posts, only: [:index, :show, :create, :update, :destroy] do
+      resources :posts, only: %i[index show create update destroy] do
         resources :comments, only: [:create]
       end
     end
