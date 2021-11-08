@@ -7,13 +7,13 @@ Rails.application.routes.draw do
       post '/users', to: 'users#create'
       get '/users/me', to: 'users#show_me'
       patch '/users/me', to: 'users#update_me'
-      resources :sessions do
+      resources :sessions, only: [:create] do
         collection do
           get :logged_in
           delete :logout
         end
       end
-      resources :posts do
+      resources :posts, only: [:index, :show, :create, :update, :destroy] do
         resources :comments, only: [:create]
       end
     end
