@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(null);
   const [userName, setUserName] = useState(null);
+  const [userIconUrl, setUserIconUrl] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/sessions/logged_in`, {
@@ -18,6 +19,7 @@ export const AuthContextProvider = ({ children }) => {
         res.json().then((res) => {
           setLoggedIn(res.logged_in);
           setUserName(res.user_name);
+          setUserIconUrl(res.user_icon_url);
         });
       }
     });
@@ -25,7 +27,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ loggedIn, setLoggedIn, userName, setUserName }}
+      value={{ loggedIn, setLoggedIn, userName, setUserName, userIconUrl }}
     >
       {children}
     </AuthContext.Provider>
