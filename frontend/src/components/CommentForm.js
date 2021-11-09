@@ -43,10 +43,17 @@ const CommentForm = (props) => {
               options={markdownOption}
             />
             <Grid container alignItems='center' justifyContent='center'>
-              <Button variant='contained' color='primary' style={{marginRight: 50}} onClick={submitComment}>
-                <SendIcon />
-                送信
-              </Button>
+              {markdown.length > 0 ?
+                <Button variant='contained' color='primary' style={{marginRight: 50}} onClick={submitComment}>
+                  <SendIcon />
+                  送信
+                </Button>
+                :
+                <Button variant='contained' disabled style={{marginRight: 50}} onClick={submitComment}>
+                  <SendIcon />
+                  送信
+                </Button>
+              }
               <Button
                 variant='contained'
                 color='secondary'
