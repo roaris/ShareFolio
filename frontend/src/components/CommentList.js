@@ -27,7 +27,7 @@ const CommentList = (props) => {
 
   return (
     <div>
-      <h2>コメント一覧</h2>
+      {props.commentsAndUsers.length ? <h2>コメント一覧({props.commentsAndUsers.length}件)</h2> : <h2>コメントはまだありません</h2>}
       {props.commentsAndUsers.map((commentAndUser, i) => (
         <Grid container key={i} className={classes.comment}>
           <Grid item xs={12} lg={1}>
