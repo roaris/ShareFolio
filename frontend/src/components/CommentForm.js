@@ -26,7 +26,9 @@ const CommentForm = () => {
       {formOpen ? (
         <Grid container>
           <Grid item xs={12} lg={1}>
-            <Owner userName={userName} userIconUrl={userIconUrl} />
+            <div style={{marginTop: 10}}>
+              <Owner userName={userName} userIconUrl={userIconUrl} />
+            </div>
           </Grid>
           <Grid item xs={12} lg={11}>
             <SimpleMDE
