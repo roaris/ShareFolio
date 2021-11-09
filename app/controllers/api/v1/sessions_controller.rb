@@ -18,7 +18,7 @@ module Api
         if current_user.nil?
           render status: :ok, json: { logged_in: false }
         else
-          render status: :ok, json: { logged_in: true, user_name: current_user.name }
+          render status: :ok, json: { logged_in: true, user_name: current_user.name, user_icon_url: current_user.icon.url }
         end
       end
 

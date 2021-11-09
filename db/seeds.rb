@@ -17,3 +17,7 @@ end
 (1..10).each do |i|
   FactoryBot.create(:post, user_id: ((i - 1) / 2) + 1)
 end
+
+(1..20).each do |i|
+  FactoryBot.create(:comment, user_id: ((i - 1) % 5) + 1, post_id: ((i - 1) / 2) + 1)
+end

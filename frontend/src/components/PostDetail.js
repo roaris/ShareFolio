@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import logo from '../logo.svg';
+import Owner from './Owner';
+import CommentForm from './CommentForm';
+import CreatedAt from './CreatedAt';
+import CommentList from './CommentList';
 
 const PostDetail = (props) => {
   const { params } = props.match;
@@ -16,8 +20,11 @@ const PostDetail = (props) => {
     description: '',
     created_at: '',
   });
-  const [userName, setUserName] = useState('');
-  const [userIconUrl, setUserIconUrl] = useState(null);
+  const [ownerName, setOwnerName] = useState('');
+  const [ownerIconUrl, setOwnerIconUrl] = useState(null);
+  const [commentsAndUsers, setCommentsAndUsers] = useState([]);
+  const userName = useContext(AuthContext).userName;
+  const userIconUrl = useContext(AuthContext).userIconUrl;
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
@@ -30,10 +37,37 @@ const PostDetail = (props) => {
       .then((res) => res.json())
       .then((res) => {
         setPost(res.post);
-        setUserName(res.user.name);
-        setUserIconUrl(res.user.icon.url);
+        setOwnerName(res.user.name);
+        setOwnerIconUrl(res.user.icon.url);
+        setCommentsAndUsers(res.comments_and_users);
       });
   }, []);
+
+  const submitComment = (markdown) => {
+    fetch(`${process.env.REACT_APP_API_URL}/posts/${id}/comments`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: JSON.stringify({
+        comment: { content: markdown },
+      }),
+    }).then((res) => {
+      if (res.status === 201) {
+        res.json().then((res) => {
+          const newCommentsAndUsers = commentsAndUsers.slice();
+          newCommentsAndUsers.push({
+            comment: res,
+            user_name: userName,
+            user_icon_url: userIconUrl,
+          });
+          setCommentsAndUsers(newCommentsAndUsers);
+        });
+      }
+    });
+  };
 
   const styles = makeStyles({
     postDetail: {
@@ -50,12 +84,6 @@ const PostDetail = (props) => {
     },
     userName: {
       overflowWrap: 'break-word',
-    },
-    postDetailLeft: {
-      display: 'flex',
-      flexDirection: 'column',
-      paddingRight: 5,
-      textAlign: 'center',
     },
     postDetailRight: {
       border: 'solid 1px #bbb',
@@ -94,12 +122,10 @@ const PostDetail = (props) => {
       <Grid item xs={1} sm={1} md={3} lg={3} />
       <Grid item xs={10} sm={10} md={6} lg={6}>
         <Grid container>
-          <Grid item xs={12} lg={1} className={classes.postDetailLeft}>
-            <img
-              src={userIconUrl ? userIconUrl : logo}
-              className={classes.icon}
-            />
-            <span className={classes.userName}>{userName}</span>
+          <Grid item xs={12} lg={1}>
+            <div style={{ marginTop: 20 }}>
+              <Owner userIconUrl={ownerIconUrl} userName={ownerName} />
+            </div>
           </Grid>
           <Grid item xs={12} lg={11} className={classes.postDetailRight}>
             <div className={classes.postDetailRightHeader}>
@@ -124,15 +150,16 @@ const PostDetail = (props) => {
               className={classes.markdown}
             ></div>
             <div className={classes.postDetailFooter}>
-              {post.created_at && (
-                <span>
-                  {post.created_at.split('T')[0].substr(0, 10)}&nbsp;
-                  {post.created_at.split('T')[1].substr(0, 5)}に投稿
-                </span>
-              )}
+              <CreatedAt createdAt={post.created_at} />
             </div>
           </Grid>
         </Grid>
+        <div style={{ marginTop: 50 }}>
+          <CommentForm submitComment={submitComment} />
+        </div>
+        <div style={{ marginTop: 50 }}>
+          <CommentList commentsAndUsers={commentsAndUsers} />
+        </div>
       </Grid>
       <Grid item xs={1} sm={1} md={3} lg={3} />
     </Grid>
