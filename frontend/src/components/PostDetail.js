@@ -16,8 +16,8 @@ const PostDetail = (props) => {
     description: '',
     created_at: '',
   });
-  const [userName, setUserName] = useState('');
-  const [userIconUrl, setUserIconUrl] = useState(null);
+  const [ownerName, setOwnerName] = useState('');
+  const [ownerIconUrl, setOwnerIconUrl] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
@@ -30,8 +30,8 @@ const PostDetail = (props) => {
       .then((res) => res.json())
       .then((res) => {
         setPost(res.post);
-        setUserName(res.user.name);
-        setUserIconUrl(res.user.icon.url);
+        setOwnerName(res.user.name);
+        setOwnerIconUrl(res.user.icon.url);
       });
   }, []);
 
@@ -89,7 +89,7 @@ const PostDetail = (props) => {
       <Grid item xs={10} sm={10} md={6} lg={6}>
         <Grid container>
           <Grid item xs={12} lg={1}>
-            <Owner userIconUrl={userIconUrl} userName={userName} />
+            <Owner userIconUrl={ownerIconUrl} userName={ownerName} />
           </Grid>
           <Grid item xs={12} lg={11} className={classes.postDetailRight}>
             <div className={classes.postDetailRightHeader}>
