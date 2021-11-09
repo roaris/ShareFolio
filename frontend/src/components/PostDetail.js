@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Owner from './Owner';
 import CommentForm from './CommentForm';
+import CreatedAt from './CreatedAt';
 
 const PostDetail = (props) => {
   const { params } = props.match;
@@ -117,12 +118,7 @@ const PostDetail = (props) => {
               className={classes.markdown}
             ></div>
             <div className={classes.postDetailFooter}>
-              {post.created_at && (
-                <span>
-                  {post.created_at.split('T')[0].substr(0, 10)}&nbsp;
-                  {post.created_at.split('T')[1].substr(0, 5)}に投稿
-                </span>
-              )}
+              <CreatedAt createdAt={post.created_at} />
             </div>
           </Grid>
         </Grid>
