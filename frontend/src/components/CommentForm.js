@@ -9,7 +9,7 @@ import SendIcon from '@material-ui/icons/Send';
 import CloseIcon from '@material-ui/icons/Close';
 import CreateIcon from '@material-ui/icons/Create';
 
-const CommentForm = () => {
+const CommentForm = (props) => {
   const [formOpen, setFormOpen] = useState(false);
   const userName = useContext(AuthContext).userName;
   const userIconUrl = useContext(AuthContext).userIconUrl;
@@ -20,6 +20,12 @@ const CommentForm = () => {
       spellChecker: false,
     };
   }, []);
+
+  const submitComment = () => {
+    props.submitComment(markdown);
+    setMarkdown('');
+    setFormOpen(false);
+  };
 
   return (
     <Grid container alignItems='center' justifyContent='center'>
@@ -37,7 +43,7 @@ const CommentForm = () => {
               options={markdownOption}
             />
             <Grid container alignItems='center' justifyContent='center'>
-              <Button variant='contained' color='primary' style={{marginRight: 50}}>
+              <Button variant='contained' color='primary' style={{marginRight: 50}} onClick={submitComment}>
                 <SendIcon />
                 送信
               </Button>

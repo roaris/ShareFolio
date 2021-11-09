@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import Grid from '@material-ui/core/Grid';
@@ -22,6 +23,8 @@ const PostDetail = (props) => {
   const [ownerName, setOwnerName] = useState('');
   const [ownerIconUrl, setOwnerIconUrl] = useState(null);
   const [commentsAndUsers, setCommentsAndUsers] = useState([]);
+  const userName = useContext(AuthContext).userName;
+  const userIconUrl = useContext(AuthContext).userIconUrl;
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
@@ -39,6 +42,29 @@ const PostDetail = (props) => {
         setCommentsAndUsers(res.comments_and_users);
       });
   }, []);
+
+  const submitComment = (markdown) => {
+    fetch(`${process.env.REACT_APP_API_URL}/posts/${id}/comments`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: JSON.stringify({
+        comment: { content: markdown },
+      })
+    })
+      .then(res => {
+        if (res.status === 201) {
+          res.json().then(res => {
+            const newCommentsAndUsers = commentsAndUsers.slice();
+            newCommentsAndUsers.push({ comment: res, user_name: userName, user_icon_url: userIconUrl });
+            setCommentsAndUsers(newCommentsAndUsers);
+          })
+        }
+      })
+  };
 
   const styles = makeStyles({
     postDetail: {
@@ -126,7 +152,7 @@ const PostDetail = (props) => {
           </Grid>
         </Grid>
         <div style={{marginTop: 50}}>
-          <CommentForm />
+          <CommentForm submitComment={submitComment} />
         </div>
         <div style={{marginTop: 50}}>
           <CommentList commentsAndUsers={commentsAndUsers} />
