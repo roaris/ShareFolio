@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Owner from './Owner';
 import CommentForm from './CommentForm';
 import CreatedAt from './CreatedAt';
+import CommentList from './CommentList';
 
 const PostDetail = (props) => {
   const { params } = props.match;
@@ -20,6 +21,7 @@ const PostDetail = (props) => {
   });
   const [ownerName, setOwnerName] = useState('');
   const [ownerIconUrl, setOwnerIconUrl] = useState(null);
+  const [commentsAndUsers, setCommentsAndUsers] = useState([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
@@ -34,6 +36,7 @@ const PostDetail = (props) => {
         setPost(res.post);
         setOwnerName(res.user.name);
         setOwnerIconUrl(res.user.icon.url);
+        setCommentsAndUsers(res.comments_and_users);
       });
   }, []);
 
@@ -124,6 +127,9 @@ const PostDetail = (props) => {
         </Grid>
         <div style={{marginTop: 50}}>
           <CommentForm />
+        </div>
+        <div style={{marginTop: 50}}>
+          <CommentList commentsAndUsers={commentsAndUsers} />
         </div>
       </Grid>
       <Grid item xs={1} sm={1} md={3} lg={3} />
