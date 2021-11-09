@@ -90,7 +90,9 @@ const PostDetail = (props) => {
       <Grid item xs={10} sm={10} md={6} lg={6}>
         <Grid container>
           <Grid item xs={12} lg={1}>
-            <Owner userIconUrl={ownerIconUrl} userName={ownerName} />
+            <div style={{ marginTop: 20 }}>
+              <Owner userIconUrl={ownerIconUrl} userName={ownerName} />
+            </div>
           </Grid>
           <Grid item xs={12} lg={11} className={classes.postDetailRight}>
             <div className={classes.postDetailRightHeader}>

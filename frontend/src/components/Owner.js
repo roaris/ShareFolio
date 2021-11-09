@@ -13,7 +13,6 @@ const Owner = (props) => {
       borderRadius: '50%',
       height: 50,
       margin: '0 auto',
-      marginTop: 20,
       width: 50,
     },
     userName: {
