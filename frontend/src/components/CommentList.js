@@ -27,11 +27,15 @@ const CommentList = (props) => {
 
   return (
     <div>
-      {props.commentsAndUsers.length ? <h2>コメント一覧({props.commentsAndUsers.length}件)</h2> : <h2>コメントはまだありません</h2>}
+      {props.commentsAndUsers.length ? (
+        <h2>コメント一覧({props.commentsAndUsers.length}件)</h2>
+      ) : (
+        <h2>コメントはまだありません</h2>
+      )}
       {props.commentsAndUsers.map((commentAndUser, i) => (
         <Grid container key={i} className={classes.comment}>
           <Grid item xs={12} lg={1}>
-            <div style={{marginTop: 10}}>
+            <div style={{ marginTop: 10 }}>
               <Owner
                 userName={commentAndUser.user_name}
                 userIconUrl={commentAndUser.user_icon_url}
@@ -44,7 +48,8 @@ const CommentList = (props) => {
                 __html: DOMPurify.sanitize(
                   marked(commentAndUser.comment.content)
                 ),
-              }} style={{borderBottom: 'solid 1px #bbb'}}
+              }}
+              style={{ borderBottom: 'solid 1px #bbb' }}
             ></div>
             <div className={classes.commentRightFooter}>
               <CreatedAt createdAt={commentAndUser.comment.created_at} />

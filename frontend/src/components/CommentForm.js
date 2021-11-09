@@ -32,7 +32,7 @@ const CommentForm = (props) => {
       {formOpen ? (
         <Grid container>
           <Grid item xs={12} lg={1}>
-            <div style={{marginTop: 10}}>
+            <div style={{ marginTop: 10 }}>
               <Owner userName={userName} userIconUrl={userIconUrl} />
             </div>
           </Grid>
@@ -43,17 +43,27 @@ const CommentForm = (props) => {
               options={markdownOption}
             />
             <Grid container alignItems='center' justifyContent='center'>
-              {markdown.length > 0 ?
-                <Button variant='contained' color='primary' style={{marginRight: 50}} onClick={submitComment}>
+              {markdown.length > 0 ? (
+                <Button
+                  variant='contained'
+                  color='primary'
+                  style={{ marginRight: 50 }}
+                  onClick={submitComment}
+                >
                   <SendIcon />
                   送信
                 </Button>
-                :
-                <Button variant='contained' disabled style={{marginRight: 50}} onClick={submitComment}>
+              ) : (
+                <Button
+                  variant='contained'
+                  disabled
+                  style={{ marginRight: 50 }}
+                  onClick={submitComment}
+                >
                   <SendIcon />
                   送信
                 </Button>
-              }
+              )}
               <Button
                 variant='contained'
                 color='secondary'

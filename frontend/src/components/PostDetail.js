@@ -53,17 +53,20 @@ const PostDetail = (props) => {
       },
       body: JSON.stringify({
         comment: { content: markdown },
-      })
-    })
-      .then(res => {
-        if (res.status === 201) {
-          res.json().then(res => {
-            const newCommentsAndUsers = commentsAndUsers.slice();
-            newCommentsAndUsers.push({ comment: res, user_name: userName, user_icon_url: userIconUrl });
-            setCommentsAndUsers(newCommentsAndUsers);
-          })
-        }
-      })
+      }),
+    }).then((res) => {
+      if (res.status === 201) {
+        res.json().then((res) => {
+          const newCommentsAndUsers = commentsAndUsers.slice();
+          newCommentsAndUsers.push({
+            comment: res,
+            user_name: userName,
+            user_icon_url: userIconUrl,
+          });
+          setCommentsAndUsers(newCommentsAndUsers);
+        });
+      }
+    });
   };
 
   const styles = makeStyles({
@@ -151,10 +154,10 @@ const PostDetail = (props) => {
             </div>
           </Grid>
         </Grid>
-        <div style={{marginTop: 50}}>
+        <div style={{ marginTop: 50 }}>
           <CommentForm submitComment={submitComment} />
         </div>
-        <div style={{marginTop: 50}}>
+        <div style={{ marginTop: 50 }}>
           <CommentList commentsAndUsers={commentsAndUsers} />
         </div>
       </Grid>
