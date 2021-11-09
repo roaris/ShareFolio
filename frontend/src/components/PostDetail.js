@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import logo from '../logo.svg';
+import Owner from './Owner';
 
 const PostDetail = (props) => {
   const { params } = props.match;
@@ -51,12 +51,6 @@ const PostDetail = (props) => {
     userName: {
       overflowWrap: 'break-word',
     },
-    postDetailLeft: {
-      display: 'flex',
-      flexDirection: 'column',
-      paddingRight: 5,
-      textAlign: 'center',
-    },
     postDetailRight: {
       border: 'solid 1px #bbb',
       borderRadius: '10px',
@@ -94,12 +88,8 @@ const PostDetail = (props) => {
       <Grid item xs={1} sm={1} md={3} lg={3} />
       <Grid item xs={10} sm={10} md={6} lg={6}>
         <Grid container>
-          <Grid item xs={12} lg={1} className={classes.postDetailLeft}>
-            <img
-              src={userIconUrl ? userIconUrl : logo}
-              className={classes.icon}
-            />
-            <span className={classes.userName}>{userName}</span>
+          <Grid item xs={12} lg={1}>
+            <Owner userIconUrl={userIconUrl} userName={userName} />
           </Grid>
           <Grid item xs={12} lg={11} className={classes.postDetailRight}>
             <div className={classes.postDetailRightHeader}>
