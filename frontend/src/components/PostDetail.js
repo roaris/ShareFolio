@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Owner from './Owner';
+import CommentForm from './CommentForm';
 
 const PostDetail = (props) => {
   const { params } = props.match;
@@ -123,6 +124,9 @@ const PostDetail = (props) => {
             </div>
           </Grid>
         </Grid>
+        <div style={{marginTop: 50}}>
+          <CommentForm />
+        </div>
       </Grid>
       <Grid item xs={1} sm={1} md={3} lg={3} />
     </Grid>
