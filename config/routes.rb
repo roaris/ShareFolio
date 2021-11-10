@@ -14,6 +14,9 @@ Rails.application.routes.draw do
         end
       end
       resources :posts, only: %i[index show create update destroy] do
+        collection do
+          get :recent
+        end
         resources :comments, only: [:create]
       end
     end
