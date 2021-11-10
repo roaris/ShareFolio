@@ -89,12 +89,14 @@ const CommentForm = (props) => {
               コメントする
             </Button>
           ) : (
-            <div style={{display: 'flex', flexDirection: 'column'}}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
               <Button variant='contained' disabled>
                 <CreateIcon />
                 コメントする
               </Button>
-              <Typography style={{color: 'red', marginTop: 10}}>ログインが必要です</Typography>
+              <Typography style={{ color: 'red', marginTop: 10 }}>
+                ログインが必要です
+              </Typography>
             </div>
           )}
         </>
