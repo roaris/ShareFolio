@@ -4,6 +4,7 @@ import Post from './Post';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import CheckIcon from '@material-ui/icons/Check';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 
 const Top = () => {
@@ -32,6 +33,10 @@ const Top = () => {
       backgroundColor: 'lightgray',
       fontSize: 'calc(1px + 3vmin)',
       padding: 30,
+    },
+    appDescription: {
+      fontSize: 'calc(1px + 2.5vmin)',
+      marginLeft: 20,
     }
   });
 
@@ -45,6 +50,11 @@ const Top = () => {
           <p>ShareFolioはWebエンジニアを目指す人のためのポートフォリオプラットフォームです。</p>
         </Grid>
       </Grid>
+      <h2 style={{marginLeft: 20}}>このアプリについて</h2>
+      <div className={classes.appDescription}>
+        <div><CheckIcon style={{color: 'green'}} />自分の作ったWebアプリを投稿することで、他の人からアドバイスをもらうことができます。</div>
+        <div><CheckIcon style={{color: 'green'}} />他の人のWebアプリを参考にして、自分の開発に役立てることができます。</div>
+      </div>
       <h2 style={{marginLeft: 20}}>最近の投稿</h2>
       <Grid container>
         {postsAndUsers.map((postAndUser) => (
