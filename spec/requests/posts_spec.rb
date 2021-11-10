@@ -14,9 +14,9 @@ RSpec.describe '/api/v1/posts', type: :request do
       expect(json(response).length).to eq(10)
     end
 
-    it 'reject an unauth user' do
+    it 'accept an unauth user' do
       get '/api/v1/posts', headers: xhr_header
-      expect(response.status).to eq(401)
+      expect(response.status).to eq(200)
     end
 
     it 'protect from CSRF' do
@@ -40,9 +40,9 @@ RSpec.describe '/api/v1/posts', type: :request do
       expect(json(response)['user']['name']).to eq(user.name)
     end
 
-    it 'reject an unauth user' do
+    it 'accept an unauth user' do
       get "/api/v1/posts/#{post.id}", headers: xhr_header
-      expect(response.status).to eq(401)
+      expect(response.status).to eq(200)
     end
 
     it 'protect from CSRF' do
