@@ -14,6 +14,15 @@ module Api
         render status: :ok, json: posts_and_users
       end
 
+      def recent
+        posts = Post.all.includes(:user).order(id: 'DESC').limit(4)
+        posts_and_users = []
+        posts.each do |post|
+          posts_and_users.push({ post: post, user: post.user })
+        end
+        render status: :ok, json: posts_and_users
+      end
+
       def show
         post = Post.find(params[:id])
         comments_and_users = []
