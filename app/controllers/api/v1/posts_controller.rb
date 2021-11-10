@@ -3,7 +3,7 @@
 module Api
   module V1
     class PostsController < ApplicationController
-      before_action :require_login, only: [:create, :update, :destroy]
+      before_action :require_login, only: %i[create update destroy]
 
       def index
         posts = Post.all.includes(:user).order(:id)
