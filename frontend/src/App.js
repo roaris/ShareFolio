@@ -5,7 +5,7 @@ import Header from './components/Header';
 import Top from './components/Top';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import Home from './components/Home';
+import PostList from './components/PostList';
 import PostDetail from './components/PostDetail';
 import Setting from './components/Setting';
 import PostForm from './components/PostForm';
@@ -23,7 +23,7 @@ const WaitInitialize = ({ children }) => {
 const PublicRoute = ({ ...props }) => {
   const loggedIn = useContext(AuthContext).loggedIn;
   if (loggedIn) {
-    return <Redirect to='/home' />;
+    return <Redirect to='/posts' />;
   } else {
     return <Route {...props} />;
   }
@@ -52,7 +52,7 @@ const App = () => {
                 <PublicRoute exact path='/' component={Top} />
                 <PublicRoute path='/signup' component={Signup} />
                 <PublicRoute path='/login' component={Login} />
-                <PrivateRoute path='/home' component={Home} />
+                <PrivateRoute path='/posts' component={PostList} />
                 <PrivateRoute path='/setting' component={Setting} />
                 <PrivateRoute path='/posts/new' component={PostForm} />
                 <PrivateRoute path='/posts/:id' component={PostDetail} />

@@ -37,7 +37,7 @@ const Login = () => {
         res.json().then((res) => {
           setLoggedIn(true);
           setUserName(res.user_name);
-          history.push('/home');
+          history.push('/posts');
         });
       } else if (res.status === 401) {
         setErrorMessage('Invalid email/password combination');
