@@ -42,7 +42,7 @@ const Top = () => {
           <p>ShareFolioはWebエンジニアを目指す人のためのポートフォリオプラットフォームです。</p>
         </Grid>
       </Grid>
-      <h1 style={{marginLeft: 20}}>最近の投稿</h1>
+      <h2 style={{marginLeft: 20}}>最近の投稿</h2>
       <Grid container>
         {postsAndUsers.map((postAndUser) => (
           <Grid item xs={12} sm={12} md={6} key={postAndUser.post.id}>
