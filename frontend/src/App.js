@@ -52,7 +52,7 @@ const App = () => {
                 <PublicRoute exact path='/' component={Top} />
                 <PublicRoute path='/signup' component={Signup} />
                 <PublicRoute path='/login' component={Login} />
-                <PrivateRoute path='/posts' component={PostList} />
+                <PrivateRoute exact path='/posts' component={PostList} />
                 <PrivateRoute path='/setting' component={Setting} />
                 <PrivateRoute path='/posts/new' component={PostForm} />
                 <PrivateRoute path='/posts/:id' component={PostDetail} />
