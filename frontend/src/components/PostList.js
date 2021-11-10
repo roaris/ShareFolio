@@ -1,94 +1,48 @@
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import defaultIcon from '../logo.svg';
+import React, { useState, useEffect } from 'react';
+import Grid from '@material-ui/core/Grid';
+import Post from './Post';
 
-const Post = (props) => {
-  const post = props.postAndUser.post;
-  const appName = post.app_name;
-  const description = post.description;
-  const date = post.created_at.split('T')[0];
+const App = () => {
+  const [postAndUsers, setPostAndUsers] = useState([]);
 
-  const user = props.postAndUser.user;
-  const userName = user.name;
-  const userIconUrl = user.icon.url;
-
-  const previewDescription = (description) => {
-    let result = '';
-    for (let i = 0; i < description.length; i++) {
-      const c = description[i];
-      if (c == ' ' || c == '#') continue;
-      result += c;
-      if (result.length > 150) {
-        result += '...';
-        break;
-      }
-    }
-    return result;
-  };
-
-  const styles = makeStyles({
-    post: {
-      border: 'solid 1px #bbb',
-      borderRadius: '10px',
-      margin: 10,
-      padding: 10,
-    },
-    appName: {
-      fontSize: 30,
-      textDecoration: 'none',
-    },
-    description: {
-      fontSize: 15,
-      overflowWrap: 'break-word',
-    },
-    postFooter: {
-      display: 'flex',
-      justifyContent: 'flex-end',
-    },
-    icon: {
-      border: 'solid 1px #bbb',
-      borderRadius: '50%',
-      height: 25,
-      width: 25,
-    },
-    date: {
-      marginRight: 5,
-      marginTop: 2,
-      position: 'relative',
-    },
-    userName: {
-      marginLeft: 5,
-      marginTop: 2,
-      position: 'relative',
-    },
-  });
-
-  const classes = styles();
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/posts`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    })
+      .then((res) => res.json())
+      .then(setPostAndUsers);
+  }, []);
 
   return (
-    <div className={classes.post}>
-      <Link className={classes.appName} href={`/posts/${post.id}`}>
-        {appName}
-      </Link>
-      <Typography className={classes.description}>
-        {previewDescription(description)}
-      </Typography>
-      <div className={classes.postFooter}>
-        <Typography className={classes.date}>{date}に</Typography>
-        <img
-          src={userIconUrl ? userIconUrl : defaultIcon}
-          className={classes.icon}
-        />
-        <Typography className={classes.userName}>
-          <Link style={{ textDecoration: 'none' }} href='/'>
-            {userName}
-          </Link>
-          が投稿
-        </Typography>
+    <div style={{ paddingTop: 50 }}>
+      <div
+        style={{
+          borderBottom: 'solid 1px #bbb',
+          margin: 30,
+          textAlign: 'center',
+        }}
+      >
+        <h1>投稿一覧({postAndUsers.length}件)</h1>
       </div>
+      <Grid container>
+        {postAndUsers.map((postAndUser) => (
+          <Grid item xs={12} sm={12} md={6} key={postAndUser.post.id}>
+            <Grid container key={postAndUser.post.id}>
+              <Grid item xs={1} />
+              <Grid item xs={10} style={{ marginBottom: 20 }}>
+                <Post postAndUser={postAndUser} />
+              </Grid>
+              <Grid item xs={1} />
+            </Grid>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };
 
-export default Post;
+export default App;
