@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Post from './Post';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 
 const Top = () => {
   const [postsAndUsers, setPostsAndUsers] = useState([]);
@@ -56,6 +59,16 @@ const Top = () => {
           </Grid>
         ))}
       </Grid>
+      <Button
+        to='/posts'
+        component={Link}
+        variant='contained'
+        color='primary'
+        style={{margin: 'auto', marginTop: 20, marginBottom: 30}}
+      >
+        <DoubleArrowIcon />
+        全ての投稿を見る
+      </Button>
     </div>
   );
 };
