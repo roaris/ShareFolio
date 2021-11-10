@@ -5,12 +5,14 @@ import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import SendIcon from '@material-ui/icons/Send';
 import CloseIcon from '@material-ui/icons/Close';
 import CreateIcon from '@material-ui/icons/Create';
 
 const CommentForm = (props) => {
   const [formOpen, setFormOpen] = useState(false);
+  const loggedIn = useContext(AuthContext).loggedIn;
   const userName = useContext(AuthContext).userName;
   const userIconUrl = useContext(AuthContext).userIconUrl;
   const [markdown, setMarkdown] = useState('');
@@ -76,14 +78,26 @@ const CommentForm = (props) => {
           </Grid>
         </Grid>
       ) : (
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => setFormOpen(true)}
-        >
-          <CreateIcon />
-          コメントする
-        </Button>
+        <>
+          {loggedIn ? (
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={() => setFormOpen(true)}
+            >
+              <CreateIcon />
+              コメントする
+            </Button>
+          ) : (
+            <div style={{display: 'flex', flexDirection: 'column'}}>
+              <Button variant='contained' disabled>
+                <CreateIcon />
+                コメントする
+              </Button>
+              <Typography style={{color: 'red', marginTop: 10}}>ログインが必要です</Typography>
+            </div>
+          )}
+        </>
       )}
     </Grid>
   );
