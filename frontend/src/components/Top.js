@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Post from './Post';
-import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 
 const Top = () => {
   const [postsAndUsers, setPostsAndUsers] = useState([]);
@@ -58,25 +56,6 @@ const Top = () => {
           </Grid>
         ))}
       </Grid>
-      <div style={{ display: 'flex' }}>
-        <Button
-          to='/signup'
-          component={Link}
-          variant='contained'
-          color='primary'
-          style={{ marginRight: 10 }}
-        >
-          新規登録
-        </Button>
-        <Button
-          to='/login'
-          component={Link}
-          variant='contained'
-          color='primary'
-        >
-          ログイン
-        </Button>
-      </div>
     </div>
   );
 };
