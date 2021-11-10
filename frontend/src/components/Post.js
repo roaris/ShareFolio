@@ -1,13 +1,14 @@
+import Owner from './Owner';
+import CreatedAt from './CreatedAt';
+import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import defaultIcon from '../logo.svg';
 
 const Post = (props) => {
   const post = props.postAndUser.post;
   const appName = post.app_name;
   const description = post.description;
-  const date = post.created_at.split('T')[0];
 
   const user = props.postAndUser.user;
   const userName = user.name;
@@ -28,10 +29,9 @@ const Post = (props) => {
   };
 
   const styles = makeStyles({
-    post: {
+    postRight: {
       border: 'solid 1px #bbb',
       borderRadius: '10px',
-      margin: 10,
       padding: 10,
     },
     appName: {
@@ -41,10 +41,12 @@ const Post = (props) => {
     description: {
       fontSize: 15,
       overflowWrap: 'break-word',
+      borderBottom: '1px solid #bbb',
     },
     postFooter: {
       display: 'flex',
       justifyContent: 'flex-end',
+      marginTop: 5,
     },
     icon: {
       border: 'solid 1px #bbb',
@@ -67,27 +69,24 @@ const Post = (props) => {
   const classes = styles();
 
   return (
-    <div className={classes.post}>
-      <Link className={classes.appName} href={`/posts/${post.id}`}>
-        {appName}
-      </Link>
-      <Typography className={classes.description}>
-        {previewDescription(description)}
-      </Typography>
-      <div className={classes.postFooter}>
-        <Typography className={classes.date}>{date}に</Typography>
-        <img
-          src={userIconUrl ? userIconUrl : defaultIcon}
-          className={classes.icon}
-        />
-        <Typography className={classes.userName}>
-          <Link style={{ textDecoration: 'none' }} href='/'>
-            {userName}
-          </Link>
-          が投稿
+    <Grid container>
+      <Grid item xs={2}>
+        <div style={{ marginTop: 10 }}>
+          <Owner userName={userName} userIconUrl={userIconUrl} />
+        </div>
+      </Grid>
+      <Grid item xs={10} className={classes.postRight}>
+        <Link className={classes.appName} href={`/posts/${post.id}`}>
+          {appName}
+        </Link>
+        <Typography className={classes.description}>
+          {previewDescription(description)}
         </Typography>
-      </div>
-    </div>
+        <div className={classes.postFooter}>
+          <CreatedAt createdAt={post.created_at} />
+        </div>
+      </Grid>
+    </Grid>
   );
 };
 

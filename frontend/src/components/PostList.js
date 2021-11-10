@@ -18,16 +18,29 @@ const App = () => {
   }, []);
 
   return (
-    <div style={{ paddingTop: 100 }}>
-      {postAndUsers.map((postAndUser) => (
-        <Grid container key={postAndUser.post.id}>
-          <Grid item xs={1} sm={1} md={3} lg={4} />
-          <Grid item xs={10} sm={10} md={6} lg={4}>
-            <Post postAndUser={postAndUser} />
+    <div style={{ paddingTop: 50 }}>
+      <div
+        style={{
+          borderBottom: 'solid 1px #bbb',
+          margin: 30,
+          textAlign: 'center',
+        }}
+      >
+        <h1>投稿一覧({postAndUsers.length}件)</h1>
+      </div>
+      <Grid container>
+        {postAndUsers.map((postAndUser) => (
+          <Grid item xs={12} sm={12} md={6} key={postAndUser.post.id}>
+            <Grid container key={postAndUser.post.id}>
+              <Grid item xs={1} />
+              <Grid item xs={10} style={{ marginBottom: 20 }}>
+                <Post postAndUser={postAndUser} />
+              </Grid>
+              <Grid item xs={1} />
+            </Grid>
           </Grid>
-          <Grid item xs={1} sm={1} md={3} lg={4} />
-        </Grid>
-      ))}
+        ))}
+      </Grid>
     </div>
   );
 };
