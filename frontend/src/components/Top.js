@@ -18,8 +18,8 @@ const Top = () => {
         'X-Requested-With': 'XMLHttpRequest',
       },
     })
-      .then(res => res.json())
-      .then(setPostsAndUsers)
+      .then((res) => res.json())
+      .then(setPostsAndUsers);
   }, []);
 
   const styles = makeStyles({
@@ -37,7 +37,7 @@ const Top = () => {
     appDescription: {
       fontSize: 'calc(1px + 2.5vmin)',
       marginLeft: 20,
-    }
+    },
   });
 
   const classes = styles();
@@ -47,15 +47,23 @@ const Top = () => {
       <Grid container>
         <Grid item xs={12} className={classes.jumbotron}>
           <h1>ShareFolio</h1>
-          <p>ShareFolioはWebエンジニアを目指す人のためのポートフォリオプラットフォームです。</p>
+          <p>
+            ShareFolioはWebエンジニアを目指す人のためのポートフォリオプラットフォームです。
+          </p>
         </Grid>
       </Grid>
-      <h2 style={{marginLeft: 20}}>このアプリについて</h2>
+      <h2 style={{ marginLeft: 20 }}>このアプリについて</h2>
       <div className={classes.appDescription}>
-        <div><CheckIcon style={{color: 'green'}} />自分の作ったWebアプリを投稿することで、他の人からアドバイスをもらうことができます。</div>
-        <div><CheckIcon style={{color: 'green'}} />他の人のWebアプリを参考にして、自分の開発に役立てることができます。</div>
+        <div>
+          <CheckIcon style={{ color: 'green' }} />
+          自分の作ったWebアプリを投稿することで、他の人からアドバイスをもらうことができます。
+        </div>
+        <div>
+          <CheckIcon style={{ color: 'green' }} />
+          他の人のWebアプリを参考にして、自分の開発に役立てることができます。
+        </div>
       </div>
-      <h2 style={{marginLeft: 20}}>最近の投稿</h2>
+      <h2 style={{ marginLeft: 20 }}>最近の投稿</h2>
       <Grid container>
         {postsAndUsers.map((postAndUser) => (
           <Grid item xs={12} sm={12} md={6} key={postAndUser.post.id}>
@@ -74,7 +82,7 @@ const Top = () => {
         component={Link}
         variant='contained'
         color='primary'
-        style={{margin: 'auto', marginTop: 20, marginBottom: 30}}
+        style={{ margin: 'auto', marginTop: 20, marginBottom: 30 }}
       >
         <DoubleArrowIcon />
         全ての投稿を見る
