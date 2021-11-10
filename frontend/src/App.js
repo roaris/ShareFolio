@@ -52,10 +52,10 @@ const App = () => {
                 <PublicRoute exact path='/' component={Top} />
                 <PublicRoute path='/signup' component={Signup} />
                 <PublicRoute path='/login' component={Login} />
-                <PrivateRoute exact path='/posts' component={PostList} />
+                <Route exact path='/posts' component={PostList} />
                 <PrivateRoute path='/setting' component={Setting} />
                 <PrivateRoute path='/posts/new' component={PostForm} />
-                <PrivateRoute path='/posts/:id' component={PostDetail} />
+                <Route path='/posts/:id' component={PostDetail} />
                 <Route component={NotFound} />
               </Switch>
             </div>
