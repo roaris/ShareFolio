@@ -9,7 +9,6 @@ const PostForm = () => {
   const style = {
     display: 'flex',
     flexDirection: 'column',
-    paddingTop: 100,
   };
 
   const [inputValue, setInputValue] = useState({
@@ -61,47 +60,53 @@ const PostForm = () => {
   };
 
   return (
-    <Grid container alignItems='center' justifyContent='center' style={style}>
-      1. アプリ名を入力してください。
-      <TextField
-        variant='outlined'
-        style={{ width: 400, marginBottom: 30 }}
-        value={inputValue.appName}
-        onChange={(e) => changeInputValue('app_name', e)}
-        error={validationMessage.app_name !== ''}
-        helperText={validationMessage.app_name}
-      />
-      2. デプロイ先のURLを入力してください。
-      <TextField
-        variant='outlined'
-        style={{ width: 400, marginBottom: 30 }}
-        value={inputValue.appUrl}
-        onChange={(e) => changeInputValue('app_url', e)}
-        error={validationMessage.app_url !== ''}
-        helperText={validationMessage.app_url}
-      />
-      3. レポジトリのURLを入力してください。
-      <TextField
-        variant='outlined'
-        style={{ width: 400, marginBottom: 30 }}
-        value={inputValue.repoUrl}
-        onChange={(e) => changeInputValue('repo_url', e)}
-        error={validationMessage.repo_url}
-        helperText={validationMessage.repo_url}
-      />
-      4. アプリの概要や工夫点を入力してください。
-      <SimpleMDE value={markdown} onChange={(e) => setMarkdown(e)} />
-      <p style={{ color: 'red', padding: 5 }}>
-        {validationMessage.description}
-      </p>
-      <Button
-        variant='contained'
-        color='primary'
-        style={{ marginBottom: 30 }}
-        onClick={submitPost}
-      >
-        送信
-      </Button>
+    <Grid container style={{paddingTop: 100}}>
+      <Grid item xs={1} lg={3} />
+      <Grid item xs={10} lg={6} style={style}>
+        <p style={{ fontSize: 18, margin: 0 }}>1. アプリ名を入力してください。</p>
+        <TextField
+          variant='outlined'
+          style={{ marginBottom: 30 }}
+          value={inputValue.appName}
+          onChange={(e) => changeInputValue('app_name', e)}
+          error={validationMessage.app_name !== ''}
+          helperText={validationMessage.app_name}
+        />
+        <p style={{ fontSize: 18, margin: 0 }}>2. デプロイ先のURLを入力してください。</p>
+        <TextField
+          variant='outlined'
+          style={{ marginBottom: 30 }}
+          value={inputValue.appUrl}
+          onChange={(e) => changeInputValue('app_url', e)}
+          error={validationMessage.app_url !== ''}
+          helperText={validationMessage.app_url}
+        />
+        <p style={{ fontSize: 18, margin: 0 }}>3. レポジトリのURLを入力してください。</p>
+        <TextField
+          variant='outlined'
+          style={{ marginBottom: 30 }}
+          value={inputValue.repoUrl}
+          onChange={(e) => changeInputValue('repo_url', e)}
+          error={validationMessage.repo_url}
+          helperText={validationMessage.repo_url}
+        />
+        <p style={{ fontSize: 18, margin: 0 }}>4. アプリの概要や工夫点を入力してください。</p>
+        <SimpleMDE value={markdown} onChange={(e) => setMarkdown(e)} style={{width: '100%'}}/>
+        <p style={{ color: 'red', padding: 5 }}>
+          {validationMessage.description}
+        </p>
+        <Grid container alignItems='center' justifyContent='center'>
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ marginBottom: 30, width: 300 }}
+            onClick={submitPost}
+          >
+            送信
+          </Button>
+        </Grid>
+      </Grid>
+      <Grid item xs={1} lg={3} />
     </Grid>
   );
 };
