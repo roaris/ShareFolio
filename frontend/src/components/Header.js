@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import Link from '@material-ui/core/Link';
 import CreateIcon from '@mui/icons-material/Create';
@@ -12,8 +11,6 @@ const Header = () => {
   const loggedIn = useContext(AuthContext).loggedIn;
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
   const userName = useContext(AuthContext).userName;
-  const setUserName = useContext(AuthContext).setUserName;
-  const history = useHistory();
 
   const logout = () => {
     fetch(`${process.env.REACT_APP_API_URL}/sessions/logout`, {
@@ -25,8 +22,6 @@ const Header = () => {
     }).then((res) => {
       if (res.status == 204) {
         setLoggedIn(false);
-        setUserName(null);
-        history.push('/login');
       }
     });
   };
