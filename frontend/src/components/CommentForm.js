@@ -33,12 +33,12 @@ const CommentForm = (props) => {
     <Grid container alignItems='center' justifyContent='center'>
       {formOpen ? (
         <Grid container>
-          <Grid item xs={12} lg={1}>
+          <Grid item xs={2} lg={1}>
             <div style={{ marginTop: 10 }}>
               <Owner userName={userName} userIconUrl={userIconUrl} />
             </div>
           </Grid>
-          <Grid item xs={12} lg={11}>
+          <Grid item xs={10} lg={11}>
             <SimpleMDE
               value={markdown}
               onChange={(e) => setMarkdown(e)}

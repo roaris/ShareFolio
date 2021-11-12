@@ -122,12 +122,12 @@ const PostDetail = (props) => {
       <Grid item xs={1} sm={1} md={3} lg={3} />
       <Grid item xs={10} sm={10} md={6} lg={6}>
         <Grid container>
-          <Grid item xs={12} lg={1}>
+          <Grid item xs={2} lg={1}>
             <div style={{ marginTop: 20 }}>
               <Owner userIconUrl={ownerIconUrl} userName={ownerName} />
             </div>
           </Grid>
-          <Grid item xs={12} lg={11} className={classes.postDetailRight}>
+          <Grid item xs={10} lg={11} className={classes.postDetailRight}>
             <div className={classes.postDetailRightHeader}>
               <h1 className={classes.appName}>{post.app_name}</h1>
               <a href={post.app_url} className={classes.link}>

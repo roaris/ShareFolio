@@ -34,7 +34,7 @@ const CommentList = (props) => {
       )}
       {props.commentsAndUsers.map((commentAndUser, i) => (
         <Grid container key={i} className={classes.comment}>
-          <Grid item xs={12} lg={1}>
+          <Grid item xs={2} lg={1}>
             <div style={{ marginTop: 10 }}>
               <Owner
                 userName={commentAndUser.user_name}
@@ -42,7 +42,7 @@ const CommentList = (props) => {
               />
             </div>
           </Grid>
-          <Grid item xs={12} lg={11} className={classes.commentRight}>
+          <Grid item xs={10} lg={11} className={classes.commentRight}>
             <div
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(
