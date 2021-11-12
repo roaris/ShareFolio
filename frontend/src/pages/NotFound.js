@@ -1,5 +1,5 @@
 import logo from '../logo.svg';
-import './styles/logo.css';
+import '../components/styles/logo.css';
 
 const NotFound = () => {
   const style = {

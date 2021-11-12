@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import AuthContextProvider, { AuthContext } from './contexts/AuthContext';
 import Header from './components/Header';
-import Top from './components/Top';
-import Signup from './components/Signup';
-import Login from './components/Login';
-import PostList from './components/PostList';
-import PostDetail from './components/PostDetail';
-import Setting from './components/Setting';
-import PostForm from './components/PostForm';
-import NotFound from './components/NotFound';
+import Top from './pages/Top';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import PostList from './pages/PostList';
+import PostDetail from './pages/PostDetail';
+import Setting from './pages/Setting';
+import PostForm from './pages/PostForm';
+import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
 
 const WaitInitialize = ({ children }) => {
