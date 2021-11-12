@@ -74,12 +74,14 @@ const Header = () => {
           <li style={listItemStyle}>
             <Link href='/setting' style={linkStyle}>
               <PersonIcon style={{ verticalAlign: 'middle' }} />
-              <span style={{verticalAlign: 'middle' }}>{userName}</span>
+              <span style={{ verticalAlign: 'middle' }}>{userName}</span>
             </Link>
           </li>
           <li style={listItemStyle} onClick={logout}>
             <LogoutIcon style={{ verticalAlign: 'middle' }} />
-            <span style={{ cursor: 'pointer', verticalAlign: 'middle' }}>ログアウト</span>
+            <span style={{ cursor: 'pointer', verticalAlign: 'middle' }}>
+              ログアウト
+            </span>
           </li>
         </ul>
       ) : (
