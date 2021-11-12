@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import Grid from '@material-ui/core/Grid';
@@ -23,6 +23,12 @@ const PostForm = () => {
     description: '',
   });
   const [markdown, setMarkdown] = useState();
+  const markdownOption = useMemo(() => {
+    return {
+      toolbar: ['preview'],
+      spellChecker: false,
+    };
+  }, []);
 
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
@@ -91,7 +97,7 @@ const PostForm = () => {
           helperText={validationMessage.repo_url}
         />
         <p style={{ fontSize: 18, margin: 0 }}>4. アプリの概要や工夫点を入力してください。</p>
-        <SimpleMDE value={markdown} onChange={(e) => setMarkdown(e)} style={{width: '100%'}}/>
+        <SimpleMDE value={markdown} onChange={(e) => setMarkdown(e)} style={{width: '100%'}} options={markdownOption} />
         <p style={{ color: 'red', padding: 5 }}>
           {validationMessage.description}
         </p>
