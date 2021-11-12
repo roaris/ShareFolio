@@ -55,12 +55,16 @@ const Top = () => {
       <h2 style={{ marginLeft: 20 }}>このアプリについて</h2>
       <div className={classes.appDescription}>
         <div>
-          <CheckIcon style={{ color: 'green' }} />
-          自分の作ったWebアプリを投稿することで、他の人からアドバイスをもらうことができます。
+          <CheckIcon style={{ color: 'green', verticalAlign: 'middle' }} />
+          <span style={{ verticalAlign: 'middle' }}>
+            自分の作ったWebアプリを投稿することで、他の人からアドバイスをもらうことができます。
+          </span>
         </div>
         <div>
-          <CheckIcon style={{ color: 'green' }} />
-          他の人のWebアプリを参考にして、自分の開発に役立てることができます。
+          <CheckIcon style={{ color: 'green', verticalAlign: 'middle' }} />
+          <span style={{ verticalAlign: 'middle' }}>
+            他の人のWebアプリを参考にして、自分の開発に役立てることができます。
+          </span>
         </div>
       </div>
       <h2 style={{ marginLeft: 20 }}>最近の投稿</h2>
