@@ -71,7 +71,7 @@ const PostForm = () => {
       <Grid item xs={10} lg={6} style={style}>
         <p style={{ fontSize: 18, margin: 0 }}>
           1. アプリ名を入力してください。
-        </p>
+        </p>    
         <TextField
           variant='outlined'
           style={{ marginBottom: 30 }}
