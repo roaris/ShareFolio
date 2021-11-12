@@ -30,7 +30,7 @@ const CommentForm = (props) => {
   };
 
   return (
-    <Grid container>
+    <Grid container alignItems='center' justifyContent='center'>
       {formOpen ? (
         <Grid container>
           <Grid item xs={2} lg={1}>
