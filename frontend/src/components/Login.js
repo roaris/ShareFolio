@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -13,7 +12,6 @@ const Login = () => {
     password: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
-  const history = useHistory();
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
   const setUserName = useContext(AuthContext).setUserName;
 
@@ -37,7 +35,6 @@ const Login = () => {
         res.json().then((res) => {
           setLoggedIn(true);
           setUserName(res.user_name);
-          history.push('/posts');
         });
       } else if (res.status === 401) {
         setErrorMessage('Invalid email/password combination');
