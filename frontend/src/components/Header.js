@@ -2,6 +2,11 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import Link from '@material-ui/core/Link';
+import CreateIcon from '@mui/icons-material/Create';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
+import AddIcon from '@mui/icons-material/Add';
 
 const Header = () => {
   const loggedIn = useContext(AuthContext).loggedIn;
@@ -61,24 +66,36 @@ const Header = () => {
       {loggedIn ? (
         <ul>
           <li style={listItemStyle}>
+            <Link href='/posts/new' style={linkStyle}>
+              <CreateIcon style={{ verticalAlign: 'middle' }} />
+              <span style={{ verticalAlign: 'middle' }}>新規投稿</span>
+            </Link>
+          </li>
+          <li style={listItemStyle}>
             <Link href='/setting' style={linkStyle}>
-              <span>{userName}</span>
+              <PersonIcon style={{ verticalAlign: 'middle' }} />
+              <span style={{ verticalAlign: 'middle' }}>{userName}</span>
             </Link>
           </li>
           <li style={listItemStyle} onClick={logout}>
-            <span style={{ cursor: 'pointer' }}>ログアウト</span>
+            <LogoutIcon style={{ verticalAlign: 'middle' }} />
+            <span style={{ cursor: 'pointer', verticalAlign: 'middle' }}>
+              ログアウト
+            </span>
           </li>
         </ul>
       ) : (
         <ul>
           <li style={listItemStyle}>
             <Link href='/login' style={linkStyle}>
-              ログイン
+              <LoginIcon style={{ verticalAlign: 'middle' }} />
+              <span style={{ verticalAlign: 'middle' }}>ログイン</span>
             </Link>
           </li>
           <li style={listItemStyle}>
             <Link href='/signup' style={linkStyle}>
-              新規登録
+              <AddIcon style={{ verticalAlign: 'middle' }} />
+              <span style={{ verticalAlign: 'middle' }}>新規登録</span>
             </Link>
           </li>
         </ul>
