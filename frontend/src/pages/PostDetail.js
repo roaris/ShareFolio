@@ -5,10 +5,10 @@ import DOMPurify from 'dompurify';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import Owner from './Owner';
-import CommentForm from './CommentForm';
-import CreatedAt from './CreatedAt';
-import CommentList from './CommentList';
+import Owner from '../components/Owner';
+import CommentForm from '../components/CommentForm';
+import CreatedAt from '../components/CreatedAt';
+import CommentList from '../components/CommentList';
 
 const PostDetail = (props) => {
   const { params } = props.match;

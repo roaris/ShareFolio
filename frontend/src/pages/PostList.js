@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Post from './Post';
+import Post from '../components/Post';
 
 const App = () => {
   const [postAndUsers, setPostAndUsers] = useState([]);
