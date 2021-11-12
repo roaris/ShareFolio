@@ -27,10 +27,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format:scan": "prettier --check ./src/App.js && prettier --check ./src/components/*.js && prettier --check ./src/contexts/*.js",
-    "format:fix": "prettier --write ./src/App.js && prettier --write ./src/components/*.js && prettier --write ./src/contexts/*.js",
-    "lint:scan": "eslint ./src/App.js && eslint ./src/components/*.js && eslint ./src/contexts/*.js",
-    "lint:fix": "eslint --fix ./src/App.js && eslint --fix ./src/components/*.js && eslint --fix ./src/contexts/*.js",
+    "format:scan": "prettier --check ./src/App.js && prettier --check ./src/components/*.js && prettier --check ./src/pages/*.js && prettier --check ./src/contexts/*.js",
+    "format:fix": "prettier --write ./src/App.js && prettier --write ./src/components/*.js && prettier --write ./src/pages/*.js && prettier --write ./src/contexts/*.js",
+    "lint:scan": "eslint ./src/App.js && eslint ./src/components/*.js && eslint ./src/pages/*.js && eslint ./src/contexts/*.js",
+    "lint:fix": "eslint --fix ./src/App.js && eslint --fix ./src/components/*.js && eslint ./src/pages/*.js && eslint --fix ./src/contexts/*.js",
     "fix": "yarn format:fix && yarn lint:fix"
   },
   "eslintConfig": {
