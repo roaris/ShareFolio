@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import Link from '@material-ui/core/Link';
+import CreateIcon from '@mui/icons-material/Create';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
@@ -64,6 +65,12 @@ const Header = () => {
       <div style={logoStyle}>ShareFolio</div>
       {loggedIn ? (
         <ul>
+          <li style={listItemStyle}>
+            <Link href='/posts/new' style={linkStyle}>
+              <CreateIcon style={{ verticalAlign: 'middle' }} />
+              <span style={{ verticalAlign: 'middle' }}>新規投稿</span>
+            </Link>
+          </li>
           <li style={listItemStyle}>
             <Link href='/setting' style={linkStyle}>
               <PersonIcon style={{ verticalAlign: 'middle' }} />
