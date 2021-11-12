@@ -4,8 +4,8 @@ import Post from './Post';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import CheckIcon from '@material-ui/icons/Check';
-import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
+import CheckIcon from '@mui/icons-material/Check';
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
 const Top = () => {
   const [postsAndUsers, setPostsAndUsers] = useState([]);

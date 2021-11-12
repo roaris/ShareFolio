@@ -6,9 +6,9 @@ import 'easymde/dist/easymde.min.css';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import SendIcon from '@material-ui/icons/Send';
-import CloseIcon from '@material-ui/icons/Close';
-import CreateIcon from '@material-ui/icons/Create';
+import SendIcon from '@mui/icons-material/Send';
+import CloseIcon from '@mui/icons-material/Close';
+import CreateIcon from '@mui/icons-material/Create';
 
 const CommentForm = (props) => {
   const [formOpen, setFormOpen] = useState(false);
