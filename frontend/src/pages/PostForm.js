@@ -66,10 +66,12 @@ const PostForm = () => {
   };
 
   return (
-    <Grid container style={{paddingTop: 100}}>
+    <Grid container style={{ paddingTop: 100 }}>
       <Grid item xs={1} lg={3} />
       <Grid item xs={10} lg={6} style={style}>
-        <p style={{ fontSize: 18, margin: 0 }}>1. アプリ名を入力してください。</p>
+        <p style={{ fontSize: 18, margin: 0 }}>
+          1. アプリ名を入力してください。
+        </p>
         <TextField
           variant='outlined'
           style={{ marginBottom: 30 }}
@@ -78,7 +80,9 @@ const PostForm = () => {
           error={validationMessage.app_name !== ''}
           helperText={validationMessage.app_name}
         />
-        <p style={{ fontSize: 18, margin: 0 }}>2. デプロイ先のURLを入力してください。</p>
+        <p style={{ fontSize: 18, margin: 0 }}>
+          2. デプロイ先のURLを入力してください。
+        </p>
         <TextField
           variant='outlined'
           style={{ marginBottom: 30 }}
@@ -87,7 +91,9 @@ const PostForm = () => {
           error={validationMessage.app_url !== ''}
           helperText={validationMessage.app_url}
         />
-        <p style={{ fontSize: 18, margin: 0 }}>3. レポジトリのURLを入力してください。</p>
+        <p style={{ fontSize: 18, margin: 0 }}>
+          3. レポジトリのURLを入力してください。
+        </p>
         <TextField
           variant='outlined'
           style={{ marginBottom: 30 }}
@@ -96,8 +102,15 @@ const PostForm = () => {
           error={validationMessage.repo_url}
           helperText={validationMessage.repo_url}
         />
-        <p style={{ fontSize: 18, margin: 0 }}>4. アプリの概要や工夫点を入力してください。</p>
-        <SimpleMDE value={markdown} onChange={(e) => setMarkdown(e)} style={{width: '100%'}} options={markdownOption} />
+        <p style={{ fontSize: 18, margin: 0 }}>
+          4. アプリの概要や工夫点を入力してください。
+        </p>
+        <SimpleMDE
+          value={markdown}
+          onChange={(e) => setMarkdown(e)}
+          style={{ width: '100%' }}
+          options={markdownOption}
+        />
         <p style={{ color: 'red', padding: 5 }}>
           {validationMessage.description}
         </p>
