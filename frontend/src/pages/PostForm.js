@@ -99,7 +99,7 @@ const PostForm = () => {
           style={{ marginBottom: 30 }}
           value={inputValue.repoUrl}
           onChange={(e) => changeInputValue('repo_url', e)}
-          error={validationMessage.repo_url}
+          error={validationMessage.repo_url !== ''}
           helperText={validationMessage.repo_url}
         />
         <p style={{ fontSize: 18, margin: 0 }}>
