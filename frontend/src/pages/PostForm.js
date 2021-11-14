@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import Grid from '@material-ui/core/Grid';
@@ -29,6 +30,7 @@ const PostForm = () => {
       spellChecker: false,
     };
   }, []);
+  const history = useHistory();
 
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
@@ -48,7 +50,11 @@ const PostForm = () => {
         post: Object.assign({}, inputValue, { description: markdown }),
       }),
     }).then((res) => {
-      if (res.status === 400) {
+      if (res.status === 201) {
+        res.json().then((res) => {
+          history.push(`/posts/${res.id}`)
+        })
+      } else if (res.status === 400) {
         res.json().then((err) => {
           const newValidationMessage = {
             app_name: '',
