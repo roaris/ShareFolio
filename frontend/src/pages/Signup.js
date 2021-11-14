@@ -42,7 +42,7 @@ const Signup = () => {
         res.json().then((res) => {
           setLoggedIn(true);
           setUserName(res.name);
-          history.push('/home');
+          history.push('/posts');
         });
       } else if (res.status === 400) {
         res.json().then((err) => {
