@@ -52,8 +52,8 @@ const PostForm = () => {
     }).then((res) => {
       if (res.status === 201) {
         res.json().then((res) => {
-          history.push(`/posts/${res.id}`)
-        })
+          history.push(`/posts/${res.id}`);
+        });
       } else if (res.status === 400) {
         res.json().then((err) => {
           const newValidationMessage = {
