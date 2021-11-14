@@ -1,0 +1,2 @@
+<%= @user.name %>さんの<%= @post.app_name %>にコメントがつきました！<br>
+<%= link_to 'このリンク', "#{ENV['FRONTEND_ORIGIN']}/posts/#{@post.id}" %>からご確認ください。
