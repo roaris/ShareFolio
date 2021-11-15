@@ -16,7 +16,7 @@ const PostDetail = (props) => {
   const id = parseInt(params.id, 10);
   const [post, setPost] = useState(null);
   const [ownerName, setOwnerName] = useState('');
-  const [ownerIconUrl, setOwnerIconUrl] = useState(null);
+  const [ownerIconUrl, setOwnerIconUrl] = useState('');
   const [commentsAndUsers, setCommentsAndUsers] = useState(null);
   const userName = useContext(AuthContext).userName;
   const userIconUrl = useContext(AuthContext).userIconUrl;
@@ -114,7 +114,7 @@ const PostDetail = (props) => {
   const isLoading =
     post === null ||
     ownerName === null ||
-    ownerIconUrl === null ||
+    ownerIconUrl === '' ||
     commentsAndUsers === null;
 
   return isLoading ? (
