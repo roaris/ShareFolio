@@ -11,11 +11,16 @@ import Setting from './pages/Setting';
 import PostForm from './pages/PostForm';
 import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
+import MDSpinner from 'react-md-spinner';
 
 const WaitInitialize = ({ children }) => {
   const initialized = useContext(AuthContext);
   if (initialized.loggedIn === null) {
-    return <div>初期化中</div>;
+    return (
+      <div style={{ marginTop: 100, textAlign: 'center' }}>
+        <MDSpinner size={70} />
+      </div>
+    );
   }
   return <>{children}</>;
 };

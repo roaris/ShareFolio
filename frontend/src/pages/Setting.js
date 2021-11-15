@@ -3,14 +3,10 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import defaultIcon from '../logo.svg';
+import MDSpinner from 'react-md-spinner';
 
 const Setting = () => {
-  const [inputValue, setInputValue] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-  });
+  const [inputValue, setInputValue] = useState(null);
   const [validationMessage, setValidationMessage] = useState({
     name: '',
     email: '',
@@ -18,7 +14,7 @@ const Setting = () => {
     password_confirmation: '',
   });
   const [icon, setIcon] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState('');
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
@@ -107,7 +103,13 @@ const Setting = () => {
     reader.readAsDataURL(file);
   };
 
-  return (
+  const isLoading = inputValue === null || preview === '';
+
+  return isLoading ? (
+    <div style={{ marginTop: 100, textAlign: 'center' }}>
+      <MDSpinner size={70} />
+    </div>
+  ) : (
     <Grid
       container
       direction='column'

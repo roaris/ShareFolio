@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Post from '../components/Post';
+import MDSpinner from 'react-md-spinner';
 
 const App = () => {
-  const [postAndUsers, setPostAndUsers] = useState([]);
+  const [postAndUsers, setPostAndUsers] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/posts`, {
@@ -17,7 +18,13 @@ const App = () => {
       .then(setPostAndUsers);
   }, []);
 
-  return (
+  const isLoading = postAndUsers === null;
+
+  return isLoading ? (
+    <div style={{ paddingTop: 100, textAlign: 'center' }}>
+      <MDSpinner size={70} />
+    </div>
+  ) : (
     <div style={{ paddingTop: 50 }}>
       <div
         style={{
