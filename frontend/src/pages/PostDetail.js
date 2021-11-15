@@ -9,20 +9,15 @@ import Owner from '../components/Owner';
 import CommentForm from '../components/CommentForm';
 import CreatedAt from '../components/CreatedAt';
 import CommentList from '../components/CommentList';
+import MDSpinner from 'react-md-spinner';
 
 const PostDetail = (props) => {
   const { params } = props.match;
   const id = parseInt(params.id, 10);
-  const [post, setPost] = useState({
-    app_name: '',
-    app_url: '',
-    repo_url: '',
-    description: '',
-    created_at: '',
-  });
+  const [post, setPost] = useState(null);
   const [ownerName, setOwnerName] = useState('');
   const [ownerIconUrl, setOwnerIconUrl] = useState(null);
-  const [commentsAndUsers, setCommentsAndUsers] = useState([]);
+  const [commentsAndUsers, setCommentsAndUsers] = useState(null);
   const userName = useContext(AuthContext).userName;
   const userIconUrl = useContext(AuthContext).userIconUrl;
 
@@ -116,8 +111,17 @@ const PostDetail = (props) => {
   });
 
   const classes = styles();
+  const isLoading =
+    post === null ||
+    ownerName === null ||
+    ownerIconUrl === null ||
+    commentsAndUsers === null;
 
-  return (
+  return isLoading ? (
+    <div style={{ marginTop: 100, textAlign: 'center' }}>
+      <MDSpinner size={70} />
+    </div>
+  ) : (
     <Grid container className={classes.postDetail}>
       <Grid item xs={1} sm={1} md={3} lg={3} />
       <Grid item xs={10} sm={10} md={6} lg={6}>

@@ -6,9 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CheckIcon from '@mui/icons-material/Check';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+import MDSpinner from 'react-md-spinner';
 
 const Top = () => {
-  const [postsAndUsers, setPostsAndUsers] = useState([]);
+  const [postsAndUsers, setPostsAndUsers] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/posts/recent`, {
@@ -68,29 +69,37 @@ const Top = () => {
         </div>
       </div>
       <h2 style={{ marginLeft: 20 }}>最近の投稿</h2>
-      <Grid container>
-        {postsAndUsers.map((postAndUser) => (
-          <Grid item xs={12} sm={12} md={6} key={postAndUser.post.id}>
-            <Grid container>
-              <Grid item xs={1} />
-              <Grid item xs={10} style={{ marginBottom: 20 }}>
-                <Post postAndUser={postAndUser} />
+      {postsAndUsers === null ? (
+        <div style={{ marginTop: 20, textAlign: 'center' }}>
+          <MDSpinner size={70} />
+        </div>
+      ) : (
+        <>
+          <Grid container>
+            {postsAndUsers.map((postAndUser) => (
+              <Grid item xs={12} sm={12} md={6} key={postAndUser.post.id}>
+                <Grid container>
+                  <Grid item xs={1} />
+                  <Grid item xs={10} style={{ marginBottom: 20 }}>
+                    <Post postAndUser={postAndUser} />
+                  </Grid>
+                  <Grid item xs={1} />
+                </Grid>
               </Grid>
-              <Grid item xs={1} />
-            </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-      <Button
-        to='/posts'
-        component={Link}
-        variant='contained'
-        color='primary'
-        style={{ margin: 'auto', marginTop: 20, marginBottom: 30 }}
-      >
-        <DoubleArrowIcon />
-        全ての投稿を見る
-      </Button>
+          <Button
+            to='/posts'
+            component={Link}
+            variant='contained'
+            color='primary'
+            style={{ margin: 'auto', marginTop: 20, marginBottom: 30 }}
+          >
+            <DoubleArrowIcon />
+            全ての投稿を見る
+          </Button>
+        </>
+      )}
     </div>
   );
 };
