@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import AuthContextProvider, { AuthContext } from './contexts/AuthContext';
+import FlashMessageContextProvider from './contexts/FlashMessageContext';
+import FlashMessage from './components/FlashMessage';
 import Header from './components/Header';
 import Top from './pages/Top';
 import Signup from './pages/Signup';
@@ -46,28 +48,35 @@ const PrivateRoute = ({ ...props }) => {
 const App = () => {
   return (
     <AuthContextProvider>
-      <WaitInitialize>
-        <BrowserRouter>
-          <div
-            style={{ display: 'flex', flexFlow: 'column', minHeight: '100vh' }}
-          >
-            <Header />
-            <div style={{ flex: 1 }}>
-              <Switch>
-                <PublicRoute exact path='/' component={Top} />
-                <PublicRoute path='/signup' component={Signup} />
-                <PublicRoute path='/login' component={Login} />
-                <Route exact path='/posts' component={PostList} />
-                <PrivateRoute path='/setting' component={Setting} />
-                <PrivateRoute path='/posts/new' component={PostForm} />
-                <Route path='/posts/:id' component={PostDetail} />
-                <Route component={NotFound} />
-              </Switch>
+      <FlashMessageContextProvider>
+        <WaitInitialize>
+          <BrowserRouter>
+            <div
+              style={{
+                display: 'flex',
+                flexFlow: 'column',
+                minHeight: '100vh',
+              }}
+            >
+              <Header />
+              <FlashMessage />
+              <div style={{ flex: 1 }}>
+                <Switch>
+                  <PublicRoute exact path='/' component={Top} />
+                  <PublicRoute path='/signup' component={Signup} />
+                  <PublicRoute path='/login' component={Login} />
+                  <Route exact path='/posts' component={PostList} />
+                  <PrivateRoute path='/setting' component={Setting} />
+                  <PrivateRoute path='/posts/new' component={PostForm} />
+                  <Route path='/posts/:id' component={PostDetail} />
+                  <Route component={NotFound} />
+                </Switch>
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
-        </BrowserRouter>
-      </WaitInitialize>
+          </BrowserRouter>
+        </WaitInitialize>
+      </FlashMessageContextProvider>
     </AuthContextProvider>
   );
 };
