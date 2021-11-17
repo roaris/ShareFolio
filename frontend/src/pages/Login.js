@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -14,6 +15,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
   const setUserName = useContext(AuthContext).setUserName;
+  const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
@@ -35,6 +37,7 @@ const Login = () => {
         res.json().then((res) => {
           setLoggedIn(true);
           setUserName(res.user_name);
+          updateFlashMessage({ successMessage: 'ログインしました' });
         });
       } else if (res.status === 401) {
         setErrorMessage('Invalid email/password combination');

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -15,6 +16,7 @@ const Setting = () => {
   });
   const [icon, setIcon] = useState(null);
   const [preview, setPreview] = useState('');
+  const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
@@ -70,6 +72,7 @@ const Setting = () => {
           password_confirmation: '',
         };
         setValidationMessage(newValidationMessage);
+        updateFlashMessage({ successMessage: 'プロフィールを更新しました' });
       } else if (res.status === 400) {
         res.json().then((err) => {
           const newValidationMessage = {
