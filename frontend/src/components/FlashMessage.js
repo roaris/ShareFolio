@@ -36,8 +36,12 @@ const FlashMessage = () => {
   return (
     <div className={classes.outer}>
       <div className={classes.flashMessage}>
-        {flashMessage.success && <span className={classes.successMessage}>{flashMessage.success}</span>}
-        {flashMessage.error && <span className={classes.errorMessage}>{flashMessage.error}</span>}
+        {flashMessage.success && (
+          <span className={classes.successMessage}>{flashMessage.success}</span>
+        )}
+        {flashMessage.error && (
+          <span className={classes.errorMessage}>{flashMessage.error}</span>
+        )}
       </div>
     </div>
   );
