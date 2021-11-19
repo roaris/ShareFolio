@@ -4,7 +4,6 @@ import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Owner from '../components/Owner';
 import CommentForm from '../components/CommentForm';
@@ -89,6 +88,7 @@ const PostDetail = (props) => {
       padding: 20,
     },
     postDetailRightHeader: {
+      paddingBottom: 20,
       borderBottom: 'solid 1px #bbb',
     },
     appName: {
@@ -96,11 +96,7 @@ const PostDetail = (props) => {
       verticalAlign: 'middle',
     },
     link: {
-      color: '#fff',
-      display: 'inline-block',
-      margin: 10,
-      textDecoration: 'none',
-      verticalAlign: 'middle',
+      overflowWrap: 'break-word'
     },
     markdown: {
       borderBottom: 'solid 1px #bbb',
@@ -136,19 +132,9 @@ const PostDetail = (props) => {
           </Grid>
           <Grid item xs={10} lg={11} className={classes.postDetailRight}>
             <div className={classes.postDetailRightHeader}>
-              <h1 className={classes.appName}>{post.app_name}</h1>
-              <a href={post.app_url} className={classes.link}>
-                <Button variant='contained' color='primary'>
-                  アプリ
-                </Button>
-              </a>
-              {post.repo_url && (
-                <a href={post.repo_url} className={classes.link}>
-                  <Button variant='contained' color='secondary'>
-                    レポジトリ
-                  </Button>
-                </a>
-              )}
+              <h1 className={classes.appName}>{post.app_name}</h1> <br />
+              アプリ: <a href={post.app_url} className={classes.link}>{post.app_url}</a> <br />
+              {post.repo_url && <>レポジトリ: <a href={post.repo_url} className={classes.link}>{post.repo_url}</a></>}
             </div>
             <div
               dangerouslySetInnerHTML={{
