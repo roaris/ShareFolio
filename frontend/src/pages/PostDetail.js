@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import Grid from '@material-ui/core/Grid';
@@ -20,6 +21,7 @@ const PostDetail = (props) => {
   const [commentsAndUsers, setCommentsAndUsers] = useState(null);
   const userName = useContext(AuthContext).userName;
   const userIconUrl = useContext(AuthContext).userIconUrl;
+  const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
@@ -59,6 +61,7 @@ const PostDetail = (props) => {
             user_icon_url: userIconUrl,
           });
           setCommentsAndUsers(newCommentsAndUsers);
+          updateFlashMessage({ successMessage: 'コメントをつけました' });
         });
       }
     });

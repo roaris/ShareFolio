@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
+import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import Link from '@material-ui/core/Link';
 import CreateIcon from '@mui/icons-material/Create';
 import PersonIcon from '@mui/icons-material/Person';
@@ -12,6 +13,7 @@ const Header = () => {
   const loggedIn = useContext(AuthContext).loggedIn;
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
   const userName = useContext(AuthContext).userName;
+  const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
   const history = useHistory();
 
   const logout = () => {
@@ -24,6 +26,7 @@ const Header = () => {
     }).then((res) => {
       if (res.status == 204) {
         setLoggedIn(false);
+        updateFlashMessage({ successMessage: 'ログアウトしました' });
         history.push('/');
       }
     });

@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
+import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { useHistory } from 'react-router-dom';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
@@ -31,6 +32,7 @@ const PostForm = () => {
     };
   }, []);
   const history = useHistory();
+  const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
@@ -53,6 +55,7 @@ const PostForm = () => {
       if (res.status === 201) {
         res.json().then((res) => {
           history.push(`/posts/${res.id}`);
+          updateFlashMessage({ successMessage: '投稿しました' });
         });
       } else if (res.status === 400) {
         res.json().then((err) => {
