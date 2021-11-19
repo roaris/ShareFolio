@@ -96,7 +96,7 @@ const PostDetail = (props) => {
       verticalAlign: 'middle',
     },
     link: {
-      overflowWrap: 'break-word'
+      overflowWrap: 'break-word',
     },
     markdown: {
       borderBottom: 'solid 1px #bbb',
@@ -133,8 +133,19 @@ const PostDetail = (props) => {
           <Grid item xs={10} lg={11} className={classes.postDetailRight}>
             <div className={classes.postDetailRightHeader}>
               <h1 className={classes.appName}>{post.app_name}</h1> <br />
-              アプリ: <a href={post.app_url} className={classes.link}>{post.app_url}</a> <br />
-              {post.repo_url && <>レポジトリ: <a href={post.repo_url} className={classes.link}>{post.repo_url}</a></>}
+              アプリ:{' '}
+              <a href={post.app_url} className={classes.link}>
+                {post.app_url}
+              </a>{' '}
+              <br />
+              {post.repo_url && (
+                <>
+                  レポジトリ:{' '}
+                  <a href={post.repo_url} className={classes.link}>
+                    {post.repo_url}
+                  </a>
+                </>
+              )}
             </div>
             <div
               dangerouslySetInnerHTML={{
