@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
+import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -29,36 +30,37 @@ const Signup = () => {
   };
 
   const createUser = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/users`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-      body: JSON.stringify({ user: inputValue }),
-      credentials: 'include',
-    }).then((res) => {
-      if (res.status === 201) {
-        res.json().then((res) => {
-          setLoggedIn(true);
-          setUserName(res.name);
-          history.push('/posts');
-        });
-      } else if (res.status === 400) {
-        res.json().then((err) => {
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/users`,
+        { user: inputValue },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setLoggedIn(true);
+        setUserName(res.data.name);
+        history.push('/posts');
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
           const newValidationMessage = {
             name: '',
             email: '',
             password: '',
             password_confirmation: '',
           };
-          for (const property in err) {
-            newValidationMessage[property] = err[property][0];
+          for (const property in err.response.data) {
+            newValidationMessage[property] = err.response.data[property][0];
           }
           setValidationMessage(newValidationMessage);
-        });
-      }
-    });
+        }
+      });
   };
 
   const style = {

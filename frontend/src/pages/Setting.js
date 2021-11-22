@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
+import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -19,14 +20,13 @@ const Setting = () => {
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    })
-      .then((res) => res.json())
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/users/me`, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        withCredentials: true,
+      })
       .then((res) => {
         const newInputValue = {
           name: '',
@@ -34,10 +34,10 @@ const Setting = () => {
           password: '',
           password_confirmation: '',
         };
-        newInputValue.name = res.name;
-        newInputValue.email = res.email;
+        newInputValue.name = res.data.name;
+        newInputValue.email = res.data.email;
         setInputValue(newInputValue);
-        setPreview(res.icon.url);
+        setPreview(res.data.icon.url);
       });
   }, []);
 
@@ -52,15 +52,14 @@ const Setting = () => {
     );
     if (icon) formData.append('user[icon]', icon);
 
-    fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
-      method: 'PATCH',
-      credentials: 'include',
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-      body: formData,
-    }).then((res) => {
-      if (res.status === 200) {
+    axios
+      .patch(`${process.env.REACT_APP_API_URL}/users/me`, formData, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        withCredentials: true,
+      })
+      .then(() => {
         const newInputValue = Object.assign({}, inputValue);
         newInputValue.password = '';
         newInputValue.password_confirmation = '';
@@ -73,21 +72,21 @@ const Setting = () => {
         };
         setValidationMessage(newValidationMessage);
         updateFlashMessage({ successMessage: 'プロフィールを更新しました' });
-      } else if (res.status === 400) {
-        res.json().then((err) => {
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
           const newValidationMessage = {
             name: '',
             email: '',
             password: '',
             password_confirmation: '',
           };
-          for (const property in err) {
-            newValidationMessage[property] = err[property][0];
+          for (const property in err.response.data) {
+            newValidationMessage[property] = err.response.data[property][0];
           }
           setValidationMessage(newValidationMessage);
-        });
-      }
-    });
+        }
+      });
   };
 
   const changeInputValue = (itemName, e) => {

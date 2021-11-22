@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import axios from 'axios';
 
 export const AuthContext = createContext();
 
@@ -8,21 +9,18 @@ export const AuthContextProvider = ({ children }) => {
   const [userIconUrl, setUserIconUrl] = useState(null);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/sessions/logged_in`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    }).then((res) => {
-      if (res.status == 200) {
-        res.json().then((res) => {
-          setLoggedIn(res.logged_in);
-          setUserName(res.user_name);
-          setUserIconUrl(res.user_icon_url);
-        });
-      }
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/sessions/logged_in`, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setLoggedIn(res.data.logged_in);
+        setUserName(res.data.user_name);
+        setUserIconUrl(res.data.user_icon_url);
+      });
   }, []);
 
   return (
