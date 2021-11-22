@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
+  include Firebase::Auth::Authenticable
 
   before_action :check_xhr_header, except: :fallback_index_html
 
@@ -25,5 +26,17 @@ class ApplicationController < ActionController::API
     return if request.xhr?
 
     render status: :forbidden
+  end
+
+  def token_from_request_headers
+    request.headers['Authorization']&.split&.last
+  end
+
+  def token
+    params[:token] || token_from_request_headers
+  end
+
+  def payload
+    @payload ||= FirebaseIdToken::Signature.verify token
   end
 end

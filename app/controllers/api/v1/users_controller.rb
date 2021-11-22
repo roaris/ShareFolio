@@ -6,7 +6,9 @@ module Api
       before_action :require_login, only: :show_me
 
       def create
-        user = User.new(user_params)
+        FirebaseIdToken::Certificates.request
+        raise ArgumentError, 'BadRequest Parameter' if payload.blank?
+        user = User.new(user_params.merge(uid: payload['sub']))
 
         if user.save
           session[:user_id] = user.id
@@ -34,8 +36,6 @@ module Api
         params.require(:user).permit(
           :name,
           :email,
-          :password,
-          :password_confirmation,
           :icon,
         )
       end
