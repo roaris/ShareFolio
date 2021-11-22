@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
+import { axiosClient } from '../api/axiosClient';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import Grid from '@material-ui/core/Grid';
@@ -23,47 +24,27 @@ const PostDetail = (props) => {
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setPost(res.post);
-        setOwnerName(res.user.name);
-        setOwnerIconUrl(res.user.icon.url);
-        setCommentsAndUsers(res.comments_and_users);
-      });
+    axiosClient.get(`/posts/${id}`).then((res) => {
+      setPost(res.data.post);
+      setOwnerName(res.data.user.name);
+      setOwnerIconUrl(res.data.user.icon.url);
+      setCommentsAndUsers(res.data.comments_and_users);
+    });
   }, []);
 
   const submitComment = (markdown) => {
-    fetch(`${process.env.REACT_APP_API_URL}/posts/${id}/comments`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-      body: JSON.stringify({
-        comment: { content: markdown },
-      }),
-    }).then((res) => {
-      if (res.status === 201) {
-        res.json().then((res) => {
-          const newCommentsAndUsers = commentsAndUsers.slice();
-          newCommentsAndUsers.push({
-            comment: res,
-            user_name: userName,
-            user_icon_url: userIconUrl,
-          });
-          setCommentsAndUsers(newCommentsAndUsers);
-          updateFlashMessage({ successMessage: 'コメントをつけました' });
+    axiosClient
+      .post(`/posts/${id}/comments`, { comment: { content: markdown } })
+      .then((res) => {
+        const newCommentsAndUsers = commentsAndUsers.slice();
+        newCommentsAndUsers.push({
+          comment: res.data,
+          user_name: userName,
+          user_icon_url: userIconUrl,
         });
-      }
-    });
+        setCommentsAndUsers(newCommentsAndUsers);
+        updateFlashMessage({ successMessage: 'コメントをつけました' });
+      });
   };
 
   const styles = makeStyles({

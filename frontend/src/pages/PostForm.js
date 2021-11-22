@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { useHistory } from 'react-router-dom';
+import { axiosClient } from '../api/axiosClient';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import Grid from '@material-ui/core/Grid';
@@ -41,37 +42,28 @@ const PostForm = () => {
   };
 
   const submitPost = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/posts`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-      body: JSON.stringify({
+    axiosClient
+      .post('/posts', {
         post: Object.assign({}, inputValue, { description: markdown }),
-      }),
-    }).then((res) => {
-      if (res.status === 201) {
-        res.json().then((res) => {
-          history.push(`/posts/${res.id}`);
-          updateFlashMessage({ successMessage: '投稿しました' });
-        });
-      } else if (res.status === 400) {
-        res.json().then((err) => {
+      })
+      .then((res) => {
+        history.push(`/posts/${res.data.id}`);
+        updateFlashMessage({ successMessage: '投稿しました' });
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
           const newValidationMessage = {
             app_name: '',
             app_url: '',
             repo_url: '',
             description: '',
           };
-          for (const property in err) {
-            newValidationMessage[property] = err[property][0];
+          for (const property in err.response.data) {
+            newValidationMessage[property] = err.response.data[property][0];
           }
           setValidationMessage(newValidationMessage);
-        });
-      }
-    });
+        }
+      });
   };
 
   return (

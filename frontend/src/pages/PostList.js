@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { axiosClient } from '../api/axiosClient';
 import Grid from '@material-ui/core/Grid';
 import Post from '../components/Post';
 import MDSpinner from 'react-md-spinner';
@@ -7,15 +8,7 @@ const App = () => {
   const [postAndUsers, setPostAndUsers] = useState(null);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/posts`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    })
-      .then((res) => res.json())
-      .then(setPostAndUsers);
+    axiosClient.get('/posts').then((res) => setPostAndUsers(res.data));
   }, []);
 
   const isLoading = postAndUsers === null;

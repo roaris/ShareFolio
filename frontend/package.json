@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.24.0",
     "dompurify": "^2.3.3",
     "easymde": "^2.15.0",
     "highlight.js": "^11.3.1",

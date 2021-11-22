@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
+import { axiosClient } from '../api/axiosClient';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -24,25 +25,18 @@ const Login = () => {
   };
 
   const login = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/sessions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-      body: JSON.stringify({ session: inputValue }),
-      credentials: 'include',
-    }).then((res) => {
-      if (res.status === 200) {
-        res.json().then((res) => {
-          setLoggedIn(true);
-          setUserName(res.user_name);
-          updateFlashMessage({ successMessage: 'ログインしました' });
-        });
-      } else if (res.status === 401) {
-        setErrorMessage('Invalid email/password combination');
-      }
-    });
+    axiosClient
+      .post('/sessions', { session: inputValue })
+      .then((res) => {
+        setLoggedIn(true);
+        setUserName(res.data.user_name);
+        updateFlashMessage({ successMessage: 'ログインしました' });
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          setErrorMessage('Invalid email/password combination');
+        }
+      });
   };
 
   const style = {
