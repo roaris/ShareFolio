@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { axiosClient } from '../api/axiosClient';
+import { auth } from '../firebase';
 
 export const AuthContext = createContext();
 
@@ -9,10 +10,16 @@ export const AuthContextProvider = ({ children }) => {
   const [userIconUrl, setUserIconUrl] = useState(null);
 
   useEffect(() => {
-    axiosClient.get('/sessions/logged_in').then((res) => {
-      setLoggedIn(res.data.logged_in);
-      setUserName(res.data.user_name);
-      setUserIconUrl(res.data.user_icon_url);
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        axiosClient.post('/users/search', { uid: user.uid }).then((res) => {
+          setLoggedIn(true);
+          setUserName(res.data.name);
+          setUserIconUrl(res.data.icon.url);
+        });
+      } else {
+        setLoggedIn(false);
+      }
     });
   }, []);
 
