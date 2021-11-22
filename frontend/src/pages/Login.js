@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { axiosClient } from '../api/axiosClient';
+import { auth } from '../firebase';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -24,19 +25,20 @@ const Login = () => {
     setInputValue(newInputValue);
   };
 
-  const login = () => {
-    axiosClient
-      .post('/sessions', { session: inputValue })
-      .then((res) => {
-        setLoggedIn(true);
-        setUserName(res.data.user_name);
-        updateFlashMessage({ successMessage: 'ログインしました' });
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
+  const login = async () => {
+    const uid = await new Promise((resolve) =>
+      auth
+        .signInWithEmailAndPassword(inputValue.email, inputValue.password)
+        .then((res) => resolve(res.user.uid))
+        .catch(() => {
           setErrorMessage('Invalid email/password combination');
-        }
-      });
+        })
+    );
+    axiosClient.post('/users/search', { uid: uid }).then((res) => {
+      setLoggedIn(true);
+      setUserName(res.data.name);
+      updateFlashMessage({ successMessage: 'ログインしました' });
+    });
   };
 
   const style = {
