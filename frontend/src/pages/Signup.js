@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { axiosClient } from '../api/axiosClient';
+import { auth } from '../firebase';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -29,9 +30,14 @@ const Signup = () => {
     setInputValue(newInputValue);
   };
 
-  const createUser = () => {
+  const createUser = async () => {
+    const token = await new Promise((resolve) =>
+      auth
+        .createUserWithEmailAndPassword(inputValue.email, inputValue.password)
+        .then((res) => resolve(res.user.Aa))
+    );
     axiosClient
-      .post('/users', { user: inputValue })
+      .post('/users', { user: inputValue, token: token })
       .then((res) => {
         setLoggedIn(true);
         setUserName(res.data.name);
