@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import axios from 'axios';
+import { axiosClient } from '../api/axiosClient';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -20,25 +20,18 @@ const Setting = () => {
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/users/me`, {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        const newInputValue = {
-          name: '',
-          email: '',
-          password: '',
-          password_confirmation: '',
-        };
-        newInputValue.name = res.data.name;
-        newInputValue.email = res.data.email;
-        setInputValue(newInputValue);
-        setPreview(res.data.icon.url);
-      });
+    axiosClient.get('/users/me').then((res) => {
+      const newInputValue = {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+      };
+      newInputValue.name = res.data.name;
+      newInputValue.email = res.data.email;
+      setInputValue(newInputValue);
+      setPreview(res.data.icon.url);
+    });
   }, []);
 
   const updateProfile = () => {
@@ -52,13 +45,8 @@ const Setting = () => {
     );
     if (icon) formData.append('user[icon]', icon);
 
-    axios
-      .patch(`${process.env.REACT_APP_API_URL}/users/me`, formData, {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-        },
-        withCredentials: true,
-      })
+    axiosClient
+      .patch('/users/me', formData)
       .then(() => {
         const newInputValue = Object.assign({}, inputValue);
         newInputValue.password = '';
