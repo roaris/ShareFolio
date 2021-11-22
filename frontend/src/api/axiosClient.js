@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { auth } from '../firebase';
 
 const headers = {
   'Content-Type': 'application/json',
@@ -6,27 +7,31 @@ const headers = {
 };
 
 export const axiosClient = {
-  get: (path) => {
+  get: async (path) => {
+    const token = await auth.currentUser.getIdToken();
     return axios.get(`${process.env.REACT_APP_API_URL}${path}`, {
-      headers: headers,
+      headers: Object.assign({ 'Authorization': `Bearer ${token}` }, headers),
       withCredentials: true,
     });
   },
-  post: (path, data) => {
+  post: async (path, data) => {
+    const token = await auth.currentUser.getIdToken();
     return axios.post(`${process.env.REACT_APP_API_URL}${path}`, data, {
-      headers: headers,
+      headers: Object.assign({ 'Authorization': `Bearer ${token}` }, headers),
       withCredentials: true,
     });
   },
-  patch: (path, data) => {
+  patch: async (path, data) => {
+    const token = await auth.currentUser.getIdToken();
     return axios.patch(`${process.env.REACT_APP_API_URL}${path}`, data, {
-      headers: headers,
+      headers: Object.assign({ 'Authorization': `Bearer ${token}` }, headers),
       withCredentials: true,
     });
   },
-  delete: (path) => {
+  delete: async (path) => {
+    const token = await auth.currentUser.getIdToken();
     return axios.delete(`${process.env.REACT_APP_API_URL}${path}`, {
-      headers: headers,
+      headers: Object.assign({ 'Authorization': `Bearer ${token}` }, headers),
       withCredentials: true,
     })
   }

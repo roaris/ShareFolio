@@ -11,12 +11,6 @@ Rails.application.routes.draw do
       end
       get '/users/me', to: 'users#show_me'
       patch '/users/me', to: 'users#update_me'
-      resources :sessions, only: [:create] do
-        collection do
-          get :logged_in
-          delete :logout
-        end
-      end
       resources :posts, only: %i[index show create update destroy] do
         collection do
           get :recent
