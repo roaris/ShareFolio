@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
+import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { axiosClient } from '../api/axiosClient';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -22,6 +23,7 @@ const Signup = () => {
   const history = useHistory();
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
   const setUserName = useContext(AuthContext).setUserName;
+  const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
@@ -35,6 +37,7 @@ const Signup = () => {
       .then((res) => {
         setLoggedIn(true);
         setUserName(res.data.name);
+        updateFlashMessage({ successMessage: 'ログインしました' });
         history.push('/posts');
       })
       .catch((err) => {
