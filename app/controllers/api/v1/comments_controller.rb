@@ -3,7 +3,7 @@
 module Api
   module V1
     class CommentsController < ApplicationController
-      before_action :require_login
+      before_action :authenticate_user
 
       def create
         comment = current_user.comments.build(comment_params.merge({ post_id: params[:post_id] }))
