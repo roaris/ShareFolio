@@ -8,6 +8,7 @@ module Api
       def create
         FirebaseIdToken::Certificates.request
         raise ArgumentError, 'BadRequest Parameter' if payload.blank?
+
         user = User.new(user_params.merge(uid: payload['sub']))
 
         if user.save
