@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import { axiosClient } from '../api/axiosClient';
+import { auth } from '../firebase';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import Grid from '@material-ui/core/Grid';
@@ -11,6 +11,7 @@ import CommentForm from '../components/CommentForm';
 import CreatedAt from '../components/CreatedAt';
 import CommentList from '../components/CommentList';
 import MDSpinner from 'react-md-spinner';
+import axios from 'axios';
 
 const PostDetail = (props) => {
   const { params } = props.match;
@@ -24,17 +25,35 @@ const PostDetail = (props) => {
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
   useEffect(() => {
-    axiosClient.get(`/posts/${id}`).then((res) => {
-      setPost(res.data.post);
-      setOwnerName(res.data.user.name);
-      setOwnerIconUrl(res.data.user.icon.url);
-      setCommentsAndUsers(res.data.comments_and_users);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      })
+      .then((res) => {
+        setPost(res.data.post);
+        setOwnerName(res.data.user.name);
+        setOwnerIconUrl(res.data.user.icon.url);
+        setCommentsAndUsers(res.data.comments_and_users);
+      });
   }, []);
 
-  const submitComment = (markdown) => {
-    axiosClient
-      .post(`/posts/${id}/comments`, { comment: { content: markdown } })
+  const submitComment = async (markdown) => {
+    const token = await auth.currentUser.getIdToken();
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/posts/${id}/comments`,
+        { comment: { content: markdown } },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         const newCommentsAndUsers = commentsAndUsers.slice();
         newCommentsAndUsers.push({

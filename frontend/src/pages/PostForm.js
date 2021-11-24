@@ -1,12 +1,13 @@
 import React, { useState, useMemo, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { useHistory } from 'react-router-dom';
-import { axiosClient } from '../api/axiosClient';
+import { auth } from '../firebase';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 const PostForm = () => {
   const style = {
@@ -41,11 +42,22 @@ const PostForm = () => {
     setInputValue(newInputValue);
   };
 
-  const submitPost = () => {
-    axiosClient
-      .post('/posts', {
-        post: Object.assign({}, inputValue, { description: markdown }),
-      })
+  const submitPost = async () => {
+    const token = await auth.currentUser.getIdToken();
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/posts`,
+        {
+          post: Object.assign({}, inputValue, { description: markdown }),
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         history.push(`/posts/${res.data.id}`);
         updateFlashMessage({ successMessage: '投稿しました' });

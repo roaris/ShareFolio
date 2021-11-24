@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
-import { axiosClient } from '../api/axiosClient';
 import { auth } from '../firebase';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 const Signup = () => {
   const [inputValue, setInputValue] = useState({
@@ -36,8 +36,20 @@ const Signup = () => {
         .createUserWithEmailAndPassword(inputValue.email, inputValue.password)
         .then((res) => resolve(res.user.Aa))
     );
-    axiosClient
-      .post('/users', { user: inputValue, token: token })
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/users`,
+        {
+          user: { name: inputValue.name, email: inputValue.email },
+          token: token,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+        }
+      )
       .then((res) => {
         setLoggedIn(true);
         setUserName(res.data.name);

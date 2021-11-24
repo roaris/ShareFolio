@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import { axiosClient } from '../api/axiosClient';
 import { auth } from '../firebase';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -15,8 +13,6 @@ const Login = () => {
     password: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
-  const setLoggedIn = useContext(AuthContext).setLoggedIn;
-  const setUserName = useContext(AuthContext).setUserName;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
   const changeInputValue = (itemName, e) => {
@@ -25,20 +21,13 @@ const Login = () => {
     setInputValue(newInputValue);
   };
 
-  const login = async () => {
-    const uid = await new Promise((resolve) =>
-      auth
-        .signInWithEmailAndPassword(inputValue.email, inputValue.password)
-        .then((res) => resolve(res.user.uid))
-        .catch(() => {
-          setErrorMessage('Invalid email/password combination');
-        })
-    );
-    axiosClient.post('/users/search', { uid: uid }).then((res) => {
-      setLoggedIn(true);
-      setUserName(res.data.name);
-      updateFlashMessage({ successMessage: 'ログインしました' });
-    });
+  const login = () => {
+    auth
+      .signInWithEmailAndPassword(inputValue.email, inputValue.password)
+      .then(() => updateFlashMessage({ successMessage: 'ログインしました' }))
+      .catch(() => {
+        setErrorMessage('Invalid email/password combination');
+      });
   };
 
   const style = {

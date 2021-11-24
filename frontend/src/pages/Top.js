@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { axiosClient } from '../api/axiosClient';
 import Post from '../components/Post';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -8,12 +7,20 @@ import Button from '@material-ui/core/Button';
 import CheckIcon from '@mui/icons-material/Check';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import MDSpinner from 'react-md-spinner';
+import axios from 'axios';
 
 const Top = () => {
   const [postsAndUsers, setPostsAndUsers] = useState(null);
 
   useEffect(() => {
-    axiosClient.get('/posts/recent').then((res) => setPostsAndUsers(res.data));
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/posts/recent`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      })
+      .then((res) => setPostsAndUsers(res.data));
   }, []);
 
   const styles = makeStyles({

@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import { axiosClient } from '../api/axiosClient';
+import { auth } from '../firebase';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import defaultIcon from '../logo.svg';
 import MDSpinner from 'react-md-spinner';
+import axios from 'axios';
 
 const Setting = () => {
   const [inputValue, setInputValue] = useState(null);
@@ -19,22 +20,31 @@ const Setting = () => {
   const [preview, setPreview] = useState('');
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
-  useEffect(() => {
-    axiosClient.get('/users/me').then((res) => {
-      const newInputValue = {
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-      };
-      newInputValue.name = res.data.name;
-      newInputValue.email = res.data.email;
-      setInputValue(newInputValue);
-      setPreview(res.data.icon.url);
-    });
+  useEffect(async () => {
+    const token = await auth.currentUser.getIdToken();
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/users/me`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        const newInputValue = {
+          name: '',
+          email: '',
+          password: '',
+          password_confirmation: '',
+        };
+        newInputValue.name = res.data.name;
+        newInputValue.email = res.data.email;
+        setInputValue(newInputValue);
+        setPreview(res.data.icon.url);
+      });
   }, []);
 
-  const updateProfile = () => {
+  const updateProfile = async () => {
     const formData = new FormData();
     formData.append('user[name]', inputValue.name);
     formData.append('user[email]', inputValue.email);
@@ -45,8 +55,15 @@ const Setting = () => {
     );
     if (icon) formData.append('user[icon]', icon);
 
-    axiosClient
-      .patch('/users/me', formData)
+    const token = await auth.currentUser.getIdToken();
+    axios
+      .patch(`${process.env.REACT_APP_API_URL}/users/me`, formData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then(() => {
         const newInputValue = Object.assign({}, inputValue);
         newInputValue.password = '';
