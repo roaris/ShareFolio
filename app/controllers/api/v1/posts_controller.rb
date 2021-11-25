@@ -4,6 +4,7 @@ module Api
   module V1
     class PostsController < ApplicationController
       before_action :require_login, only: %i[create update destroy]
+      skip_before_action :authenticate_user, only: %i[index recent show]
 
       def index
         posts = Post.all.includes(:user).order(:id)
