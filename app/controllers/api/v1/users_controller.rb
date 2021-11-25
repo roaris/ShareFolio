@@ -3,7 +3,6 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :require_login, only: :show_me
       skip_before_action :authenticate_user, only: :create
 
       def create
