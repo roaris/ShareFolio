@@ -10,7 +10,9 @@ export const AuthContextProvider = ({ children }) => {
   const [userIconUrl, setUserIconUrl] = useState(null);
 
   useEffect(async () => {
-    const uid = await new Promise(resolve => auth.onAuthStateChanged(user => resolve(user?.uid)));
+    const uid = await new Promise((resolve) =>
+      auth.onAuthStateChanged((user) => resolve(user?.uid))
+    );
     if (uid) {
       setLoggedIn(true);
       const token = await auth.currentUser.getIdToken();
@@ -18,7 +20,7 @@ export const AuthContextProvider = ({ children }) => {
         .get(`${process.env.REACT_APP_API_URL}/users/search?uid=${uid}`, {
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {

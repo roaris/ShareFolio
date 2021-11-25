@@ -50,7 +50,7 @@ const PostDetail = (props) => {
           headers: {
             'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
-            'Authorization': `Beaer ${token}`,
+            Authorization: `Beaer ${token}`,
           },
           withCredentials: true,
         }

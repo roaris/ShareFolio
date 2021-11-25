@@ -22,7 +22,7 @@ const Header = () => {
       setLoggedIn(false);
       updateFlashMessage({ successMessage: 'ログアウトしました' });
       history.push('/');
-    })
+    });
   };
 
   const headerStyle = {

@@ -24,7 +24,7 @@ const Setting = () => {
       .get(`${process.env.REACT_APP_API_URL}/users/me`, {
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         withCredentials: true,
       })
@@ -51,7 +51,7 @@ const Setting = () => {
       .patch(`${process.env.REACT_APP_API_URL}/users/me`, formData, {
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         withCredentials: true,
       })
