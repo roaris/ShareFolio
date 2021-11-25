@@ -2,8 +2,10 @@
 
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
+  include Firebase::Auth::Authenticable
 
   before_action :check_xhr_header, except: :fallback_index_html
+  before_action :authenticate_user
 
   def fallback_index_html
     respond_to do |format|
