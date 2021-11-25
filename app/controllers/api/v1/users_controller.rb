@@ -17,7 +17,6 @@ module Api
         else
           user = User.new(user_params.merge(uid: payload['sub']))
           if user.save
-            session[:user_id] = user.id
             render json: user, status: :created
           else
             render json: user.errors, status: :bad_request
@@ -34,6 +33,15 @@ module Api
           render status: :ok, json: current_user
         else
           render status: :bad_request, json: current_user.errors
+        end
+      end
+
+      def search
+        user = User.find_by(uid: params[:uid])
+        if user
+          render status: :ok, json: user
+        else
+          render status: :not_found
         end
       end
 
