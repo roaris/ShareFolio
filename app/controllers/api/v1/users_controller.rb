@@ -9,13 +9,19 @@ module Api
       def create
         FirebaseIdToken::Certificates.request
         raise ArgumentError, 'BadRequest Parameter' if payload.blank?
-        user = User.new(user_params.merge(uid: payload['sub']))
 
-        if user.save
-          session[:user_id] = user.id
-          render json: user, status: :created
+        uid = payload['sub']
+
+        if user = User.find_by(uid: uid)
+          render json: user, status: :ok
         else
-          render json: user.errors, status: :bad_request
+          user = User.new(user_params.merge(uid: payload['sub']))
+          if user.save
+            session[:user_id] = user.id
+            render json: user, status: :created
+          else
+            render json: user.errors, status: :bad_request
+          end
         end
       end
 
