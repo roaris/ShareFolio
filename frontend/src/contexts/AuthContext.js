@@ -22,8 +22,8 @@ export const AuthContextProvider = ({ children }) => {
           },
         })
         .then((res) => {
-          setUserName(res.data.user_name);
-          setUserIconUrl(res.data.user_icon_url);
+          setUserName(res.data.name);
+          setUserIconUrl(res.data.icon.url);
         });
     } else {
       setLoggedIn(false);
