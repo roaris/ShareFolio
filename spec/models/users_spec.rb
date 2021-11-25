@@ -38,20 +38,4 @@ RSpec.describe User, type: :model do
       expect(user).to be_invalid
     end
   end
-
-  it 'is invalid with a duplicated email address' do
-    create(:user, email: 'test@example.com')
-    user = build(:user, email: 'test@example.com')
-    expect(user).to be_invalid
-  end
-
-  it 'is invalid with an empty password' do
-    user = build(:user, password: '')
-    expect(user).to be_invalid
-  end
-
-  it 'is invalid with a too short password' do
-    user = build(:user, password: 'abcde')
-    expect(user).to be_invalid
-  end
 end

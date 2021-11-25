@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 module TestHelper
-  def log_in_as(user)
-    allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return({ user_id: user.id })
-  end
-
   def xhr_header
     { 'X-Requested-With': 'XMLHttpRequest' }
   end
@@ -33,8 +29,6 @@ module TestHelper
       user: {
         name: 'test',
         email: 'test@example.com',
-        password: 'password',
-        password_confirmation: 'password',
       },
     }
   end
