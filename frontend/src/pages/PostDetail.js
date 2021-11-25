@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import axios from 'axios';
+import { auth } from '../firebase';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import Grid from '@material-ui/core/Grid';
@@ -39,7 +40,8 @@ const PostDetail = (props) => {
       });
   }, []);
 
-  const submitComment = (markdown) => {
+  const submitComment = async (markdown) => {
+    const token = await auth.currentUser.getIdToken();
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/posts/${id}/comments`,
@@ -48,6 +50,7 @@ const PostDetail = (props) => {
           headers: {
             'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
+            'Authorization': `Beaer ${token}`,
           },
           withCredentials: true,
         }

@@ -2,6 +2,7 @@ import React, { useState, useMemo, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { auth } from '../firebase';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import Grid from '@material-ui/core/Grid';
@@ -41,7 +42,8 @@ const PostForm = () => {
     setInputValue(newInputValue);
   };
 
-  const submitPost = () => {
+  const submitPost = async () => {
+    const token = await auth.currentUser.getIdToken();
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/posts`,
@@ -50,6 +52,7 @@ const PostForm = () => {
           headers: {
             'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
+            'Authorization': `Bearer ${token}`,
           },
           withCredentials: true,
         }

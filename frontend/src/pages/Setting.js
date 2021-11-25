@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import axios from 'axios';
+import { auth } from '../firebase';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -19,11 +20,13 @@ const Setting = () => {
   const [preview, setPreview] = useState('');
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
-  useEffect(() => {
+  useEffect(async () => {
+    const token = await auth.currentUser.getIdToken();
     axios
       .get(`${process.env.REACT_APP_API_URL}/users/me`, {
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
+          'Authorization': `Bearer ${token}`,
         },
         withCredentials: true,
       })
@@ -41,7 +44,7 @@ const Setting = () => {
       });
   }, []);
 
-  const updateProfile = () => {
+  const updateProfile = async () => {
     const formData = new FormData();
     formData.append('user[name]', inputValue.name);
     formData.append('user[email]', inputValue.email);
@@ -52,10 +55,12 @@ const Setting = () => {
     );
     if (icon) formData.append('user[icon]', icon);
 
+    const token = await auth.currentUser.getIdToken();
     axios
       .patch(`${process.env.REACT_APP_API_URL}/users/me`, formData, {
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
+          'Authorization': `Bearer ${token}`,
         },
         withCredentials: true,
       })
