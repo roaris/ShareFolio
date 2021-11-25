@@ -1,42 +1,34 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import { axiosClient } from '../api/axiosClient';
+import { axiosAuthClient } from '../api/axiosClient';
+import { auth, githubProvider } from '../firebase';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 const Login = () => {
-  const [inputValue, setInputValue] = useState({
-    email: '',
-    password: '',
-  });
-  const [errorMessage, setErrorMessage] = useState('');
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
   const setUserName = useContext(AuthContext).setUserName;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
-  const changeInputValue = (itemName, e) => {
-    const newInputValue = Object.assign({}, inputValue);
-    newInputValue[itemName] = e.target.value;
-    setInputValue(newInputValue);
-  };
-
   const login = () => {
-    axiosClient
-      .post('/sessions', { session: inputValue })
-      .then((res) => {
-        setLoggedIn(true);
-        setUserName(res.data.user_name);
-        updateFlashMessage({ successMessage: 'ログインしました' });
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          setErrorMessage('Invalid email/password combination');
-        }
-      });
+    auth.signInWithPopup(githubProvider).then((res) => {
+      const name = res.additionalUserInfo.username;
+      const email = res.user.email;
+      const icon = res.user.photoURL;
+      const token = res.user.Aa;
+      axiosAuthClient
+        .post('/users', {
+          user: { name: name, email: email, icon: icon },
+          token: token,
+        })
+        .then((res) => {
+          setLoggedIn(true);
+          setUserName(res.data.name);
+          updateFlashMessage({ successMessage: 'ログインしました' });
+        });
+    });
   };
 
   const style = {
@@ -47,33 +39,18 @@ const Login = () => {
 
   return (
     <Grid container alignItems='center' justifyContent='center' style={style}>
-      <Typography style={{ color: 'red', marginBottom: 30 }}>
-        {errorMessage}
-      </Typography>
-      <TextField
-        label='メールアドレス'
-        variant='outlined'
-        style={{ width: '40ch', marginBottom: 30 }}
-        value={inputValue.email}
-        onChange={(e) => changeInputValue('email', e)}
-      />
-      <TextField
-        label='パスワード'
-        type='password'
-        variant='outlined'
-        style={{ width: '40ch', marginBottom: 30 }}
-        value={inputValue.password}
-        onChange={(e) => changeInputValue('password', e)}
-      />
       <Button
-        variant='contained'
-        color='primary'
+        style={{
+          backgroundColor: 'black',
+          color: 'white',
+          textTransform: 'none',
+          width: 400,
+        }}
         onClick={login}
-        style={{ marginBottom: 30 }}
       >
-        ログイン
+        <GitHubIcon style={{ marginRight: 10 }} />
+        GitHubでログイン
       </Button>
-      <Link href='/signup'>新規登録はこちら</Link>
     </Grid>
   );
 };

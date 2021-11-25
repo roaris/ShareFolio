@@ -12,7 +12,6 @@ gem 'puma', '~> 5.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
-gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -27,6 +26,7 @@ gem 'dotenv-rails'
 gem "factory_bot_rails"
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'firebase-auth-rails'
 
 group :development, :test do
   gem 'sqlite3', '~> 1.4'

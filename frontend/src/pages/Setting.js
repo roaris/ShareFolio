@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import { axiosClient } from '../api/axiosClient';
+import { axiosAuthClient } from '../api/axiosClient';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -12,20 +12,16 @@ const Setting = () => {
   const [validationMessage, setValidationMessage] = useState({
     name: '',
     email: '',
-    password: '',
-    password_confirmation: '',
   });
   const [icon, setIcon] = useState(null);
   const [preview, setPreview] = useState('');
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
-  useEffect(() => {
-    axiosClient.get('/users/me').then((res) => {
+  useEffect(async () => {
+    axiosAuthClient.get('/users/me').then((res) => {
       const newInputValue = {
         name: '',
         email: '',
-        password: '',
-        password_confirmation: '',
       };
       newInputValue.name = res.data.name;
       newInputValue.email = res.data.email;
@@ -34,29 +30,20 @@ const Setting = () => {
     });
   }, []);
 
-  const updateProfile = () => {
+  const updateProfile = async () => {
     const formData = new FormData();
     formData.append('user[name]', inputValue.name);
     formData.append('user[email]', inputValue.email);
-    formData.append('user[password]', inputValue.password);
-    formData.append(
-      'user[password_confirmation]',
-      inputValue.password_confirmation
-    );
     if (icon) formData.append('user[icon]', icon);
 
-    axiosClient
+    axiosAuthClient
       .patch('/users/me', formData)
       .then(() => {
         const newInputValue = Object.assign({}, inputValue);
-        newInputValue.password = '';
-        newInputValue.password_confirmation = '';
         setInputValue(newInputValue);
         const newValidationMessage = {
           name: '',
           email: '',
-          password: '',
-          password_confirmation: '',
         };
         setValidationMessage(newValidationMessage);
         updateFlashMessage({ successMessage: 'プロフィールを更新しました' });
@@ -66,8 +53,6 @@ const Setting = () => {
           const newValidationMessage = {
             name: '',
             email: '',
-            password: '',
-            password_confirmation: '',
           };
           for (const property in err.response.data) {
             newValidationMessage[property] = err.response.data[property][0];
@@ -196,26 +181,6 @@ const InfoRenderer = (props) => {
         onChange={(e) => props.changeInputValue('email', e)}
         error={props.validationMessage.email !== ''}
         helperText={props.validationMessage.email}
-      />
-      <TextField
-        label='パスワード変更'
-        type='password'
-        variant='outlined'
-        style={{ width: '40ch', marginBottom: 30 }}
-        value={props.inputValue.password}
-        onChange={(e) => props.changeInputValue('password', e)}
-        error={props.validationMessage.password !== ''}
-        helperText={props.validationMessage.password}
-      />
-      <TextField
-        label='パスワード変更(確認)'
-        type='password'
-        variant='outlined'
-        style={{ width: '40ch', marginBottom: 30 }}
-        value={props.inputValue.password_confirmation}
-        onChange={(e) => props.changeInputValue('password_confirmation', e)}
-        error={props.validationMessage.password_confirmation !== ''}
-        helperText={props.validationMessage.password_confirmation}
       />
     </Grid>
   );

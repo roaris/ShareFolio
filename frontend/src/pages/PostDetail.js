@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import { axiosClient } from '../api/axiosClient';
+import { axiosAuthClient, axiosClient } from '../api/axiosClient';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import Grid from '@material-ui/core/Grid';
@@ -32,8 +32,8 @@ const PostDetail = (props) => {
     });
   }, []);
 
-  const submitComment = (markdown) => {
-    axiosClient
+  const submitComment = async (markdown) => {
+    axiosAuthClient
       .post(`/posts/${id}/comments`, { comment: { content: markdown } })
       .then((res) => {
         const newCommentsAndUsers = commentsAndUsers.slice();

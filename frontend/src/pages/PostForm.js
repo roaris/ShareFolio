@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { useHistory } from 'react-router-dom';
-import { axiosClient } from '../api/axiosClient';
+import { axiosAuthClient } from '../api/axiosClient';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import Grid from '@material-ui/core/Grid';
@@ -41,8 +41,8 @@ const PostForm = () => {
     setInputValue(newInputValue);
   };
 
-  const submitPost = () => {
-    axiosClient
+  const submitPost = async () => {
+    axiosAuthClient
       .post('/posts', {
         post: Object.assign({}, inputValue, { description: markdown }),
       })
