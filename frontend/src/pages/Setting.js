@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import axios from 'axios';
-import { auth } from '../firebase';
+import { axiosAuthClient } from '../api/axiosClient';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -19,25 +18,16 @@ const Setting = () => {
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
   useEffect(async () => {
-    const token = await auth.currentUser.getIdToken();
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/users/me`, {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        const newInputValue = {
-          name: '',
-          email: '',
-        };
-        newInputValue.name = res.data.name;
-        newInputValue.email = res.data.email;
-        setInputValue(newInputValue);
-        setPreview(res.data.icon.url);
-      });
+    axiosAuthClient.get('/users/me').then((res) => {
+      const newInputValue = {
+        name: '',
+        email: '',
+      };
+      newInputValue.name = res.data.name;
+      newInputValue.email = res.data.email;
+      setInputValue(newInputValue);
+      setPreview(res.data.icon.url);
+    });
   }, []);
 
   const updateProfile = async () => {
@@ -46,15 +36,8 @@ const Setting = () => {
     formData.append('user[email]', inputValue.email);
     if (icon) formData.append('user[icon]', icon);
 
-    const token = await auth.currentUser.getIdToken();
-    axios
-      .patch(`${process.env.REACT_APP_API_URL}/users/me`, formData, {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      })
+    axiosAuthClient
+      .patch('/users/me', formData)
       .then(() => {
         const newInputValue = Object.assign({}, inputValue);
         setInputValue(newInputValue);

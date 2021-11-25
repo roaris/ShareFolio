@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import { axiosAuthClient } from '../api/axiosClient';
 import { auth } from '../firebase';
 
 export const AuthContext = createContext();
@@ -15,18 +15,10 @@ export const AuthContextProvider = ({ children }) => {
     );
     if (uid) {
       setLoggedIn(true);
-      const token = await auth.currentUser.getIdToken();
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/users/search?uid=${uid}`, {
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          setUserName(res.data.name);
-          setUserIconUrl(res.data.icon.url);
-        });
+      axiosAuthClient.get(`/users/search?uid=${uid}`).then((res) => {
+        setUserName(res.data.name);
+        setUserIconUrl(res.data.icon.url);
+      });
     } else {
       setLoggedIn(false);
     }

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import axios from 'axios';
-import { auth } from '../firebase';
+import { axiosAuthClient, axiosClient } from '../api/axiosClient';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import Grid from '@material-ui/core/Grid';
@@ -25,36 +24,17 @@ const PostDetail = (props) => {
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        setPost(res.data.post);
-        setOwnerName(res.data.user.name);
-        setOwnerIconUrl(res.data.user.icon.url);
-        setCommentsAndUsers(res.data.comments_and_users);
-      });
+    axiosClient.get(`/posts/${id}`).then((res) => {
+      setPost(res.data.post);
+      setOwnerName(res.data.user.name);
+      setOwnerIconUrl(res.data.user.icon.url);
+      setCommentsAndUsers(res.data.comments_and_users);
+    });
   }, []);
 
   const submitComment = async (markdown) => {
-    const token = await auth.currentUser.getIdToken();
-    axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/posts/${id}/comments`,
-        { comment: { content: markdown } },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
-            Authorization: `Beaer ${token}`,
-          },
-          withCredentials: true,
-        }
-      )
+    axiosAuthClient
+      .post(`/posts/${id}/comments`, { comment: { content: markdown } })
       .then((res) => {
         const newCommentsAndUsers = commentsAndUsers.slice();
         newCommentsAndUsers.push({

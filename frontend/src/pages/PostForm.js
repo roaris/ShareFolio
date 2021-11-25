@@ -1,8 +1,7 @@
 import React, { useState, useMemo, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import { auth } from '../firebase';
+import { axiosAuthClient } from '../api/axiosClient';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import Grid from '@material-ui/core/Grid';
@@ -43,20 +42,10 @@ const PostForm = () => {
   };
 
   const submitPost = async () => {
-    const token = await auth.currentUser.getIdToken();
-    axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/posts`,
-        { post: Object.assign({}, inputValue, { description: markdown }) },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        }
-      )
+    axiosAuthClient
+      .post('/posts', {
+        post: Object.assign({}, inputValue, { description: markdown }),
+      })
       .then((res) => {
         history.push(`/posts/${res.data.id}`);
         updateFlashMessage({ successMessage: '投稿しました' });
