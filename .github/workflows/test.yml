@@ -10,7 +10,7 @@ jobs:
           MYSQL_USERNAME: dbuser
           MYSQL_ROOT_PASSWORD: dbpass
     container:
-      image: ruby:2.6
+      image: ruby:2.6.8
       env:
         RAILS_ENV: test
         MYSQL_HOST: db
