@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import { axiosClient } from '../api/axiosClient';
+import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -32,8 +32,18 @@ const Signup = () => {
   };
 
   const createUser = () => {
-    axiosClient
-      .post('/users', { user: inputValue })
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/users`,
+        { user: inputValue },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         setLoggedIn(true);
         setUserName(res.data.name);

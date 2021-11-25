@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import { axiosClient } from '../api/axiosClient';
+import axios from 'axios';
 import Link from '@material-ui/core/Link';
 import CreateIcon from '@mui/icons-material/Create';
 import PersonIcon from '@mui/icons-material/Person';
@@ -18,11 +18,18 @@ const Header = () => {
   const history = useHistory();
 
   const logout = () => {
-    axiosClient.delete('/sessions/logout').then(() => {
-      setLoggedIn(false);
-      updateFlashMessage({ successMessage: 'ログアウトしました' });
-      history.push('/');
-    });
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/sessions/logout`, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        withCredentials: true,
+      })
+      .then(() => {
+        setLoggedIn(false);
+        updateFlashMessage({ successMessage: 'ログアウトしました' });
+        history.push('/');
+      });
   };
 
   const headerStyle = {

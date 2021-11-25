@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { axiosClient } from '../api/axiosClient';
+import axios from 'axios';
 import Post from '../components/Post';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -13,7 +13,14 @@ const Top = () => {
   const [postsAndUsers, setPostsAndUsers] = useState(null);
 
   useEffect(() => {
-    axiosClient.get('/posts/recent').then((res) => setPostsAndUsers(res.data));
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/posts/recent`, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        withCredentials: true,
+      })
+      .then((res) => setPostsAndUsers(res.data));
   }, []);
 
   const styles = makeStyles({

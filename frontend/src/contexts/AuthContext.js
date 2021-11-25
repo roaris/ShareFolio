@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { axiosClient } from '../api/axiosClient';
+import axios from 'axios';
 
 export const AuthContext = createContext();
 
@@ -9,11 +9,18 @@ export const AuthContextProvider = ({ children }) => {
   const [userIconUrl, setUserIconUrl] = useState(null);
 
   useEffect(() => {
-    axiosClient.get('/sessions/logged_in').then((res) => {
-      setLoggedIn(res.data.logged_in);
-      setUserName(res.data.user_name);
-      setUserIconUrl(res.data.user_icon_url);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/sessions/logged_in`, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setLoggedIn(res.data.logged_in);
+        setUserName(res.data.user_name);
+        setUserIconUrl(res.data.user_icon_url);
+      });
   }, []);
 
   return (

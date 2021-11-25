@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import { axiosClient } from '../api/axiosClient';
+import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -25,8 +25,18 @@ const Login = () => {
   };
 
   const login = () => {
-    axiosClient
-      .post('/sessions', { session: inputValue })
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/sessions`,
+        { session: inputValue },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         setLoggedIn(true);
         setUserName(res.data.user_name);
