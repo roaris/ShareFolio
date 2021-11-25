@@ -5,6 +5,7 @@ class ChangeColumnOfUsers < ActiveRecord::Migration[6.1]
     change_table :users do |t|
       t.remove :password_digest
       t.string :uid, null: false
+      t.index :uid, unique: true
     end
   end
 
@@ -12,6 +13,7 @@ class ChangeColumnOfUsers < ActiveRecord::Migration[6.1]
     change_table :users do |t|
       t.string :password_digest, null: false
       t.remove :uid
+      t.remove_index :uid
     end
   end
 end

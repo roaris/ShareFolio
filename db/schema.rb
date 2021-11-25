@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2021_11_25_075739) do
     t.string "icon"
     t.string "uid", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
   add_foreign_key "comments", "posts"
