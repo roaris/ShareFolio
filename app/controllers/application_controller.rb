@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
   include Firebase::Auth::Authenticable
 
   before_action :check_xhr_header, except: :fallback_index_html
-  before_action :authenticate_user
+  before_action :authenticate_user, except: :fallback_index_html
 
   def fallback_index_html
     respond_to do |format|
