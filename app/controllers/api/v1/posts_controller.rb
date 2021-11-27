@@ -27,7 +27,9 @@ module Api
         post = Post.find(params[:id])
         comments_and_users = []
         post.comments.includes(:user).each do |comment|
-          comments_and_users.push({ comment: comment, user_name: comment.user.name, user_icon_url: comment.user.icon.url })
+          user = comment.user
+          user_icon_url = user.upload_icon.url || user.default_icon_url
+          comments_and_users.push({ comment: comment, user_name: user.name, user_icon_url: user_icon_url })
         end
         render staus: :ok, json: { post: post, user: post.user, comments_and_users: comments_and_users }
       end

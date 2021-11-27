@@ -50,7 +50,8 @@ module Api
         params.require(:user).permit(
           :name,
           :email,
-          :icon,
+          :upload_icon,
+          :default_icon_url,
         )
       end
 

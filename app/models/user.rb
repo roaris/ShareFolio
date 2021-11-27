@@ -10,6 +10,7 @@ class User < ApplicationRecord
     length: { maximum: 255 },
     format: { with: VALID_EMAIL_REGEX },
   }
-  mount_uploader :icon, IconUploader
+  mount_uploader :upload_icon, IconUploader
+  validates :default_icon_url, presence: true
   validates :uid, presence: true
 end

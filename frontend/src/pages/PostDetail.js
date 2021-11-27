@@ -27,7 +27,11 @@ const PostDetail = (props) => {
     axiosClient.get(`/posts/${id}`).then((res) => {
       setPost(res.data.post);
       setOwnerName(res.data.user.name);
-      setOwnerIconUrl(res.data.user.icon.url);
+      setOwnerIconUrl(
+        res.data.user.upload_icon.url
+          ? res.data.user.upload_icon.url
+          : res.data.user.default_icon_url
+      );
       setCommentsAndUsers(res.data.comments_and_users);
     });
   }, []);

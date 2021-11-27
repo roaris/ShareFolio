@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_25_075739) do
+ActiveRecord::Schema.define(version: 2021_11_27_175204) do
 
   create_table "comments", force: :cascade do |t|
     t.string "content", null: false
@@ -38,8 +38,9 @@ ActiveRecord::Schema.define(version: 2021_11_25_075739) do
     t.string "email", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "icon"
+    t.string "upload_icon"
     t.string "uid", null: false
+    t.string "default_icon_url", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
