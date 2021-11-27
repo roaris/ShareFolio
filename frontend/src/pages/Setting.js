@@ -26,7 +26,11 @@ const Setting = () => {
       newInputValue.name = res.data.name;
       newInputValue.email = res.data.email;
       setInputValue(newInputValue);
-      setPreview(res.data.upload_icon.url ? res.data.upload_icon.url : res.data.default_icon_url);
+      setPreview(
+        res.data.upload_icon.url
+          ? res.data.upload_icon.url
+          : res.data.default_icon_url
+      );
     });
   }, []);
 

@@ -12,7 +12,9 @@ const Post = (props) => {
 
   const user = props.postAndUser.user;
   const userName = user.name;
-  const userIconUrl = user.upload_icon.url ? user.upload_icon.url : user.default_icon_url;
+  const userIconUrl = user.upload_icon.url
+    ? user.upload_icon.url
+    : user.default_icon_url;
 
   const previewDescription = (description) => {
     let result = '';

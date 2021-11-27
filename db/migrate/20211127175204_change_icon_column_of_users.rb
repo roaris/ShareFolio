@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 class ChangeIconColumnOfUsers < ActiveRecord::Migration[6.1]
   def change
-    rename_column :users, :icon, :upload_icon
-    add_column :users, :default_icon_url, :string, null: false
+    change_table :users do |t|
+      t.rename :icon, :upload_icon
+      t.string :default_icon_url, null: false
+    end
   end
 end

@@ -23,10 +23,7 @@ const Owner = (props) => {
 
   return (
     <div className={classes.owner}>
-      <img
-        src={props.userIconUrl}
-        className={classes.icon}
-      />
+      <img src={props.userIconUrl} className={classes.icon} />
       <span className={classes.userName}>{props.userName}</span>
     </div>
   );
