@@ -84,7 +84,7 @@ const Login = () => {
         onClick={githublogin}
       >
         <GitHubIcon style={{ marginRight: 10 }} />
-        GitHubでログイン
+        GitHubでログイン / 新規登録
       </Button>
       <Button
         style={{
@@ -95,7 +95,7 @@ const Login = () => {
         onClick={googlelogin}
       >
         <GoogleIcon style={{ color: '#DC4A3D', marginRight: 10 }} />
-        Googleでログイン
+        Googleでログイン / 新規登録
       </Button>
     </Grid>
   );

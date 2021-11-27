@@ -5,7 +5,6 @@ import FlashMessageContextProvider from './contexts/FlashMessageContext';
 import FlashMessage from './components/FlashMessage';
 import Header from './components/Header';
 import Top from './pages/Top';
-import Signup from './pages/Signup';
 import Login from './pages/Login';
 import PostList from './pages/PostList';
 import PostDetail from './pages/PostDetail';
@@ -63,7 +62,6 @@ const App = () => {
               <div style={{ flex: 1 }}>
                 <Switch>
                   <PublicRoute exact path='/' component={Top} />
-                  <PublicRoute path='/signup' component={Signup} />
                   <PublicRoute path='/login' component={Login} />
                   <Route exact path='/posts' component={PostList} />
                   <PrivateRoute path='/setting' component={Setting} />
