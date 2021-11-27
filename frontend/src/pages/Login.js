@@ -2,7 +2,12 @@ import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { axiosAuthClient } from '../api/axiosClient';
-import { auth, githubProvider, googleProvider, twitterProvider } from '../firebase';
+import {
+  auth,
+  githubProvider,
+  googleProvider,
+  twitterProvider,
+} from '../firebase';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CheckIcon from '@mui/icons-material/Check';
@@ -77,7 +82,9 @@ const Login = () => {
         const token = res.user.Aa;
         if (email === null) {
           auth.signOut();
-          setErrorMessage('このTwitterアカウントにはメールアドレスが登録されていません。アドレス登録後に再度お手続きをお願いします。')
+          setErrorMessage(
+            'このTwitterアカウントにはメールアドレスが登録されていません。アドレス登録後に再度お手続きをお願いします。'
+          );
           return;
         }
         createUser(name, email, icon, token);
