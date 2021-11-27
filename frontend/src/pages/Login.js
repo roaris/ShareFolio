@@ -5,6 +5,7 @@ import { axiosAuthClient } from '../api/axiosClient';
 import { auth, githubProvider, googleProvider } from '../firebase';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import CheckIcon from '@mui/icons-material/Check';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
 
@@ -66,37 +67,51 @@ const Login = () => {
   };
 
   const style = {
-    display: 'flex',
-    flexDirection: 'column',
-    paddingTop: 250,
+    paddingTop: 200,
   };
 
   return (
     <Grid container alignItems='center' justifyContent='center' style={style}>
-      <p style={{ color: 'red' }}>{errorMessage}</p>
-      <Button
-        style={{
-          backgroundColor: 'black',
-          color: 'white',
-          textTransform: 'none',
-          width: 400,
-        }}
-        onClick={githublogin}
-      >
-        <GitHubIcon style={{ marginRight: 10 }} />
-        GitHubでログイン
-      </Button>
-      <Button
-        style={{
-          border: 'solid 1px #bbb',
-          textTransform: 'none',
-          width: 400,
-        }}
-        onClick={googlelogin}
-      >
-        <GoogleIcon style={{ color: '#DC4A3D', marginRight: 10 }} />
-        Googleでログイン
-      </Button>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        ログインすると以下のことができるようになります。
+        <ul style={{ listStyle: 'none' }}>
+          <li>
+            <CheckIcon style={{ color: 'green', verticalAlign: 'middle' }} />
+            <span style={{ verticalAlign: 'middle' }}>
+              自分の作ったアプリの投稿
+            </span>
+          </li>
+          <li>
+            <CheckIcon style={{ color: 'green', verticalAlign: 'middle' }} />
+            <span style={{ verticalAlign: 'middle' }}>
+              他の人が作ったアプリへのコメント
+            </span>
+          </li>
+        </ul>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+        <Button
+          style={{
+            backgroundColor: 'black',
+            color: 'white',
+            marginBottom: 20,
+            textTransform: 'none',
+          }}
+          onClick={githublogin}
+        >
+          <GitHubIcon style={{ marginRight: 10 }} />
+          GitHubでログイン / 新規登録
+        </Button>
+        <Button
+          style={{
+            border: 'solid 1px #bbb',
+            textTransform: 'none',
+          }}
+          onClick={googlelogin}
+        >
+          <GoogleIcon style={{ color: '#DC4A3D', marginRight: 10 }} />
+          Googleでログイン / 新規登録
+        </Button>
+      </div>
     </Grid>
   );
 };

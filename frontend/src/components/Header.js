@@ -8,7 +8,6 @@ import CreateIcon from '@mui/icons-material/Create';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
-import AddIcon from '@mui/icons-material/Add';
 
 const Header = () => {
   const loggedIn = useContext(AuthContext).loggedIn;
@@ -83,13 +82,9 @@ const Header = () => {
           <li style={listItemStyle}>
             <Link href='/login' style={linkStyle}>
               <LoginIcon style={{ verticalAlign: 'middle' }} />
-              <span style={{ verticalAlign: 'middle' }}>ログイン</span>
-            </Link>
-          </li>
-          <li style={listItemStyle}>
-            <Link href='/signup' style={linkStyle}>
-              <AddIcon style={{ verticalAlign: 'middle' }} />
-              <span style={{ verticalAlign: 'middle' }}>新規登録</span>
+              <span style={{ verticalAlign: 'middle' }}>
+                ログイン / 新規登録
+              </span>
             </Link>
           </li>
         </ul>
