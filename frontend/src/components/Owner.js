@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import logo from '../logo.svg';
 
 const Owner = (props) => {
   const styles = makeStyles({
@@ -25,7 +24,7 @@ const Owner = (props) => {
   return (
     <div className={classes.owner}>
       <img
-        src={props.userIconUrl ? props.userIconUrl : logo}
+        src={props.userIconUrl}
         className={classes.icon}
       />
       <span className={classes.userName}>{props.userName}</span>

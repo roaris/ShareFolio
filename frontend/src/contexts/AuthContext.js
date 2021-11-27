@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
       setLoggedIn(true);
       axiosAuthClient.get(`/users/search?uid=${uid}`).then((res) => {
         setUserName(res.data.name);
-        setUserIconUrl(res.data.icon.url);
+        setUserIconUrl(res.data.upload_icon.url ? res.data.upload_icon.url : res.data.default_icon_url);
       });
     } else {
       setLoggedIn(false);

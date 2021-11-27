@@ -26,7 +26,7 @@ const Setting = () => {
       newInputValue.name = res.data.name;
       newInputValue.email = res.data.email;
       setInputValue(newInputValue);
-      setPreview(res.data.icon.url);
+      setPreview(res.data.upload_icon.url ? res.data.upload_icon.url : res.data.default_icon_url);
     });
   }, []);
 
@@ -34,7 +34,7 @@ const Setting = () => {
     const formData = new FormData();
     formData.append('user[name]', inputValue.name);
     formData.append('user[email]', inputValue.email);
-    if (icon) formData.append('user[icon]', icon);
+    if (icon) formData.append('user[upload_icon]', icon);
 
     axiosAuthClient
       .patch('/users/me', formData)

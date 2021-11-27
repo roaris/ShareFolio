@@ -21,10 +21,10 @@ const Login = () => {
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
   const [errorMessage, setErrorMessage] = useState('');
 
-  const createUser = (name, email, icon, token) => {
+  const createUser = (name, email, default_icon_url, token) => {
     axiosAuthClient
       .post('/users', {
-        user: { name: name, email: email, icon: icon },
+        user: { name: name, email: email, default_icon_url: default_icon_url },
         token: token,
       })
       .then((res) => {
@@ -40,9 +40,9 @@ const Login = () => {
       .then((res) => {
         const name = res.additionalUserInfo.username;
         const email = res.user.email;
-        const icon = res.user.photoURL;
+        const default_icon_url = res.user.photoURL;
         const token = res.user.Aa;
-        createUser(name, email, icon, token);
+        createUser(name, email, default_icon_url, token);
       })
       .catch((err) => {
         if (err.code === 'auth/account-exists-with-different-credential') {
@@ -59,9 +59,9 @@ const Login = () => {
       .then((res) => {
         const name = res.additionalUserInfo.profile.name;
         const email = res.user.email;
-        const icon = res.user.photoURL;
+        const default_icon_url = res.user.photoURL;
         const token = res.user.Aa;
-        createUser(name, email, icon, token);
+        createUser(name, email, default_icon_url, token);
       })
       .catch((err) => {
         if (err.code === 'auth/account-exists-with-different-credential') {
@@ -78,7 +78,7 @@ const Login = () => {
       .then((res) => {
         const name = res.user.displayName;
         const email = res.user.email;
-        const icon = res.user.photoURL;
+        const default_icon_url = res.user.photoURL;
         const token = res.user.Aa;
         if (email === null) {
           auth.signOut();
@@ -87,7 +87,7 @@ const Login = () => {
           );
           return;
         }
-        createUser(name, email, icon, token);
+        createUser(name, email, default_icon_url, token);
       })
       .catch((err) => {
         if (err.code === 'auth/account-exists-with-different-credential') {
