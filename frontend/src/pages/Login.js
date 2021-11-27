@@ -95,59 +95,63 @@ const Login = () => {
   };
 
   return (
-    <Grid container alignItems='center' justifyContent='center' style={style}>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        ログインすると以下のことができるようになります。
-        <ul style={{ listStyle: 'none' }}>
-          <li>
-            <CheckIcon style={{ color: 'green', verticalAlign: 'middle' }} />
-            <span style={{ verticalAlign: 'middle' }}>
-              自分の作ったアプリの投稿
-            </span>
-          </li>
-          <li>
-            <CheckIcon style={{ color: 'green', verticalAlign: 'middle' }} />
-            <span style={{ verticalAlign: 'middle' }}>
-              他の人が作ったアプリへのコメント
-            </span>
-          </li>
-        </ul>
-        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        <Button
-          style={{
-            backgroundColor: 'black',
-            color: 'white',
-            marginBottom: 20,
-            textTransform: 'none',
-          }}
-          onClick={githublogin}
-        >
-          <GitHubIcon style={{ marginRight: 10 }} />
-          GitHubでログイン / 新規登録
-        </Button>
-        <Button
-          style={{
-            border: 'solid 1px #bbb',
-            marginBottom: 20,
-            textTransform: 'none',
-          }}
-          onClick={googlelogin}
-        >
-          <GoogleIcon style={{ color: '#DC4A3D', marginRight: 10 }} />
-          Googleでログイン / 新規登録
-        </Button>
-        <Button
-          style={{
-            backgroundColor: '#4099FF',
-            color: 'white',
-            textTransform: 'none',
-          }}
-          onClick={twitterlogin}
-        >
-          <TwitterIcon style={{ marginRight: 10 }} />
-          Twitterでログイン / 新規登録
-        </Button>
-      </div>
+    <Grid container style={style}>
+      <Grid item xs={2} md={4} />
+      <Grid item xs={8} md={4}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          ログインすると以下のことができるようになります。
+          <ul style={{ listStyle: 'none' }}>
+            <li>
+              <CheckIcon style={{ color: 'green', verticalAlign: 'middle' }} />
+              <span style={{ verticalAlign: 'middle' }}>
+                自分の作ったアプリの投稿
+              </span>
+            </li>
+            <li>
+              <CheckIcon style={{ color: 'green', verticalAlign: 'middle' }} />
+              <span style={{ verticalAlign: 'middle' }}>
+                他の人が作ったアプリへのコメント
+              </span>
+            </li>
+          </ul>
+          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+          <Button
+            style={{
+              backgroundColor: 'black',
+              color: 'white',
+              marginBottom: 20,
+              textTransform: 'none',
+            }}
+            onClick={githublogin}
+          >
+            <GitHubIcon style={{ marginRight: 10 }} />
+            GitHubでログイン / 新規登録
+          </Button>
+          <Button
+            style={{
+              border: 'solid 1px #bbb',
+              marginBottom: 20,
+              textTransform: 'none',
+            }}
+            onClick={googlelogin}
+          >
+            <GoogleIcon style={{ color: '#DC4A3D', marginRight: 10 }} />
+            Googleでログイン / 新規登録
+          </Button>
+          <Button
+            style={{
+              backgroundColor: '#4099FF',
+              color: 'white',
+              textTransform: 'none',
+            }}
+            onClick={twitterlogin}
+          >
+            <TwitterIcon style={{ marginRight: 10 }} />
+            Twitterでログイン / 新規登録
+          </Button>
+        </div>
+      </Grid>
+      <Grid item xs={2} md={4} />
     </Grid>
   );
 };
