@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import PostList from './pages/PostList';
 import PostDetail from './pages/PostDetail';
 import Setting from './pages/Setting';
+import UserDetail from './pages/UserDetail';
 import PostForm from './pages/PostForm';
 import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
@@ -65,6 +66,7 @@ const App = () => {
                   <PublicRoute path='/login' component={Login} />
                   <Route exact path='/posts' component={PostList} />
                   <PrivateRoute path='/setting' component={Setting} />
+                  <Route path='/users/:id' component={UserDetail} />
                   <PrivateRoute path='/posts/new' component={PostForm} />
                   <Route path='/posts/:id' component={PostDetail} />
                   <Route component={NotFound} />

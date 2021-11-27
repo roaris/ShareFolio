@@ -16,6 +16,7 @@ const PostDetail = (props) => {
   const { params } = props.match;
   const id = parseInt(params.id, 10);
   const [post, setPost] = useState(null);
+  const [ownerId, setOwnerId] = useState(null);
   const [ownerName, setOwnerName] = useState('');
   const [ownerIconUrl, setOwnerIconUrl] = useState('');
   const [commentsAndUsers, setCommentsAndUsers] = useState(null);
@@ -26,6 +27,7 @@ const PostDetail = (props) => {
   useEffect(() => {
     axiosClient.get(`/posts/${id}`).then((res) => {
       setPost(res.data.post);
+      setOwnerId(res.data.user.id);
       setOwnerName(res.data.user.name);
       setOwnerIconUrl(
         res.data.user.upload_icon.url
@@ -112,7 +114,7 @@ const PostDetail = (props) => {
         <Grid container>
           <Grid item xs={2} lg={1}>
             <div style={{ marginTop: 20 }}>
-              <Owner userIconUrl={ownerIconUrl} userName={ownerName} />
+              <Owner userId={ownerId} userIconUrl={ownerIconUrl} userName={ownerName} />
             </div>
           </Grid>
           <Grid item xs={10} lg={11} className={classes.postDetailRight}>

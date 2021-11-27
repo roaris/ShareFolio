@@ -1,11 +1,17 @@
+import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 
 const Owner = (props) => {
   const styles = makeStyles({
     owner: {
+      color: 'black',
       display: 'flex',
       flexDirection: 'column',
       textAlign: 'center',
+      textDecoration: 'none',
+      '&:hover': {
+        textDecoration: 'none',
+      }
     },
     icon: {
       border: 'solid 1px #bbb',
@@ -22,10 +28,10 @@ const Owner = (props) => {
   const classes = styles();
 
   return (
-    <div className={classes.owner}>
+    <Link href={`/users/${props.userId}`} className={classes.owner}>
       <img src={props.userIconUrl} className={classes.icon} />
       <span className={classes.userName}>{props.userName}</span>
-    </div>
+    </Link>
   );
 };
 

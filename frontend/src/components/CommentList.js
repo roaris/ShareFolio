@@ -37,6 +37,7 @@ const CommentList = (props) => {
           <Grid item xs={2} lg={1}>
             <div style={{ marginTop: 10 }}>
               <Owner
+                userId={commentAndUser.user_id}
                 userName={commentAndUser.user_name}
                 userIconUrl={commentAndUser.user_icon_url}
               />
