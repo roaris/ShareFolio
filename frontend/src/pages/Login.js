@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { axiosAuthClient } from '../api/axiosClient';
@@ -12,6 +12,7 @@ const Login = () => {
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
   const setUserName = useContext(AuthContext).setUserName;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
+  const [errorMessage, setErrorMessage] = useState('')
 
   const createUser = (name, email, icon, token) => {
     axiosAuthClient
@@ -33,6 +34,10 @@ const Login = () => {
       const icon = res.user.photoURL;
       const token = res.user.Aa;
       createUser(name, email, icon, token);
+    }).catch((err) => {
+      if (err.code === 'auth/account-exists-with-different-credential') {
+        setErrorMessage('既にこのメールアドレスは登録されています。違うログイン方法を選択してください。');
+      }
     });
   };
 
@@ -43,6 +48,10 @@ const Login = () => {
       const icon = res.user.photoURL;
       const token = res.user.Aa;
       createUser(name, email, icon, token);
+    }).catch((err) => {
+      if (err.code === 'auth/account-exists-with-different-credential') {
+        setErrorMessage('既にこのメールアドレスは登録されています。違うログイン方法を選択してください。');
+      }
     });
   };
 
@@ -54,6 +63,7 @@ const Login = () => {
 
   return (
     <Grid container alignItems='center' justifyContent='center' style={style}>
+      <p style={{color: 'red'}}>{errorMessage}</p>
       <Button
         style={{
           backgroundColor: 'black',
