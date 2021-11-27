@@ -12,7 +12,7 @@ const Login = () => {
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
   const setUserName = useContext(AuthContext).setUserName;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('');
 
   const createUser = (name, email, icon, token) => {
     axiosAuthClient
@@ -28,31 +28,41 @@ const Login = () => {
   };
 
   const githublogin = () => {
-    auth.signInWithPopup(githubProvider).then((res) => {
-      const name = res.additionalUserInfo.username;
-      const email = res.user.email;
-      const icon = res.user.photoURL;
-      const token = res.user.Aa;
-      createUser(name, email, icon, token);
-    }).catch((err) => {
-      if (err.code === 'auth/account-exists-with-different-credential') {
-        setErrorMessage('既にこのメールアドレスは登録されています。違うログイン方法を選択してください。');
-      }
-    });
+    auth
+      .signInWithPopup(githubProvider)
+      .then((res) => {
+        const name = res.additionalUserInfo.username;
+        const email = res.user.email;
+        const icon = res.user.photoURL;
+        const token = res.user.Aa;
+        createUser(name, email, icon, token);
+      })
+      .catch((err) => {
+        if (err.code === 'auth/account-exists-with-different-credential') {
+          setErrorMessage(
+            '既にこのメールアドレスは登録されています。違うログイン方法を選択してください。'
+          );
+        }
+      });
   };
 
   const googlelogin = () => {
-    auth.signInWithPopup(googleProvider).then((res) => {
-      const name = res.additionalUserInfo.profile.name;
-      const email = res.user.email;
-      const icon = res.user.photoURL;
-      const token = res.user.Aa;
-      createUser(name, email, icon, token);
-    }).catch((err) => {
-      if (err.code === 'auth/account-exists-with-different-credential') {
-        setErrorMessage('既にこのメールアドレスは登録されています。違うログイン方法を選択してください。');
-      }
-    });
+    auth
+      .signInWithPopup(googleProvider)
+      .then((res) => {
+        const name = res.additionalUserInfo.profile.name;
+        const email = res.user.email;
+        const icon = res.user.photoURL;
+        const token = res.user.Aa;
+        createUser(name, email, icon, token);
+      })
+      .catch((err) => {
+        if (err.code === 'auth/account-exists-with-different-credential') {
+          setErrorMessage(
+            '既にこのメールアドレスは登録されています。違うログイン方法を選択してください。'
+          );
+        }
+      });
   };
 
   const style = {
@@ -63,7 +73,7 @@ const Login = () => {
 
   return (
     <Grid container alignItems='center' justifyContent='center' style={style}>
-      <p style={{color: 'red'}}>{errorMessage}</p>
+      <p style={{ color: 'red' }}>{errorMessage}</p>
       <Button
         style={{
           backgroundColor: 'black',
