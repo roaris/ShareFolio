@@ -76,6 +76,7 @@ const Login = () => {
         const icon = res.user.photoURL;
         const token = res.user.Aa;
         if (email === null) {
+          auth.signOut();
           setErrorMessage('このTwitterアカウントにはメールアドレスが登録されていません。アドレス登録後に再度お手続きをお願いします。')
           return;
         }
