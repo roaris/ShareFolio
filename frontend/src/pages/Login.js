@@ -13,22 +13,26 @@ const Login = () => {
   const setUserName = useContext(AuthContext).setUserName;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
 
+  const createUser = (name, email, icon, token) => {
+    axiosAuthClient
+      .post('/users', {
+        user: { name: name, email: email, icon: icon },
+        token: token,
+      })
+      .then((res) => {
+        setLoggedIn(true);
+        setUserName(res.data.name);
+        updateFlashMessage({ successMessage: 'ログインしました' });
+      });
+  };
+
   const githublogin = () => {
     auth.signInWithPopup(githubProvider).then((res) => {
       const name = res.additionalUserInfo.username;
       const email = res.user.email;
       const icon = res.user.photoURL;
       const token = res.user.Aa;
-      axiosAuthClient
-        .post('/users', {
-          user: { name: name, email: email, icon: icon },
-          token: token,
-        })
-        .then((res) => {
-          setLoggedIn(true);
-          setUserName(res.data.name);
-          updateFlashMessage({ successMessage: 'ログインしました' });
-        });
+      createUser(name, email, icon, token);
     });
   };
 
@@ -38,16 +42,7 @@ const Login = () => {
       const email = res.user.email;
       const icon = res.user.photoURL;
       const token = res.user.Aa;
-      axiosAuthClient
-        .post('/users', {
-          user: { name: name, email: email, icon: icon },
-          token: token,
-        })
-        .then((res) => {
-          setLoggedIn(true);
-          setUserName(res.data.name);
-          updateFlashMessage({ successMessage: 'ログインしました' });
-        });
+      createUser(name, email, icon, token);
     });
   };
 
