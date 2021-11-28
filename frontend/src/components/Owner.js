@@ -11,7 +11,7 @@ const Owner = (props) => {
       textDecoration: 'none',
       '&:hover': {
         textDecoration: 'none',
-      }
+      },
     },
     icon: {
       border: 'solid 1px #bbb',

@@ -114,7 +114,11 @@ const PostDetail = (props) => {
         <Grid container>
           <Grid item xs={2} lg={1}>
             <div style={{ marginTop: 20 }}>
-              <Owner userId={ownerId} userIconUrl={ownerIconUrl} userName={ownerName} />
+              <Owner
+                userId={ownerId}
+                userIconUrl={ownerIconUrl}
+                userName={ownerName}
+              />
             </div>
           </Grid>
           <Grid item xs={10} lg={11} className={classes.postDetailRight}>
