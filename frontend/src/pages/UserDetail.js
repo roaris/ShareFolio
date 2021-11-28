@@ -118,33 +118,43 @@ const UserDetail = (props) => {
         <Grid item xs={0} md={2} />
         <Grid item xs={12} md={8}>
           <Grid container direction='column'>
-            <span style={{ fontSize: 25, marginLeft: 20, marginBottom: 20 }}>
-              作成したアプリ一覧
-            </span>
-            <Grid container>
-              {posts.map((post) => (
-                <Grid item xs={12} sm={12} md={6} key={post.id}>
-                  <Grid container>
-                    <Grid item xs={1} />
-                    <Grid item xs={10} className={classes.post}>
-                      <Link
-                        className={classes.appName}
-                        href={`/posts/${post.id}`}
-                      >
-                        {post.app_name}
-                      </Link>
-                      <Typography className={classes.description}>
-                        {previewDescription(post.description)}
-                      </Typography>
-                      <div className={classes.postFooter}>
-                        <CreatedAt createdAt={post.created_at} />
-                      </div>
+            {posts.length === 0 ? (
+              <span style={{ fontSize: 25, textAlign: 'center' }}>
+                作成したアプリはありません
+              </span>
+            ) : (
+              <>
+                <span
+                  style={{ fontSize: 25, marginLeft: 20, marginBottom: 20 }}
+                >
+                  作成したアプリ一覧
+                </span>
+                <Grid container>
+                  {posts.map((post) => (
+                    <Grid item xs={12} sm={12} md={6} key={post.id}>
+                      <Grid container>
+                        <Grid item xs={1} />
+                        <Grid item xs={10} className={classes.post}>
+                          <Link
+                            className={classes.appName}
+                            href={`/posts/${post.id}`}
+                          >
+                            {post.app_name}
+                          </Link>
+                          <Typography className={classes.description}>
+                            {previewDescription(post.description)}
+                          </Typography>
+                          <div className={classes.postFooter}>
+                            <CreatedAt createdAt={post.created_at} />
+                          </div>
+                        </Grid>
+                        <Grid item xs={1} />
+                      </Grid>
                     </Grid>
-                    <Grid item xs={1} />
-                  </Grid>
+                  ))}
                 </Grid>
-              ))}
-            </Grid>
+              </>
+            )}
           </Grid>
         </Grid>
         <Grid item xs={0} md={2} />
