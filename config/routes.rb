@@ -10,6 +10,9 @@ Rails.application.routes.draw do
         collection do
           get :search
         end
+        member do
+          get :posts
+        end
       end
       resources :posts, only: %i[index show create update destroy] do
         collection do
