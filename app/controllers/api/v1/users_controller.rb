@@ -3,7 +3,16 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      skip_before_action :authenticate_user, only: :create
+      skip_before_action :authenticate_user, only: %i[show create posts]
+
+      def show
+        user = User.find(params[:id])
+        if user
+          render json: user, status: :ok
+        else
+          render status: :not_found
+        end
+      end
 
       def create
         FirebaseIdToken::Certificates.request
@@ -39,6 +48,15 @@ module Api
         user = User.find_by(uid: params[:uid])
         if user
           render status: :ok, json: user
+        else
+          render status: :not_found
+        end
+      end
+
+      def posts
+        user = User.find(params[:id])
+        if user
+          render status: :ok, json: user.posts
         else
           render status: :not_found
         end

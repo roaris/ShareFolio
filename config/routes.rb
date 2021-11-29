@@ -4,13 +4,16 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace :api do
     namespace :v1 do
-      resources :users, only: :create do
+      get '/users/me', to: 'users#show_me'
+      patch '/users/me', to: 'users#update_me'
+      resources :users, only: %i[show create] do
         collection do
           get :search
         end
+        member do
+          get :posts
+        end
       end
-      get '/users/me', to: 'users#show_me'
-      patch '/users/me', to: 'users#update_me'
       resources :posts, only: %i[index show create update destroy] do
         collection do
           get :recent

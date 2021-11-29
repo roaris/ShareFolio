@@ -74,7 +74,11 @@ const Post = (props) => {
     <Grid container>
       <Grid item xs={2}>
         <div style={{ marginTop: 10 }}>
-          <Owner userName={userName} userIconUrl={userIconUrl} />
+          <Owner
+            userId={user.id}
+            userName={userName}
+            userIconUrl={userIconUrl}
+          />
         </div>
       </Grid>
       <Grid item xs={10} className={classes.postRight}>
