@@ -6,6 +6,7 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import MDSpinner from 'react-md-spinner';
+import { TwitterIcon, TwitterShareButton, } from 'react-share';
 
 const UserDetail = (props) => {
   const { params } = props.match;
@@ -156,6 +157,17 @@ const UserDetail = (props) => {
               </>
             )}
           </Grid>
+        </Grid>
+        <Grid item xs={0} md={2} />
+      </Grid>
+      <Grid container>
+        <Grid item xs={0} md={2} />
+        <Grid item xs={12} md={8}>
+          <div style={{display: 'flex', justifyContent: 'flex-end', marginRight: 20, marginBottom: 20}}>
+            <TwitterShareButton url={`${process.env.REACT_APP_HOST_URL}/users/${user.id}`} title={`[ShareFolio] ${user.name}が作ったアプリ一覧`}>
+              <TwitterIcon size={50} round={true} />
+            </TwitterShareButton>
+          </div>
         </Grid>
         <Grid item xs={0} md={2} />
       </Grid>
