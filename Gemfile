@@ -27,6 +27,7 @@ gem "factory_bot_rails"
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'firebase-auth-rails'
+gem 'kaminari'
 
 group :development, :test do
   gem 'sqlite3', '~> 1.4'
