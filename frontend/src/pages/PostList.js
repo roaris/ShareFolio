@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { axiosClient } from '../api/axiosClient';
 import Grid from '@material-ui/core/Grid';
 import Post from '../components/Post';
 import MDSpinner from 'react-md-spinner';
 
 const App = () => {
+  const search = useLocation().search;
+  const query = new URLSearchParams(search);
+  const page = query.get('page');
   const [postAndUsers, setPostAndUsers] = useState(null);
 
   useEffect(() => {
-    axiosClient.get('/posts').then((res) => setPostAndUsers(res.data));
+    axiosClient
+      .get(`/posts?page=${page}&per=10`)
+      .then((res) => setPostAndUsers(res.data.posts_and_users));
   }, []);
 
   const isLoading = postAndUsers === null;
@@ -26,7 +32,7 @@ const App = () => {
           textAlign: 'center',
         }}
       >
-        <h1>投稿一覧({postAndUsers.length}件)</h1>
+        <h1>投稿一覧</h1>
       </div>
       <Grid container>
         {postAndUsers.map((postAndUser) => (
