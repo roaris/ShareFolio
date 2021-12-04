@@ -14,7 +14,7 @@ module Api
         posts.each do |post|
           posts_and_users.push({ post: post, user: post.user })
         end
-        render status: :ok, json: {posts_and_users: posts_and_users}.merge(pagination)
+        render status: :ok, json: { posts_and_users: posts_and_users }.merge(pagination)
       end
 
       def recent
