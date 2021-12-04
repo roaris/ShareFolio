@@ -8,9 +8,12 @@ RSpec.describe '/api/v1/posts', type: :request do
   describe 'index' do
     it 'accept an auth user' do
       create_list(:post, 10)
-      get '/api/v1/posts', headers: xhr_header
+      get '/api/v1/posts?page=1&per=6', headers: xhr_header
       expect(response.status).to eq(200)
-      expect(json(response).length).to eq(10)
+      expect(json(response)['posts_and_users'].length).to eq(6)
+      get '/api/v1/posts?page=2&per=6', headers: xhr_header
+      expect(response.status).to eq(200)
+      expect(json(response)['posts_and_users'].length).to eq(4)
     end
 
     it 'accept an unauth user' do

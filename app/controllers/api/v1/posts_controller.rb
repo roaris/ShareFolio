@@ -4,14 +4,17 @@ module Api
   module V1
     class PostsController < ApplicationController
       skip_before_action :authenticate_user, only: %i[index recent show]
+      include Pagination
 
       def index
         posts = Post.all.includes(:user).order(:id)
+        posts = posts.page(params[:page]).per(params[:per])
+        pagination = pagination(posts)
         posts_and_users = []
         posts.each do |post|
           posts_and_users.push({ post: post, user: post.user })
         end
-        render status: :ok, json: posts_and_users
+        render status: :ok, json: { posts_and_users: posts_and_users }.merge(pagination)
       end
 
       def recent
