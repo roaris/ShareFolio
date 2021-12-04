@@ -10,7 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 const App = () => {
   const search = useLocation().search;
   const query = new URLSearchParams(search);
-  const page = parseInt(query.get('page'), 10);
+  const page = query.get('page') ? parseInt(query.get('page'), 10) : 1;
   const [postAndUsers, setPostAndUsers] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
 
