@@ -8,4 +8,5 @@ class Post < ApplicationRecord
   validates :app_url, presence: true, length: { maximum: 255 }
   validates :repo_url, length: { maximum: 255 }
   validates :description, presence: true, length: { maximum: 10000 }
+  validates :like_num, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 end

@@ -47,6 +47,16 @@ RSpec.describe Post, type: :model do
     expect(post).to be_invalid
   end
 
+  it 'is invalid with a float like_num' do
+    post = build(:post, like_num: 1.23)
+    expect(post).to be_invalid
+  end
+
+  it 'is invalid with a minus like_num' do
+    post = build(:post, like_num: -1)
+    expect(post).to be_invalid
+  end
+
   it 'is invalid with a too long description' do
     post = build(:post, description: 'a' * 10001)
     expect(post).to be_invalid
