@@ -13,13 +13,13 @@ RSpec.describe Like, type: :model do
     user = like.user
     expect do
       user.destroy
-    end.to change(Like, :count).by(-1)
+    end.to change(described_class, :count).by(-1)
   end
 
   it 'is deleted when a corresponding post is deleted' do
     post = like.post
     expect do
       post.destroy
-    end.to change(Like, :count).by(-1)
+    end.to change(described_class, :count).by(-1)
   end
 end

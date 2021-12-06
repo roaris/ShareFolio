@@ -24,7 +24,7 @@ module Api
         end
       end
 
-      def is_liked
+      def liked?
         post_id = params[:id]
         like = Like.find_by(user_id: current_user.id, post_id: post_id)
         if like

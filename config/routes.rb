@@ -25,7 +25,7 @@ Rails.application.routes.draw do
           end
         end
         member do
-          get '/is_liked', to: 'likes#is_liked'
+          get '/is_liked', to: 'likes#liked?'
         end
       end
     end

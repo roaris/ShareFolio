@@ -41,7 +41,7 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Exclude:
     - 'config/sitemap.rb'
-    - 'config/routes/**'
+    - 'config/routes.rb'
     - 'factories/**/*'
     - 'spec/**/*'
     - 'config/environments/*'
