@@ -1,5 +1,6 @@
 import Owner from './Owner';
 import CreatedAt from './CreatedAt';
+import Like from './Like';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
@@ -36,9 +37,16 @@ const Post = (props) => {
       borderRadius: '10px',
       padding: 10,
     },
+    appNameAndLike: {
+      alignItems: 'center',
+      display: 'flex',
+    },
     appName: {
       fontSize: 30,
       textDecoration: 'none',
+    },
+    like: {
+      marginLeft: 'auto',
     },
     description: {
       fontSize: 15,
@@ -82,9 +90,19 @@ const Post = (props) => {
         </div>
       </Grid>
       <Grid item xs={10} className={classes.postRight}>
-        <Link className={classes.appName} href={`/posts/${post.id}`}>
-          {appName}
-        </Link>
+        <div className={classes.appNameAndLike}>
+          <Link className={classes.appName} href={`/posts/${post.id}`}>
+            {appName}
+          </Link>
+          <div className={classes.like}>
+            <Like
+              likeNum={post.like_num}
+              likeFlag={false}
+              createLike={() => {}}
+              destroyLike={() => {}}
+            />
+          </div>
+        </div>
         <Typography className={classes.description}>
           {previewDescription(description)}
         </Typography>
