@@ -1,4 +1,5 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const Like = (props) => {
   return (
@@ -14,7 +15,7 @@ const Like = (props) => {
         </div>
       ) : (
         <div onClick={props.createLike}>
-          <FavoriteIcon style={{ fontSize: 30, verticalAlign: 'middle' }} />
+          <FavoriteBorderIcon style={{ fontSize: 30, verticalAlign: 'middle' }} />
           <span style={{ fontSize: 25, verticalAlign: 'middle' }}>
             {props.likeNum}
           </span>
