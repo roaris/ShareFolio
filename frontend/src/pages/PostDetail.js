@@ -98,9 +98,12 @@ const PostDetail = (props) => {
       paddingBottom: 20,
       borderBottom: 'solid 1px #bbb',
     },
-    appName: {
-      display: 'inline-block',
-      verticalAlign: 'middle',
+    appNameAndLike: {
+      alignItems: 'center',
+      display: 'flex',
+    },
+    like: {
+      marginLeft: 'auto',
     },
     link: {
       overflowWrap: 'break-word',
@@ -145,7 +148,17 @@ const PostDetail = (props) => {
           </Grid>
           <Grid item xs={10} lg={11} className={classes.postDetailRight}>
             <div className={classes.postDetailRightHeader}>
-              <h1 className={classes.appName}>{post.app_name}</h1> <br />
+              <div className={classes.appNameAndLike}>
+                <h1>{post.app_name}</h1>
+                <div className={classes.like}>
+                  <Like
+                    likeNum={likeNum}
+                    likeFlag={likeFlag}
+                    createLike={createLike}
+                    destroyLike={destroyLike}
+                  />
+                </div>
+              </div>
               アプリ:{' '}
               <a href={post.app_url} className={classes.link}>
                 {post.app_url}
@@ -171,12 +184,6 @@ const PostDetail = (props) => {
             </div>
           </Grid>
         </Grid>
-        <Like
-          likeNum={likeNum}
-          likeFlag={likeFlag}
-          createLike={createLike}
-          destroyLike={destroyLike}
-        />
         <div style={{ marginTop: 50 }}>
           <CommentForm submitComment={submitComment} />
         </div>
