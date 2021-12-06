@@ -23,6 +23,7 @@ const PostDetail = (props) => {
   const [commentsAndUsers, setCommentsAndUsers] = useState(null);
   const userName = useContext(AuthContext).userName;
   const userIconUrl = useContext(AuthContext).userIconUrl;
+  const loggedIn = useContext(AuthContext).loggedIn;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
   const [likeNum, setLikeNum] = useState(null);
   const [likeFlag, setLikeFlag] = useState(null);
@@ -41,9 +42,13 @@ const PostDetail = (props) => {
       setLikeNum(res.data.post.like_num);
     });
 
-    axiosAuthClient.get(`/posts/${id}/is_liked`).then((res) => {
-      setLikeFlag(res.data.flag);
-    });
+    if (loggedIn) {
+      axiosAuthClient.get(`/posts/${id}/is_liked`).then((res) => {
+        setLikeFlag(res.data.flag);
+      });
+    } else {
+      setLikeFlag(false);
+    }
   }, []);
 
   const submitComment = async (markdown) => {
@@ -62,12 +67,14 @@ const PostDetail = (props) => {
   };
 
   const createLike = () => {
+    if (!loggedIn) return;
     setLikeFlag(true);
     setLikeNum(likeNum + 1);
     axiosAuthClient.post(`/posts/${id}/likes`);
   };
 
   const destroyLike = () => {
+    if (!loggedIn) return;
     setLikeFlag(false);
     setLikeNum(likeNum - 1);
     axiosAuthClient.delete(`/posts/${id}/likes`);
