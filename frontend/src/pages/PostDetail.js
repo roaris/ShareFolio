@@ -10,6 +10,7 @@ import Owner from '../components/Owner';
 import CommentForm from '../components/CommentForm';
 import CreatedAt from '../components/CreatedAt';
 import CommentList from '../components/CommentList';
+import Like from '../components/Like';
 import MDSpinner from 'react-md-spinner';
 
 const PostDetail = (props) => {
@@ -23,6 +24,8 @@ const PostDetail = (props) => {
   const userName = useContext(AuthContext).userName;
   const userIconUrl = useContext(AuthContext).userIconUrl;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
+  const [likeNum, setLikeNum] = useState(null);
+  const [likeFlag, setLikeFlag] = useState(null);
 
   useEffect(() => {
     axiosClient.get(`/posts/${id}`).then((res) => {
@@ -35,6 +38,11 @@ const PostDetail = (props) => {
           : res.data.user.default_icon_url
       );
       setCommentsAndUsers(res.data.comments_and_users);
+      setLikeNum(res.data.post.like_num);
+    });
+
+    axiosAuthClient.get(`/posts/${id}/is_liked`).then((res) => {
+      setLikeFlag(res.data.flag);
     });
   }, []);
 
@@ -51,6 +59,18 @@ const PostDetail = (props) => {
         setCommentsAndUsers(newCommentsAndUsers);
         updateFlashMessage({ successMessage: 'コメントをつけました' });
       });
+  };
+
+  const createLike = () => {
+    setLikeFlag(true);
+    setLikeNum(likeNum + 1);
+    axiosAuthClient.post(`/posts/${id}/likes`);
+  };
+
+  const destroyLike = () => {
+    setLikeFlag(false);
+    setLikeNum(likeNum - 1);
+    axiosAuthClient.delete(`/posts/${id}/likes`);
   };
 
   const styles = makeStyles({
@@ -101,7 +121,9 @@ const PostDetail = (props) => {
     post === null ||
     ownerName === null ||
     ownerIconUrl === '' ||
-    commentsAndUsers === null;
+    commentsAndUsers === null ||
+    likeNum === null ||
+    likeFlag === null;
 
   return isLoading ? (
     <div style={{ marginTop: 100, textAlign: 'center' }}>
@@ -149,6 +171,12 @@ const PostDetail = (props) => {
             </div>
           </Grid>
         </Grid>
+        <Like
+          likeNum={likeNum}
+          likeFlag={likeFlag}
+          createLike={createLike}
+          destroyLike={destroyLike}
+        />
         <div style={{ marginTop: 50 }}>
           <CommentForm submitComment={submitComment} />
         </div>
