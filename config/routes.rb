@@ -19,6 +19,14 @@ Rails.application.routes.draw do
           get :recent
         end
         resources :comments, only: [:create]
+        resources :likes, only: [:create] do
+          collection do
+            delete '', to: 'likes#destroy'
+          end
+        end
+        member do
+          get '/is_liked', to: 'likes#liked?'
+        end
       end
     end
   end

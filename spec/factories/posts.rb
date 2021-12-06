@@ -7,5 +7,6 @@ FactoryBot.define do
     sequence(:repo_url) { |n| "https://example.com/repo#{n}" }
     sequence(:description) { |n| "description#{n}" * 100 }
     sequence(:user_id) { 1 }
+    sequence(:like_num) { |n| n }
   end
 end
