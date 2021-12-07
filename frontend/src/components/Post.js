@@ -97,7 +97,7 @@ const Post = (props) => {
           <div className={classes.like}>
             <Like
               likeNum={post.like_num}
-              likeFlag={false}
+              likeFlag={props.likeFlag}
               createLike={() => {}}
               destroyLike={() => {}}
             />
