@@ -63,7 +63,12 @@ const App = () => {
       >
         <h1>投稿一覧</h1>
       </div>
-      <Pagination totalPages={totalPages} page={page} />
+      <Pagination
+        totalPages={totalPages}
+        page={page}
+        setPostAndUsers={setPostAndUsers}
+        setLikeFlags={setLikeFlags}
+      />
       <Grid container>
         {postAndUsers.map((postAndUser, i) => (
           <Grid item xs={12} sm={12} md={6} key={postAndUser.post.id}>
@@ -77,7 +82,12 @@ const App = () => {
           </Grid>
         ))}
       </Grid>
-      <Pagination totalPages={totalPages} page={page} />
+      <Pagination
+        totalPages={totalPages}
+        page={page}
+        setPostAndUsers={setPostAndUsers}
+        setLikeFlags={setLikeFlags}
+      />
     </div>
   );
 };
@@ -97,6 +107,9 @@ const Pagination = (props) => {
         count={props.totalPages}
         color='primary'
         onChange={(_, page) => {
+          if (props.page === page) return;
+          props.setPostAndUsers(null);
+          props.setLikeFlags(null);
           history.push(`/posts?page=${page}`);
         }}
         page={props.page}
