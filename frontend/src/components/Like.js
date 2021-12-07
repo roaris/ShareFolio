@@ -7,16 +7,16 @@ const Like = (props) => {
       {props.likeFlag ? (
         <div onClick={props.destroyLike}>
           <FavoriteIcon
-            style={{ color: 'red', fontSize: 30, verticalAlign: 'middle' }}
+            style={{ color: 'red', fontSize: props.heartSize, verticalAlign: 'middle' }}
           />
-          <span style={{ fontSize: 25, verticalAlign: 'middle' }}>
+          <span style={{ fontSize: props.numSize, verticalAlign: 'middle' }}>
             {props.likeNum}
           </span>
         </div>
       ) : (
         <div onClick={props.createLike}>
-          <FavoriteBorderIcon style={{ fontSize: 30, verticalAlign: 'middle' }} />
-          <span style={{ fontSize: 25, verticalAlign: 'middle' }}>
+          <FavoriteBorderIcon style={{ fontSize: props.heartSize, verticalAlign: 'middle' }} />
+          <span style={{ fontSize: props.numSize, verticalAlign: 'middle' }}>
             {props.likeNum}
           </span>
         </div>

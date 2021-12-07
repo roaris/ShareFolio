@@ -160,7 +160,9 @@ const PostDetail = (props) => {
                 <div className={classes.like}>
                   <Like
                     likeNum={likeNum}
+                    numSize={25}
                     likeFlag={likeFlag}
+                    heartSize={30}
                     createLike={createLike}
                     destroyLike={destroyLike}
                   />
