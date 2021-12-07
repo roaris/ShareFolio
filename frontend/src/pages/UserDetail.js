@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { axiosClient } from '../api/axiosClient';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+import { axiosClient, axiosAuthClient } from '../api/axiosClient';
 import CreatedAt from '../components/CreatedAt';
+import Like from '../components/Like';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
@@ -13,14 +15,34 @@ const UserDetail = (props) => {
   const id = parseInt(params.id, 10);
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState(null);
+  const [likeFlags, setLikeFlags] = useState(null);
+  const loggedIn = useContext(AuthContext).loggedIn;
 
-  useEffect(() => {
+  useEffect(async () => {
     axiosClient.get(`/users/${id}`).then((res) => {
       setUser(res.data);
     });
-    axiosClient.get(`/users/${id}/posts`).then((res) => {
-      setPosts(res.data);
+    const posts = await new Promise((resolve) => {
+      axiosClient.get(`/users/${id}/posts`).then((res) => {
+        setPosts(res.data);
+        resolve(res.data);
+      });
     });
+    if (loggedIn) {
+      const newLikeFlags = await Promise.all(
+        posts.map((post) => {
+          return new Promise((resolve) => {
+            axiosAuthClient
+              .get(`/posts/${post.id}/is_liked`)
+              .then((res) => resolve(res.data.flag));
+          });
+        })
+      );
+      setLikeFlags(newLikeFlags);
+    } else {
+      const newLikeFlags = Array(posts.length).fill(false);
+      setLikeFlags(newLikeFlags);
+    }
   }, []);
 
   const previewDescription = (description) => {
@@ -59,9 +81,16 @@ const UserDetail = (props) => {
       marginBottom: 20,
       padding: 10,
     },
+    appNameAndLike: {
+      alignItems: 'center',
+      display: 'flex',
+    },
     appName: {
       fontSize: 30,
       textDecoration: 'none',
+    },
+    like: {
+      marginLeft: 'auto',
     },
     description: {
       fontSize: 15,
@@ -76,7 +105,7 @@ const UserDetail = (props) => {
   });
 
   const classes = styles();
-  const isLoading = user === null || posts === null;
+  const isLoading = user === null || posts === null || likeFlags === null;
 
   return isLoading ? (
     <div style={{ marginTop: 100, textAlign: 'center' }}>
@@ -131,17 +160,29 @@ const UserDetail = (props) => {
                   作成したアプリ一覧
                 </span>
                 <Grid container>
-                  {posts.map((post) => (
+                  {posts.map((post, i) => (
                     <Grid item xs={12} sm={12} md={6} key={post.id}>
                       <Grid container>
                         <Grid item xs={1} />
                         <Grid item xs={10} className={classes.post}>
-                          <Link
-                            className={classes.appName}
-                            href={`/posts/${post.id}`}
-                          >
-                            {post.app_name}
-                          </Link>
+                          <div className={classes.appNameAndLike}>
+                            <Link
+                              className={classes.appName}
+                              href={`/posts/${post.id}`}
+                            >
+                              {post.app_name}
+                            </Link>
+                            <div className={classes.like}>
+                              <Like
+                                likeNum={post.like_num}
+                                numSize={20}
+                                likeFlag={likeFlags[i]}
+                                heartSize={25}
+                                createLike={() => {}}
+                                destroyLike={() => {}}
+                              />
+                            </div>
+                          </div>
                           <Typography className={classes.description}>
                             {previewDescription(post.description)}
                           </Typography>

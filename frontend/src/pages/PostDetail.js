@@ -10,6 +10,7 @@ import Owner from '../components/Owner';
 import CommentForm from '../components/CommentForm';
 import CreatedAt from '../components/CreatedAt';
 import CommentList from '../components/CommentList';
+import Like from '../components/Like';
 import MDSpinner from 'react-md-spinner';
 
 const PostDetail = (props) => {
@@ -22,7 +23,10 @@ const PostDetail = (props) => {
   const [commentsAndUsers, setCommentsAndUsers] = useState(null);
   const userName = useContext(AuthContext).userName;
   const userIconUrl = useContext(AuthContext).userIconUrl;
+  const loggedIn = useContext(AuthContext).loggedIn;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
+  const [likeNum, setLikeNum] = useState(null);
+  const [likeFlag, setLikeFlag] = useState(null);
 
   useEffect(() => {
     axiosClient.get(`/posts/${id}`).then((res) => {
@@ -35,7 +39,16 @@ const PostDetail = (props) => {
           : res.data.user.default_icon_url
       );
       setCommentsAndUsers(res.data.comments_and_users);
+      setLikeNum(res.data.post.like_num);
     });
+
+    if (loggedIn) {
+      axiosAuthClient.get(`/posts/${id}/is_liked`).then((res) => {
+        setLikeFlag(res.data.flag);
+      });
+    } else {
+      setLikeFlag(false);
+    }
   }, []);
 
   const submitComment = async (markdown) => {
@@ -51,6 +64,20 @@ const PostDetail = (props) => {
         setCommentsAndUsers(newCommentsAndUsers);
         updateFlashMessage({ successMessage: 'コメントをつけました' });
       });
+  };
+
+  const createLike = () => {
+    if (!loggedIn) return;
+    setLikeFlag(true);
+    setLikeNum(likeNum + 1);
+    axiosAuthClient.post(`/posts/${id}/likes`);
+  };
+
+  const destroyLike = () => {
+    if (!loggedIn) return;
+    setLikeFlag(false);
+    setLikeNum(likeNum - 1);
+    axiosAuthClient.delete(`/posts/${id}/likes`);
   };
 
   const styles = makeStyles({
@@ -78,9 +105,12 @@ const PostDetail = (props) => {
       paddingBottom: 20,
       borderBottom: 'solid 1px #bbb',
     },
-    appName: {
-      display: 'inline-block',
-      verticalAlign: 'middle',
+    appNameAndLike: {
+      alignItems: 'center',
+      display: 'flex',
+    },
+    like: {
+      marginLeft: 'auto',
     },
     link: {
       overflowWrap: 'break-word',
@@ -101,7 +131,9 @@ const PostDetail = (props) => {
     post === null ||
     ownerName === null ||
     ownerIconUrl === '' ||
-    commentsAndUsers === null;
+    commentsAndUsers === null ||
+    likeNum === null ||
+    likeFlag === null;
 
   return isLoading ? (
     <div style={{ marginTop: 100, textAlign: 'center' }}>
@@ -123,7 +155,19 @@ const PostDetail = (props) => {
           </Grid>
           <Grid item xs={10} lg={11} className={classes.postDetailRight}>
             <div className={classes.postDetailRightHeader}>
-              <h1 className={classes.appName}>{post.app_name}</h1> <br />
+              <div className={classes.appNameAndLike}>
+                <h1>{post.app_name}</h1>
+                <div className={classes.like}>
+                  <Like
+                    likeNum={likeNum}
+                    numSize={25}
+                    likeFlag={likeFlag}
+                    heartSize={30}
+                    createLike={createLike}
+                    destroyLike={destroyLike}
+                  />
+                </div>
+              </div>
               アプリ:{' '}
               <a href={post.app_url} className={classes.link}>
                 {post.app_url}

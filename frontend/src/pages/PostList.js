@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { axiosClient } from '../api/axiosClient';
+import { AuthContext } from '../contexts/AuthContext';
+import { axiosClient, axiosAuthClient } from '../api/axiosClient';
 import Grid from '@material-ui/core/Grid';
 import Post from '../components/Post';
 import MDSpinner from 'react-md-spinner';
@@ -11,17 +12,41 @@ const App = () => {
   const search = useLocation().search;
   const query = new URLSearchParams(search);
   const page = query.get('page') ? parseInt(query.get('page'), 10) : 1;
+  const loggedIn = useContext(AuthContext).loggedIn;
   const [postAndUsers, setPostAndUsers] = useState(null);
+  const [likeFlags, setLikeFlags] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
 
-  useEffect(() => {
-    axiosClient.get(`/posts?page=${page}&per=10`).then((res) => {
-      setPostAndUsers(res.data.posts_and_users);
-      setTotalPages(res.data.pagination.total_pages);
+  useEffect(async () => {
+    const posts_and_users = await new Promise((resolve) => {
+      axiosClient.get(`/posts?page=${page}&per=10`).then((res) => {
+        setPostAndUsers(res.data.posts_and_users);
+        setTotalPages(res.data.pagination.total_pages);
+        resolve(res.data.posts_and_users);
+      });
     });
+
+    if (loggedIn) {
+      const newLikeFlags = await Promise.all(
+        posts_and_users.map((post_and_user) => {
+          return new Promise((resolve) => {
+            axiosAuthClient
+              .get(`/posts/${post_and_user.post.id}/is_liked`)
+              .then((res) => {
+                resolve(res.data.flag);
+              });
+          });
+        })
+      );
+      setLikeFlags(newLikeFlags);
+    } else {
+      const newLikeFlags = Array(posts_and_users.length).fill(false);
+      setLikeFlags(newLikeFlags);
+    }
   }, [page]);
 
-  const isLoading = postAndUsers === null || totalPages === null;
+  const isLoading =
+    postAndUsers === null || totalPages === null || likeFlags === null;
 
   return isLoading ? (
     <div style={{ paddingTop: 100, textAlign: 'center' }}>
@@ -40,12 +65,12 @@ const App = () => {
       </div>
       <Pagination totalPages={totalPages} page={page} />
       <Grid container>
-        {postAndUsers.map((postAndUser) => (
+        {postAndUsers.map((postAndUser, i) => (
           <Grid item xs={12} sm={12} md={6} key={postAndUser.post.id}>
             <Grid container key={postAndUser.post.id}>
               <Grid item xs={1} />
               <Grid item xs={10} style={{ marginBottom: 20 }}>
-                <Post postAndUser={postAndUser} />
+                <Post postAndUser={postAndUser} likeFlag={likeFlags[i]} />
               </Grid>
               <Grid item xs={1} />
             </Grid>
