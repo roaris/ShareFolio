@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import MDSpinner from 'react-md-spinner';
 import { TwitterIcon, TwitterShareButton } from 'react-share';
+import MuiTwitterIcon from '@mui/icons-material/Twitter';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 const UserDetail = (props) => {
   const { params } = props.match;
@@ -139,6 +141,30 @@ const UserDetail = (props) => {
               <span className={classes.userItem}>
                 {user.created_at.split('T')[0].substr(0, 10)}に登録
               </span>
+              <div style={{ display: 'flex' }}>
+                {user.twitter && (
+                  <span style={{ marginRight: 10 }}>
+                    <a
+                      href={`https://twitter.com/${user.twitter}`}
+                      style={{ color: 'inherit' }}
+                    >
+                      <MuiTwitterIcon
+                        style={{ color: '#4099FF', height: 30, width: 30 }}
+                      />
+                    </a>
+                  </span>
+                )}
+                {user.github && (
+                  <span>
+                    <a
+                      href={`https://github.com/${user.github}`}
+                      style={{ color: 'inherit' }}
+                    >
+                      <GitHubIcon style={{ height: 30, width: 30 }} />
+                    </a>
+                  </span>
+                )}
+              </div>
             </div>
           </Grid>
         </Grid>
