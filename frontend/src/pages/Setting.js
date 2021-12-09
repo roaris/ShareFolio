@@ -27,7 +27,7 @@ const Setting = () => {
       };
       newInputValue.name = res.data.name;
       newInputValue.email = res.data.email;
-      newInputValue.twitter = res.data.twitter ? res.data.twitter: '';
+      newInputValue.twitter = res.data.twitter ? res.data.twitter : '';
       newInputValue.github = res.data.github ? res.data.github : '';
       setInputValue(newInputValue);
       setPreview(
