@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_06_111101) do
+ActiveRecord::Schema.define(version: 2021_12_09_080221) do
 
   create_table "comments", force: :cascade do |t|
     t.string "content", null: false
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 2021_12_06_111101) do
     t.string "upload_icon"
     t.string "uid", null: false
     t.string "default_icon_url", null: false
+    t.string "twitter"
+    t.string "github"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end

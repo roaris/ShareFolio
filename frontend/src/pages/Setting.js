@@ -22,9 +22,13 @@ const Setting = () => {
       const newInputValue = {
         name: '',
         email: '',
+        twitter: '',
+        github: '',
       };
       newInputValue.name = res.data.name;
       newInputValue.email = res.data.email;
+      newInputValue.twitter = res.data.twitter ? res.data.twitter : '';
+      newInputValue.github = res.data.github ? res.data.github : '';
       setInputValue(newInputValue);
       setPreview(
         res.data.upload_icon.url
@@ -38,6 +42,8 @@ const Setting = () => {
     const formData = new FormData();
     formData.append('user[name]', inputValue.name);
     formData.append('user[email]', inputValue.email);
+    formData.append('user[twitter]', inputValue.twitter);
+    formData.append('user[github]', inputValue.github);
     if (icon) formData.append('user[upload_icon]', icon);
 
     axiosAuthClient
@@ -185,6 +191,20 @@ const InfoRenderer = (props) => {
         onChange={(e) => props.changeInputValue('email', e)}
         error={props.validationMessage.email !== ''}
         helperText={props.validationMessage.email}
+      />
+      <TextField
+        label='TwitterID(@以降)'
+        variant='outlined'
+        style={{ width: '40ch', marginBottom: 30 }}
+        value={props.inputValue.twitter}
+        onChange={(e) => props.changeInputValue('twitter', e)}
+      />
+      <TextField
+        label='GitHubID'
+        variant='outlined'
+        style={{ width: '40ch', marginBottom: 30 }}
+        value={props.inputValue.github}
+        onChange={(e) => props.changeInputValue('github', e)}
       />
     </Grid>
   );

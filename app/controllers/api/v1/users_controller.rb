@@ -70,6 +70,8 @@ module Api
           :email,
           :upload_icon,
           :default_icon_url,
+          :twitter,
+          :github,
         )
       end
 
