@@ -18,6 +18,9 @@ const App = () => {
   const [totalPages, setTotalPages] = useState(null);
 
   useEffect(async () => {
+    setPostAndUsers(null);
+    setLikeFlags(null);
+
     const posts_and_users = await new Promise((resolve) => {
       axiosClient.get(`/posts?page=${page}&per=10`).then((res) => {
         setPostAndUsers(res.data.posts_and_users);
@@ -107,9 +110,6 @@ const Pagination = (props) => {
         count={props.totalPages}
         color='primary'
         onChange={(_, page) => {
-          if (props.page === page) return;
-          props.setPostAndUsers(null);
-          props.setLikeFlags(null);
           history.push(`/posts?page=${page}`);
         }}
         page={props.page}
