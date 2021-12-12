@@ -13,8 +13,7 @@ import CreateIcon from '@mui/icons-material/Create';
 const CommentForm = (props) => {
   const [formOpen, setFormOpen] = useState(false);
   const loggedIn = useContext(AuthContext).loggedIn;
-  const userName = useContext(AuthContext).userName;
-  const userIconUrl = useContext(AuthContext).userIconUrl;
+  const user = useContext(AuthContext).user;
   const [markdown, setMarkdown] = useState('');
   const markdownOption = useMemo(() => {
     return {
@@ -35,7 +34,14 @@ const CommentForm = (props) => {
         <Grid container>
           <Grid item xs={2} lg={1}>
             <div style={{ marginTop: 10 }}>
-              <Owner userName={userName} userIconUrl={userIconUrl} />
+              <Owner
+                userName={user.name}
+                userIconUrl={
+                  user.upload_icon.url
+                    ? user.upload_icon.url
+                    : user.default_icon_url
+                }
+              />
             </div>
           </Grid>
           <Grid item xs={10} lg={11}>
