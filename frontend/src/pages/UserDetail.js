@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { axiosClient, axiosAuthClient } from '../api/axiosClient';
 import CreatedAt from '../components/CreatedAt';
 import Like from '../components/Like';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
+import MuiLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import MDSpinner from 'react-md-spinner';
 import { TwitterIcon, TwitterShareButton } from 'react-share';
 import MuiTwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const UserDetail = (props) => {
   const { params } = props.match;
@@ -19,6 +22,7 @@ const UserDetail = (props) => {
   const [posts, setPosts] = useState(null);
   const [likeFlags, setLikeFlags] = useState(null);
   const loggedIn = useContext(AuthContext).loggedIn;
+  const userId = useContext(AuthContext).userId;
 
   useEffect(async () => {
     axiosClient.get(`/users/${id}`).then((res) => {
@@ -165,6 +169,18 @@ const UserDetail = (props) => {
                   </span>
                 )}
               </div>
+              {id === userId && (
+                <Button
+                  to='/setting'
+                  component={Link}
+                  variant='contained'
+                  color='primary'
+                  style={{ marginTop: 20 }}
+                >
+                  <SettingsIcon />
+                  設定画面へ
+                </Button>
+              )}
             </div>
           </Grid>
         </Grid>
@@ -192,12 +208,12 @@ const UserDetail = (props) => {
                         <Grid item xs={1} />
                         <Grid item xs={10} className={classes.post}>
                           <div className={classes.appNameAndLike}>
-                            <Link
+                            <MuiLink
                               className={classes.appName}
                               href={`/posts/${post.id}`}
                             >
                               {post.app_name}
-                            </Link>
+                            </MuiLink>
                             <div className={classes.like}>
                               <Like
                                 likeNum={post.like_num}

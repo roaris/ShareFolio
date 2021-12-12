@@ -13,6 +13,7 @@ const Header = () => {
   const loggedIn = useContext(AuthContext).loggedIn;
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
   const userName = useContext(AuthContext).userName;
+  const userId = useContext(AuthContext).userId;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
   const history = useHistory();
 
@@ -65,7 +66,7 @@ const Header = () => {
             </Link>
           </li>
           <li style={listItemStyle}>
-            <Link href='/setting' style={linkStyle}>
+            <Link href={`/users/${userId}`} style={linkStyle}>
               <PersonIcon style={{ verticalAlign: 'middle' }} />
               <span style={{ verticalAlign: 'middle' }}>{userName}</span>
             </Link>

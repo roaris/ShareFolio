@@ -8,6 +8,7 @@ export const AuthContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(null);
   const [userName, setUserName] = useState(null);
   const [userIconUrl, setUserIconUrl] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   useEffect(async () => {
     const uid = await new Promise((resolve) =>
@@ -22,6 +23,7 @@ export const AuthContextProvider = ({ children }) => {
             ? res.data.upload_icon.url
             : res.data.default_icon_url
         );
+        setUserId(res.data.id);
       });
     } else {
       setLoggedIn(false);
@@ -30,7 +32,14 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ loggedIn, setLoggedIn, userName, setUserName, userIconUrl }}
+      value={{
+        loggedIn,
+        setLoggedIn,
+        userName,
+        setUserName,
+        userIconUrl,
+        userId,
+      }}
     >
       {children}
     </AuthContext.Provider>
