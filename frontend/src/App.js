@@ -17,13 +17,8 @@ import MDSpinner from 'react-md-spinner';
 
 const WaitInitialize = ({ children }) => {
   const loggedIn = useContext(AuthContext).loggedIn;
-  const userName = useContext(AuthContext).userName;
-  const userIconUrl = useContext(AuthContext).userIconUrl;
-  const userId = useContext(AuthContext).userId;
-  const isLoading =
-    loggedIn === null ||
-    (loggedIn === true &&
-      (userName === null || userIconUrl === null || userId === null));
+  const user = useContext(AuthContext).user;
+  const isLoading = loggedIn === null || (loggedIn === true && user === null);
   if (isLoading) {
     return (
       <div style={{ marginTop: 100, textAlign: 'center' }}>

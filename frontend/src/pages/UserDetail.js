@@ -22,7 +22,7 @@ const UserDetail = (props) => {
   const [posts, setPosts] = useState(null);
   const [likeFlags, setLikeFlags] = useState(null);
   const loggedIn = useContext(AuthContext).loggedIn;
-  const userId = useContext(AuthContext).userId;
+  const loginUser = useContext(AuthContext).user;
 
   useEffect(async () => {
     axiosClient.get(`/users/${id}`).then((res) => {
@@ -169,7 +169,7 @@ const UserDetail = (props) => {
                   </span>
                 )}
               </div>
-              {id === userId && (
+              {id === loginUser?.id && (
                 <Button
                   to='/setting'
                   component={Link}

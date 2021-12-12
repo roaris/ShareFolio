@@ -17,7 +17,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 
 const Login = () => {
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
-  const setUserName = useContext(AuthContext).setUserName;
+  const setUser = useContext(AuthContext).setUser;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -29,7 +29,7 @@ const Login = () => {
       })
       .then((res) => {
         setLoggedIn(true);
-        setUserName(res.data.name);
+        setUser(res.data);
         updateFlashMessage({ successMessage: 'ログインしました' });
       });
   };

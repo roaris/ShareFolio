@@ -12,8 +12,7 @@ import LoginIcon from '@mui/icons-material/Login';
 const Header = () => {
   const loggedIn = useContext(AuthContext).loggedIn;
   const setLoggedIn = useContext(AuthContext).setLoggedIn;
-  const userName = useContext(AuthContext).userName;
-  const userId = useContext(AuthContext).userId;
+  const user = useContext(AuthContext).user;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
   const history = useHistory();
 
@@ -66,9 +65,9 @@ const Header = () => {
             </Link>
           </li>
           <li style={listItemStyle}>
-            <Link href={`/users/${userId}`} style={linkStyle}>
+            <Link href={`/users/${user.id}`} style={linkStyle}>
               <PersonIcon style={{ verticalAlign: 'middle' }} />
-              <span style={{ verticalAlign: 'middle' }}>{userName}</span>
+              <span style={{ verticalAlign: 'middle' }}>{user.name}</span>
             </Link>
           </li>
           <li style={listItemStyle} onClick={logout}>

@@ -21,9 +21,8 @@ const PostDetail = (props) => {
   const [ownerName, setOwnerName] = useState('');
   const [ownerIconUrl, setOwnerIconUrl] = useState('');
   const [commentsAndUsers, setCommentsAndUsers] = useState(null);
-  const userName = useContext(AuthContext).userName;
-  const userIconUrl = useContext(AuthContext).userIconUrl;
   const loggedIn = useContext(AuthContext).loggedIn;
+  const user = useContext(AuthContext).user;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
   const [likeNum, setLikeNum] = useState(null);
   const [likeFlag, setLikeFlag] = useState(null);
@@ -58,8 +57,10 @@ const PostDetail = (props) => {
         const newCommentsAndUsers = commentsAndUsers.slice();
         newCommentsAndUsers.push({
           comment: res.data,
-          user_name: userName,
-          user_icon_url: userIconUrl,
+          user_name: user.name,
+          user_icon_url: user.upload_icon.url
+            ? user.upload_icon.url
+            : user.default_icon_url,
         });
         setCommentsAndUsers(newCommentsAndUsers);
         updateFlashMessage({ successMessage: 'コメントをつけました' });

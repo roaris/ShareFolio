@@ -6,9 +6,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(null);
-  const [userName, setUserName] = useState(null);
-  const [userIconUrl, setUserIconUrl] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(async () => {
     const uid = await new Promise((resolve) =>
@@ -17,13 +15,7 @@ export const AuthContextProvider = ({ children }) => {
     if (uid) {
       setLoggedIn(true);
       axiosAuthClient.get(`/users/search?uid=${uid}`).then((res) => {
-        setUserName(res.data.name);
-        setUserIconUrl(
-          res.data.upload_icon.url
-            ? res.data.upload_icon.url
-            : res.data.default_icon_url
-        );
-        setUserId(res.data.id);
+        setUser(res.data);
       });
     } else {
       setLoggedIn(false);
@@ -31,16 +23,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{
-        loggedIn,
-        setLoggedIn,
-        userName,
-        setUserName,
-        userIconUrl,
-        userId,
-      }}
-    >
+    <AuthContext.Provider value={{ loggedIn, setLoggedIn, user, setUser }}>
       {children}
     </AuthContext.Provider>
   );
