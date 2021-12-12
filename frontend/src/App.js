@@ -22,9 +22,8 @@ const WaitInitialize = ({ children }) => {
   const userId = useContext(AuthContext).userId;
   const isLoading =
     loggedIn === null ||
-    userName === null ||
-    userIconUrl === null ||
-    userId === null;
+    (loggedIn === true &&
+      (userName === null || userIconUrl === null || userId === null));
   if (isLoading) {
     return (
       <div style={{ marginTop: 100, textAlign: 'center' }}>
