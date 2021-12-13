@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { axiosAuthClient } from '../api/axiosClient';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import defaultIcon from '../logo.svg';
 import MDSpinner from 'react-md-spinner';
 
