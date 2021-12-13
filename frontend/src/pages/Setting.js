@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import defaultIcon from '../logo.svg';
 import MDSpinner from 'react-md-spinner';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 const Setting = () => {
   const [inputValue, setInputValue] = useState(null);
@@ -120,7 +121,7 @@ const Setting = () => {
         style={{ width: 300, marginBottom: 30 }}
         onClick={updateProfile}
       >
-        Update
+        更新する
       </Button>
     </Grid>
   );
@@ -154,7 +155,8 @@ const ImageRenderer = (props) => {
           marginBottom: 30,
         }}
       >
-        Upload
+        <FileUploadIcon />
+        画像をアップロード
         <input
           type='file'
           accept='image/*'
