@@ -8,8 +8,8 @@ import {
   googleProvider,
   twitterProvider,
 } from '../firebase';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import CheckIcon from '@mui/icons-material/Check';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -162,6 +162,7 @@ const Login = () => {
           <Button
             style={{
               border: 'solid 1px #bbb',
+              color: 'black',
               marginBottom: 20,
               textTransform: 'none',
             }}
