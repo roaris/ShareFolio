@@ -44,15 +44,6 @@ module Api
         end
       end
 
-      def search
-        user = User.find_by(uid: params[:uid])
-        if user
-          render status: :ok, json: user
-        else
-          render status: :not_found
-        end
-      end
-
       def posts
         user = User.find(params[:id])
         if user

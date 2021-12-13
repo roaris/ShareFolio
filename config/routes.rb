@@ -6,7 +6,6 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[show create] do
         collection do
-          get :search
           get '/me', to: 'users#show_me'
           patch '/me', to: 'users#update_me'
         end

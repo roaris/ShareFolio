@@ -8,18 +8,15 @@ export const AuthContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(null);
   const [user, setUser] = useState(null);
 
-  useEffect(async () => {
-    const uid = await new Promise((resolve) =>
-      auth.onAuthStateChanged((user) => resolve(user?.uid))
-    );
-    if (uid) {
-      setLoggedIn(true);
-      axiosAuthClient.get(`/users/search?uid=${uid}`).then((res) => {
-        setUser(res.data);
-      });
-    } else {
-      setLoggedIn(false);
-    }
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setLoggedIn(true);
+        axiosAuthClient.get(`/users/me`).then((res) => setUser(res.data));
+      } else {
+        setLoggedIn(false);
+      }
+    });
   }, []);
 
   return (
