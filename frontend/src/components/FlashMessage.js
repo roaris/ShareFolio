@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 
 const FlashMessage = () => {
   const flashMessage = useContext(FlashMessageContext).flashMessage;

@@ -2,11 +2,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { axiosClient, axiosAuthClient } from '../api/axiosClient';
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 import Post from '../components/Post';
 import MDSpinner from 'react-md-spinner';
-import MuiPagination from '@material-ui/lab/Pagination';
-import { withStyles } from '@material-ui/core/styles';
+import MuiPagination from '@mui/material/Pagination';
+import { withStyles } from '@mui/styles';
 
 const App = () => {
   const search = useLocation().search;
