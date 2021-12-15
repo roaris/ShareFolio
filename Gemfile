@@ -43,6 +43,7 @@ group :development do
   gem 'rubocop', require: false
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'rack-mini-profiler', require: false
 end
 
 group :production do
