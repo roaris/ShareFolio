@@ -31,4 +31,5 @@
 /config/master.key
 
 .env
-/public/uploads
+/public/*
+!robots.txt
