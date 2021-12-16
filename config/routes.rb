@@ -23,9 +23,6 @@ Rails.application.routes.draw do
             delete '', to: 'likes#destroy'
           end
         end
-        member do
-          get '/is_liked', to: 'likes#liked?'
-        end
       end
     end
   end

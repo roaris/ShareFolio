@@ -98,7 +98,7 @@ const Post = (props) => {
             <Like
               likeNum={post.like_num}
               numSize={20}
-              likeFlag={props.likeFlag}
+              likeFlag={post.like_flag}
               heartSize={25}
               createLike={() => {}}
               destroyLike={() => {}}
