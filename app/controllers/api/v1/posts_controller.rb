@@ -11,9 +11,19 @@ module Api
         posts = posts.page(params[:page]).per(params[:per])
         pagination = pagination(posts)
         posts_and_users = []
-        posts.each do |post|
-          posts_and_users.push({ post: post, user: post.user })
+
+        if request.headers['Authorization']
+          authenticate_user
+          posts.each do |post|
+            like_flag = Like.exists?(post_id: post.id, user_id: current_user.id)
+            posts_and_users.push({ post: post.as_json.merge({ like_flag: like_flag }), user: post.user })
+          end
+        else
+          posts.each do |post|
+            posts_and_users.push({ post: post, user: post.user })
+          end
         end
+
         render status: :ok, json: { posts_and_users: posts_and_users }.merge(pagination)
       end
 
@@ -34,7 +44,16 @@ module Api
           user_icon_url = user.upload_icon.url || user.default_icon_url
           comments_and_users.push({ comment: comment, user_id: user.id, user_name: user.name, user_icon_url: user_icon_url })
         end
-        render staus: :ok, json: { post: post, user: post.user, comments_and_users: comments_and_users }
+
+        if request.headers['Authorization']
+          authenticate_user
+          like_flag = Like.exists?(post_id: post.id, user_id: current_user.id)
+          render staus: :ok,
+                 json: { post: post.as_json.merge({ like_flag: like_flag }), user: post.user,
+                         comments_and_users: comments_and_users }
+        else
+          render staus: :ok, json: { post: post, user: post.user, comments_and_users: comments_and_users }
+        end
       end
 
       def create
