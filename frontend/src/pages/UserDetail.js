@@ -20,7 +20,6 @@ const UserDetail = (props) => {
   const id = parseInt(params.id, 10);
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState(null);
-  const [likeFlags, setLikeFlags] = useState(null);
   const loggedIn = useContext(AuthContext).loggedIn;
   const loginUser = useContext(AuthContext).user;
 
@@ -28,26 +27,15 @@ const UserDetail = (props) => {
     axiosClient.get(`/users/${id}`).then((res) => {
       setUser(res.data);
     });
-    const posts = await new Promise((resolve) => {
-      axiosClient.get(`/users/${id}/posts`).then((res) => {
-        setPosts(res.data);
-        resolve(res.data);
-      });
-    });
+
+    const callback = (res) => {
+      setPosts(res.data);
+    };
+
     if (loggedIn) {
-      const newLikeFlags = await Promise.all(
-        posts.map((post) => {
-          return new Promise((resolve) => {
-            axiosAuthClient
-              .get(`/posts/${post.id}/is_liked`)
-              .then((res) => resolve(res.data.flag));
-          });
-        })
-      );
-      setLikeFlags(newLikeFlags);
+      axiosAuthClient.get(`/users/${id}/posts`).then(callback);
     } else {
-      const newLikeFlags = Array(posts.length).fill(false);
-      setLikeFlags(newLikeFlags);
+      axiosClient.get(`/users/${id}/posts`).then(callback);
     }
   }, []);
 
@@ -111,7 +99,7 @@ const UserDetail = (props) => {
   });
 
   const classes = styles();
-  const isLoading = user === null || posts === null || likeFlags === null;
+  const isLoading = user === null || posts === null;
 
   return isLoading ? (
     <div style={{ marginTop: 100, textAlign: 'center' }}>
@@ -202,7 +190,7 @@ const UserDetail = (props) => {
                   作成したアプリ一覧
                 </span>
                 <Grid container>
-                  {posts.map((post, i) => (
+                  {posts.map((post) => (
                     <Grid item xs={12} sm={12} md={6} key={post.id}>
                       <Grid container>
                         <Grid item xs={1} />
@@ -218,7 +206,7 @@ const UserDetail = (props) => {
                               <Like
                                 likeNum={post.like_num}
                                 numSize={20}
-                                likeFlag={likeFlags[i]}
+                                likeFlag={post.like_flag}
                                 heartSize={25}
                                 createLike={() => {}}
                                 destroyLike={() => {}}
