@@ -28,7 +28,7 @@ const PostDetail = (props) => {
   const [likeFlag, setLikeFlag] = useState(null);
 
   useEffect(() => {
-    axiosClient.get(`/posts/${id}`).then((res) => {
+    const callback = (res) => {
       setPost(res.data.post);
       setOwnerId(res.data.user.id);
       setOwnerName(res.data.user.name);
@@ -39,14 +39,13 @@ const PostDetail = (props) => {
       );
       setCommentsAndUsers(res.data.comments_and_users);
       setLikeNum(res.data.post.like_num);
-    });
+      setLikeFlag(res.data.post.like_flag);
+    };
 
     if (loggedIn) {
-      axiosAuthClient.get(`/posts/${id}/is_liked`).then((res) => {
-        setLikeFlag(res.data.flag);
-      });
+      axiosAuthClient.get(`/posts/${id}`).then(callback);
     } else {
-      setLikeFlag(false);
+      axiosClient.get(`/posts/${id}`).then(callback);
     }
   }, []);
 
