@@ -7,7 +7,12 @@ module Api
       include Pagination
 
       def index
-        posts = Post.all.includes(:user).order(id: 'DESC')
+        if tag_id = params[:tag_id]
+          posts = Tag.find(tag_id).posts.order(id: 'DESC')
+        else
+          posts = Post.all.includes(:user).order(id: 'DESC')
+        end
+
         posts = posts.page(params[:page]).per(params[:per])
         pagination = pagination(posts)
         posts_and_users = []
