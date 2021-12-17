@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :comment do
     sequence(:content) { |n| "content#{n}" }
-    sequence(:user_id) { 1 }
-    sequence(:post_id) { 1 }
+    association :user
+    association :post
   end
 end

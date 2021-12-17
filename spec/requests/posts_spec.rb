@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe '/api/v1/posts', type: :request do
-  let!(:user) { create(:user) }
-
   describe 'index' do
     it 'accept an auth user' do
       create_list(:post, 10)
@@ -37,7 +35,7 @@ RSpec.describe '/api/v1/posts', type: :request do
       expect(json(response)['post']['app_url']).to eq(post.app_url)
       expect(json(response)['post']['repo_url']).to eq(post.repo_url)
       expect(json(response)['post']['description']).to eq(post.description)
-      expect(json(response)['user']['name']).to eq(user.name)
+      expect(json(response)['user']['name']).to eq(post.user.name)
     end
 
     it 'accept an unauth user' do

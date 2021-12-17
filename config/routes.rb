@@ -23,7 +23,13 @@ Rails.application.routes.draw do
             delete '', to: 'likes#destroy'
           end
         end
+        resources :taggings, only: [] do
+          collection do
+            patch '', to: 'taggings#update'
+          end
+        end
       end
+      resources :tags, only: :index
     end
   end
 

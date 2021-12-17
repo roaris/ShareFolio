@@ -49,10 +49,10 @@ module Api
         if user
           if request.headers['Authorization']
             render status: :ok, json: user.posts.map { |post|
-              post.as_json.merge({ like_flag: Like.exists?(post_id: post.id, user_id: current_user.id) })
+              post.as_json.merge({ like_flag: Like.exists?(post_id: post.id, user_id: current_user.id), tags: post.tags })
             }
           else
-            render status: :ok, json: user.posts
+            render status: :ok, json: user.posts.map { |post| post.as_json.merge({ tags: post.tags }) }
           end
         else
           render status: :not_found

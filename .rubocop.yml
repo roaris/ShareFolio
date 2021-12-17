@@ -90,6 +90,7 @@ Rails/OutputSafety:
 Rails/SkipsModelValidations:
   Exclude:
     - 'spec/**/*'
+    - 'app/controllers/api/v1/taggings_controller.rb'
 
 Layout/ParameterAlignment:
   Enabled: false
