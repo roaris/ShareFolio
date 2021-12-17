@@ -10,10 +10,11 @@ module Api
         if tag_id = params[:tag_id]
           posts = Tag.find(tag_id).posts.order(id: 'DESC')
         else
-          posts = Post.all.includes(:user).order(id: 'DESC')
+          posts = Post.all.order(id: 'DESC')
         end
 
         posts = posts.page(params[:page]).per(params[:per])
+        posts = posts.includes(:user, :tags)
         pagination = pagination(posts)
         posts_and_users = []
 
