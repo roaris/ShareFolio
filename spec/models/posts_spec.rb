@@ -69,4 +69,11 @@ RSpec.describe Post, type: :model do
       user.destroy
     end.to change(described_class, :count).by(-1)
   end
+
+  it 'has approriate tags' do
+    tagging1 = create(:tagging)
+    post = tagging1.post
+    tagging2 = create(:tagging, post_id: post.id)
+    expect(post.tags).to eq([tagging1.tag, tagging2.tag])
+  end
 end
