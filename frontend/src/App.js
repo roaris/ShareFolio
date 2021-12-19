@@ -11,6 +11,7 @@ import PostDetail from './pages/PostDetail';
 import Setting from './pages/Setting';
 import UserDetail from './pages/UserDetail';
 import PostForm from './pages/PostForm';
+import PostEdit from './pages/PostEdit';
 import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
 import MDSpinner from 'react-md-spinner';
@@ -70,6 +71,7 @@ const App = () => {
                   <PrivateRoute path='/setting' component={Setting} />
                   <Route path='/users/:id' component={UserDetail} />
                   <PrivateRoute path='/posts/new' component={PostForm} />
+                  <PrivateRoute path='/posts/:id/edit' component={PostEdit} />
                   <Route path='/posts/:id' component={PostDetail} />
                   <Route component={NotFound} />
                 </Switch>
