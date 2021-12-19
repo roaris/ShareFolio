@@ -14,7 +14,7 @@ const DeleteModal = (props) => {
       <DialogTitle id='alert-dialog-title'>{props.title}</DialogTitle>
       <DialogActions>
         <Button onClick={props.handleClose}>キャンセル</Button>
-        <Button color='secondary' onClick={props.handleClose}>
+        <Button color='secondary' onClick={props.deletePost}>
           削除する
         </Button>
       </DialogActions>

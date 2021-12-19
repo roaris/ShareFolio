@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { axiosAuthClient, axiosClient } from '../api/axiosClient';
@@ -30,6 +31,7 @@ const PostDetail = (props) => {
   const [likeNum, setLikeNum] = useState(null);
   const [likeFlag, setLikeFlag] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     const callback = (res) => {
@@ -69,6 +71,14 @@ const PostDetail = (props) => {
         updateFlashMessage({ successMessage: 'コメントをつけました' });
       });
   };
+
+  const deletePost = () => {
+    axiosAuthClient.delete(`/posts/${id}`)
+      .then(() => {
+        history.push('/posts');
+        updateFlashMessage({ successMessage: '削除しました' });
+      });
+    };
 
   const createLike = () => {
     if (!loggedIn) return;
@@ -208,6 +218,7 @@ const PostDetail = (props) => {
                 <Link href={`/posts/${id}/edit`} style={{marginRight: 10, textDecoration: 'none'}}>編集する</Link>
                 <span onClick={() => setModalOpen(true)} style={{color: 'red'}}>削除する</span>
                 <DeleteConfirm
+                  deletePost={deletePost}
                   open={modalOpen}
                   handleClose={() => setModalOpen(false)}
                   title={`${post.app_name}を削除して良いですか？`}
