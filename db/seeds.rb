@@ -52,3 +52,10 @@ tags = [
 ]
 
 tags.each { |tag| FactoryBot.create(:tag, name: tag) }
+
+(1..10).each do |i|
+  tag_ids = (1..26).to_a.sample(5)
+  (0...5).each do |j|
+    FactoryBot.create(:tagging, post_id: i, tag_id: tag_ids[j])
+  end
+end

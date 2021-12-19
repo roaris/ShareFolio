@@ -6,7 +6,7 @@ FactoryBot.define do
     sequence(:app_url) { |n| "https://example.com/app#{n}" }
     sequence(:repo_url) { |n| "https://example.com/repo#{n}" }
     sequence(:description) { |n| "description#{n}" * 100 }
-    sequence(:like_num) { |n| n }
+    sequence(:like_num) { 0 }
     association :user
   end
 end
