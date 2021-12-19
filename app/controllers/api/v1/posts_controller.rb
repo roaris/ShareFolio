@@ -7,8 +7,8 @@ module Api
       include Pagination
 
       def index
-        posts = if tag_id = params[:tag_id]
-                  Tag.find(tag_id).posts.order(id: 'DESC')
+        posts = if tag_name = params[:tag]
+                  Tag.find_by(name: tag_name).posts.order(id: 'DESC')
                 else
                   Post.all.order(id: 'DESC')
                 end
