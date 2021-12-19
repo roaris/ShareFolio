@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { axiosAuthClient, axiosClient } from '../api/axiosClient';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 import { makeStyles } from '@mui/styles';
 import Owner from '../components/Owner';
 import CommentForm from '../components/CommentForm';
@@ -12,6 +14,7 @@ import CreatedAt from '../components/CreatedAt';
 import CommentList from '../components/CommentList';
 import Like from '../components/Like';
 import Tags from '../components/Tags';
+import DeleteConfirm from '../components/DeleteConfirm';
 import MDSpinner from 'react-md-spinner';
 
 const PostDetail = (props) => {
@@ -27,6 +30,8 @@ const PostDetail = (props) => {
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
   const [likeNum, setLikeNum] = useState(null);
   const [likeFlag, setLikeFlag] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     const callback = (res) => {
@@ -65,6 +70,13 @@ const PostDetail = (props) => {
         setCommentsAndUsers(newCommentsAndUsers);
         updateFlashMessage({ successMessage: 'コメントをつけました' });
       });
+  };
+
+  const deletePost = () => {
+    axiosAuthClient.delete(`/posts/${id}`).then(() => {
+      history.push('/posts');
+      updateFlashMessage({ successMessage: '削除しました' });
+    });
   };
 
   const createLike = () => {
@@ -197,6 +209,33 @@ const PostDetail = (props) => {
             </div>
           </Grid>
         </Grid>
+        {ownerId === user.id && (
+          <Grid container>
+            <Grid item xs={2} lg={1} />
+            <Grid item xs={10} lg={11}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Link
+                  href={`/posts/${id}/edit`}
+                  style={{ marginRight: 10, textDecoration: 'none' }}
+                >
+                  編集する
+                </Link>
+                <span
+                  onClick={() => setModalOpen(true)}
+                  style={{ color: 'red', cursor: 'pointer' }}
+                >
+                  削除する
+                </span>
+                <DeleteConfirm
+                  deletePost={deletePost}
+                  open={modalOpen}
+                  handleClose={() => setModalOpen(false)}
+                  title={`${post.app_name}を削除して良いですか？`}
+                />
+              </div>
+            </Grid>
+          </Grid>
+        )}
         <div style={{ marginTop: 50 }}>
           <CommentForm submitComment={submitComment} />
         </div>
