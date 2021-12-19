@@ -53,7 +53,7 @@ const PostEdit = (props) => {
         app_url: post.app_url,
         repo_url: post.repo_url,
       });
-      setTagIds(post.tags.map(tag => tag.id));
+      setTagIds(post.tags.map((tag) => tag.id));
       setMarkdown(post.description);
     });
 
@@ -155,7 +155,9 @@ const PostEdit = (props) => {
         </p>
         <div style={{ marginBottom: 30 }}>
           <Select
-            defaultValue={tagIds.map(tagId => tags.find(tag => tag.value === tagId))}
+            defaultValue={tagIds.map((tagId) =>
+              tags.find((tag) => tag.value === tagId)
+            )}
             isMulti
             options={tags}
             onChange={(arr) => setTagIds(arr.map((e) => e.value))}

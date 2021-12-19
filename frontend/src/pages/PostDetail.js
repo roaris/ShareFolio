@@ -73,12 +73,11 @@ const PostDetail = (props) => {
   };
 
   const deletePost = () => {
-    axiosAuthClient.delete(`/posts/${id}`)
-      .then(() => {
-        history.push('/posts');
-        updateFlashMessage({ successMessage: '削除しました' });
-      });
-    };
+    axiosAuthClient.delete(`/posts/${id}`).then(() => {
+      history.push('/posts');
+      updateFlashMessage({ successMessage: '削除しました' });
+    });
+  };
 
   const createLike = () => {
     if (!loggedIn) return;
@@ -215,8 +214,18 @@ const PostDetail = (props) => {
             <Grid item xs={2} lg={1} />
             <Grid item xs={10} lg={11}>
               <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Link href={`/posts/${id}/edit`} style={{marginRight: 10, textDecoration: 'none'}}>編集する</Link>
-                <span onClick={() => setModalOpen(true)} style={{color: 'red'}}>削除する</span>
+                <Link
+                  href={`/posts/${id}/edit`}
+                  style={{ marginRight: 10, textDecoration: 'none' }}
+                >
+                  編集する
+                </Link>
+                <span
+                  onClick={() => setModalOpen(true)}
+                  style={{ color: 'red' }}
+                >
+                  削除する
+                </span>
                 <DeleteConfirm
                   deletePost={deletePost}
                   open={modalOpen}
