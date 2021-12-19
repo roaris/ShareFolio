@@ -118,7 +118,7 @@ const PostEdit = (props) => {
       <Grid item xs={1} lg={3} />
       <Grid item xs={10} lg={6} style={style}>
         <p style={{ fontSize: 18, margin: 0 }}>
-          1. アプリ名を入力してください。
+          1. アプリ名を入力してください。(必須)
         </p>
         <TextField
           variant='outlined'
@@ -129,7 +129,7 @@ const PostEdit = (props) => {
           helperText={validationMessage.app_name}
         />
         <p style={{ fontSize: 18, margin: 0 }}>
-          2. デプロイ先のURLを入力してください。
+          2. デプロイ先のURLを入力してください。(必須)
         </p>
         <TextField
           variant='outlined'
@@ -140,7 +140,7 @@ const PostEdit = (props) => {
           helperText={validationMessage.app_url}
         />
         <p style={{ fontSize: 18, margin: 0 }}>
-          3. レポジトリのURLを入力してください。
+          3. レポジトリのURLを入力してください。(任意)
         </p>
         <TextField
           variant='outlined'
@@ -151,7 +151,7 @@ const PostEdit = (props) => {
           helperText={validationMessage.repo_url}
         />
         <p style={{ fontSize: 18, margin: 0 }}>
-          4. 使用した技術を選択してください。(複数選択可)
+          4. 使用した技術を選択してください。(任意、複数選択可)
         </p>
         <div style={{ marginBottom: 30 }}>
           <Select
@@ -165,7 +165,7 @@ const PostEdit = (props) => {
           />
         </div>
         <p style={{ fontSize: 18, margin: 0 }}>
-          5. アプリの概要や工夫点を入力してください。
+          5. アプリの概要や工夫点を入力してください。(必須、マークダウン可)
         </p>
         <SimpleMDE
           value={markdown}
