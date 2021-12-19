@@ -21,3 +21,31 @@ end
 (1..20).each do |i|
   FactoryBot.create(:comment, user_id: ((i - 1) % 5) + 1, post_id: ((i - 1) / 2) + 1)
 end
+
+tags = [
+  'AWS',
+  'Angular',
+  'C#',
+  'Django',
+  'Express.js',
+  'Firebase',
+  'Flask',
+  'Gin',
+  'Go',
+  'Heroku',
+  'Java',
+  'JavaScript',
+  'Kotlin',
+  'Laravel',
+  'Next.js',
+  'Node.js',
+  'Nuxt.js',
+  'PHP',
+  'Python',
+  'Rails',
+  'React',
+  'Ruby',
+  'Vue',
+]
+
+tags.each { |tag| FactoryBot.create(:tag, name: tag) }
