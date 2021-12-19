@@ -58,7 +58,9 @@ module Api
                  json: { post: post.as_json.merge({ like_flag: like_flag, tags: post.tags }), user: post.user,
                          comments_and_users: comments_and_users }
         else
-          render staus: :ok, json: { post: post.as_json.merge({ tags: post.tags }), user: post.user, comments_and_users: comments_and_users }
+          render staus: :ok,
+                 json: { post: post.as_json.merge({ tags: post.tags }), user: post.user,
+                         comments_and_users: comments_and_users }
         end
       end
 
