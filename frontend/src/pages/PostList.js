@@ -12,6 +12,7 @@ const App = () => {
   const search = useLocation().search;
   const query = new URLSearchParams(search);
   const page = query.get('page') ? parseInt(query.get('page'), 10) : 1;
+  const tagName = query.get('tag');
   const loggedIn = useContext(AuthContext).loggedIn;
   const [postAndUsers, setPostAndUsers] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
@@ -24,10 +25,13 @@ const App = () => {
       setTotalPages(res.data.pagination.total_pages);
     };
 
+    const requestUrl = tagName
+      ? `/posts?page=${page}&per=10&tag=${tagName}`
+      : `/posts?page=${page}&per=10`;
     if (loggedIn) {
-      axiosAuthClient.get(`/posts?page=${page}&per=10`).then(callback);
+      axiosAuthClient.get(requestUrl).then(callback);
     } else {
-      axiosClient.get(`/posts?page=${page}&per=10`).then(callback);
+      axiosClient.get(requestUrl).then(callback);
     }
   }, [page]);
 
@@ -46,9 +50,9 @@ const App = () => {
           textAlign: 'center',
         }}
       >
-        <h1>投稿一覧</h1>
+        <h1>{tagName ? `${tagName}の投稿一覧` : '投稿一覧'}</h1>
       </div>
-      <Pagination totalPages={totalPages} page={page} />
+      <Pagination totalPages={totalPages} page={page} tagName={tagName} />
       <Grid container>
         {postAndUsers.map((postAndUser) => (
           <Grid item xs={12} sm={12} md={6} key={postAndUser.post.id}>
@@ -62,7 +66,7 @@ const App = () => {
           </Grid>
         ))}
       </Grid>
-      <Pagination totalPages={totalPages} page={page} />
+      <Pagination totalPages={totalPages} page={page} tagName={tagName} />
     </div>
   );
 };
@@ -82,7 +86,10 @@ const Pagination = (props) => {
         count={props.totalPages}
         color='primary'
         onChange={(_, page) => {
-          history.push(`/posts?page=${page}`);
+          const url = props.tagName
+            ? `/posts?tag=${props.tagName}&page=${page}`
+            : `/posts?page=${page}`;
+          history.push(url);
         }}
         page={props.page}
         style={{ marginBottom: 30 }}
