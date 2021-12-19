@@ -16,6 +16,11 @@ const App = () => {
   const loggedIn = useContext(AuthContext).loggedIn;
   const [postAndUsers, setPostAndUsers] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
+  const [tags, setTags] = useState(null);
+
+  useEffect(() => {
+    axiosAuthClient.get('/tags').then((res) => setTags(res.data));
+  }, []);
 
   useEffect(() => {
     setPostAndUsers(null);
@@ -35,7 +40,7 @@ const App = () => {
     }
   }, [page]);
 
-  const isLoading = postAndUsers === null || totalPages === null;
+  const isLoading = postAndUsers === null || totalPages === null || tags === null;
 
   return isLoading ? (
     <div style={{ paddingTop: 100, textAlign: 'center' }}>
@@ -50,7 +55,7 @@ const App = () => {
           textAlign: 'center',
         }}
       >
-        <h1>{tagId ? `${tagId}の投稿一覧` : '投稿一覧'}</h1>
+        <h1>{tagId ? `${tags.find(tag => tag.id === parseInt(tagId, 10)).name}の投稿一覧` : '投稿一覧'}</h1>
       </div>
       <Pagination totalPages={totalPages} page={page} tagId={tagId} />
       <Grid container>
