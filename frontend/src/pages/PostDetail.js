@@ -209,7 +209,7 @@ const PostDetail = (props) => {
             </div>
           </Grid>
         </Grid>
-        {ownerId === user.id && (
+        {ownerId === user?.id && (
           <Grid container>
             <Grid item xs={2} lg={1} />
             <Grid item xs={10} lg={11}>
