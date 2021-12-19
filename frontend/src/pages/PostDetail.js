@@ -222,7 +222,7 @@ const PostDetail = (props) => {
                 </Link>
                 <span
                   onClick={() => setModalOpen(true)}
-                  style={{ color: 'red' }}
+                  style={{ color: 'red', cursor: 'pointer' }}
                 >
                   削除する
                 </span>
