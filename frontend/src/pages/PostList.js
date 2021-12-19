@@ -40,7 +40,8 @@ const App = () => {
     }
   }, [page]);
 
-  const isLoading = postAndUsers === null || totalPages === null || tags === null;
+  const isLoading =
+    postAndUsers === null || totalPages === null || tags === null;
 
   return isLoading ? (
     <div style={{ paddingTop: 100, textAlign: 'center' }}>
@@ -55,7 +56,13 @@ const App = () => {
           textAlign: 'center',
         }}
       >
-        <h1>{tagId ? `${tags.find(tag => tag.id === parseInt(tagId, 10)).name}の投稿一覧` : '投稿一覧'}</h1>
+        <h1>
+          {tagId
+            ? `${
+                tags.find((tag) => tag.id === parseInt(tagId, 10)).name
+              }の投稿一覧`
+            : '投稿一覧'}
+        </h1>
       </div>
       <Pagination totalPages={totalPages} page={page} tagId={tagId} />
       <Grid container>
