@@ -19,7 +19,7 @@ const App = () => {
   const [tags, setTags] = useState(null);
 
   useEffect(() => {
-    axiosAuthClient.get('/tags').then((res) => setTags(res.data));
+    axiosClient.get('/tags').then((res) => setTags(res.data));
   }, []);
 
   useEffect(() => {
