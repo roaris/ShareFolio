@@ -13,6 +13,7 @@ import CreatedAt from '../components/CreatedAt';
 import CommentList from '../components/CommentList';
 import Like from '../components/Like';
 import Tags from '../components/Tags';
+import DeleteConfirm from '../components/DeleteConfirm';
 import MDSpinner from 'react-md-spinner';
 
 const PostDetail = (props) => {
@@ -28,6 +29,7 @@ const PostDetail = (props) => {
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
   const [likeNum, setLikeNum] = useState(null);
   const [likeFlag, setLikeFlag] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const callback = (res) => {
@@ -203,7 +205,13 @@ const PostDetail = (props) => {
             <Grid item xs={2} lg={1} />
             <Grid item xs={10} lg={11}>
               <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Link href={`/posts/${id}/edit`}>編集する</Link>
+                <Link href={`/posts/${id}/edit`} style={{marginRight: 10, textDecoration: 'none'}}>編集する</Link>
+                <span onClick={() => setModalOpen(true)} style={{color: 'red'}}>削除する</span>
+                <DeleteConfirm
+                  open={modalOpen}
+                  handleClose={() => setModalOpen(false)}
+                  title={`${post.app_name}を削除して良いですか？`}
+                />
               </div>
             </Grid>
           </Grid>
