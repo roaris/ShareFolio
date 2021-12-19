@@ -5,6 +5,7 @@ import { axiosAuthClient, axiosClient } from '../api/axiosClient';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 import { makeStyles } from '@mui/styles';
 import Owner from '../components/Owner';
 import CommentForm from '../components/CommentForm';
@@ -197,6 +198,16 @@ const PostDetail = (props) => {
             </div>
           </Grid>
         </Grid>
+        {ownerId === user.id && (
+          <Grid container>
+            <Grid item xs={2} lg={1} />
+            <Grid item xs={10} lg={11}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Link href={`/posts/${id}/edit`}>編集する</Link>
+              </div>
+            </Grid>
+          </Grid>
+        )}
         <div style={{ marginTop: 50 }}>
           <CommentForm submitComment={submitComment} />
         </div>
