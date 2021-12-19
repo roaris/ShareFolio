@@ -170,7 +170,7 @@ const PostDetail = (props) => {
                 </div>
               </div>
               <div style={{ marginBottom: 10 }}>
-                <Tags names={post.tags.map((tag) => tag.name)} />
+                <Tags tags={post.tags} />
               </div>
               アプリ:{' '}
               <a href={post.app_url} className={classes.link}>

@@ -215,7 +215,7 @@ const UserDetail = (props) => {
                             </div>
                           </div>
                           <div style={{ marginTop: 10, marginBottom: 10 }}>
-                            <Tags names={post.tags.map((tag) => tag.name)} />
+                            <Tags tags={post.tags} />
                           </div>
                           <Typography className={classes.description}>
                             {previewDescription(post.description)}
