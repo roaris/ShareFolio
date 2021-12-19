@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { useHistory } from 'react-router-dom';
 import { axiosAuthClient, axiosClient } from '../api/axiosClient';
@@ -33,12 +34,19 @@ const PostEdit = (props) => {
     };
   }, []);
   const history = useHistory();
+  const loginUser = useContext(AuthContext).user;
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
   const [tags, setTags] = useState(null);
   const [tagIds, setTagIds] = useState([]);
 
   useEffect(async () => {
     await axiosClient.get(`/posts/${id}`).then((res) => {
+      const ownerId = res.data.user.id;
+      if (ownerId !== loginUser.id) {
+        history.push('/posts');
+        updateFlashMessage({ errorMessage: '権限がありません' });
+      }
+
       const post = res.data.post;
       setInputValue({
         app_name: post.app_name,
