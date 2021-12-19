@@ -36,10 +36,12 @@ const Header = () => {
   };
 
   const logoStyle = {
+    color: 'white',
     fontSize: 25,
     fontWeight: 'bold',
     marginLeft: 10,
     marginRight: 'auto',
+    textDecoration: 'none',
   };
 
   const listItemStyle = {
@@ -55,7 +57,9 @@ const Header = () => {
 
   return (
     <header style={headerStyle}>
-      <div style={logoStyle}>ShareFolio</div>
+      <Link href={loggedIn ? '/posts' : '/'} style={logoStyle}>
+        ShareFolio
+      </Link>
       {loggedIn ? (
         <ul>
           <li style={listItemStyle}>
