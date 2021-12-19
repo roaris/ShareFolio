@@ -4,6 +4,7 @@ import { AuthContext } from '../contexts/AuthContext';
 import { axiosClient, axiosAuthClient } from '../api/axiosClient';
 import CreatedAt from '../components/CreatedAt';
 import Like from '../components/Like';
+import Tags from '../components/Tags';
 import Grid from '@mui/material/Grid';
 import MuiLink from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
@@ -212,6 +213,9 @@ const UserDetail = (props) => {
                                 destroyLike={() => {}}
                               />
                             </div>
+                          </div>
+                          <div style={{ marginTop: 10, marginBottom: 10 }}>
+                            <Tags tags={post.tags} />
                           </div>
                           <Typography className={classes.description}>
                             {previewDescription(post.description)}

@@ -22,11 +22,11 @@ module Api
           authenticate_user
           posts.each do |post|
             like_flag = Like.exists?(post_id: post.id, user_id: current_user.id)
-            posts_and_users.push({ post: post.as_json.merge({ like_flag: like_flag }), user: post.user, tags: post.tags })
+            posts_and_users.push({ post: post.as_json.merge({ like_flag: like_flag, tags: post.tags }), user: post.user })
           end
         else
           posts.each do |post|
-            posts_and_users.push({ post: post, user: post.user, tags: post.tags })
+            posts_and_users.push({ post: post.as_json.merge({ tags: post.tags }), user: post.user })
           end
         end
 
@@ -37,7 +37,7 @@ module Api
         posts = Post.all.includes(:user).order(id: 'DESC').limit(4)
         posts_and_users = []
         posts.each do |post|
-          posts_and_users.push({ post: post, user: post.user, tags: post.tags })
+          posts_and_users.push({ post: post.as_json.merge({ tags: post.tags }), user: post.user })
         end
         render status: :ok, json: posts_and_users
       end
@@ -55,10 +55,12 @@ module Api
           authenticate_user
           like_flag = Like.exists?(post_id: post.id, user_id: current_user.id)
           render staus: :ok,
-                 json: { post: post.as_json.merge({ like_flag: like_flag }), user: post.user,
-                         comments_and_users: comments_and_users, tags: post.tags }
+                 json: { post: post.as_json.merge({ like_flag: like_flag, tags: post.tags }), user: post.user,
+                         comments_and_users: comments_and_users }
         else
-          render staus: :ok, json: { post: post, user: post.user, comments_and_users: comments_and_users, tags: post.tags }
+          render staus: :ok,
+                 json: { post: post.as_json.merge({ tags: post.tags }), user: post.user,
+                         comments_and_users: comments_and_users }
         end
       end
 

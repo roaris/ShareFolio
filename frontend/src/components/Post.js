@@ -1,6 +1,7 @@
 import Owner from './Owner';
 import CreatedAt from './CreatedAt';
 import Like from './Like';
+import Tags from './Tags';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
@@ -104,6 +105,9 @@ const Post = (props) => {
               destroyLike={() => {}}
             />
           </div>
+        </div>
+        <div style={{ marginTop: 10, marginBottom: 10 }}>
+          <Tags tags={post.tags} />
         </div>
         <Typography className={classes.description}>
           {previewDescription(description)}

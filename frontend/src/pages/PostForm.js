@@ -1,12 +1,14 @@
-import React, { useState, useMemo, useContext } from 'react';
+import React, { useEffect, useState, useMemo, useContext } from 'react';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
 import { useHistory } from 'react-router-dom';
 import { axiosAuthClient } from '../api/axiosClient';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
+import Select from 'react-select';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import MDSpinner from 'react-md-spinner';
 
 const PostForm = () => {
   const style = {
@@ -34,6 +36,18 @@ const PostForm = () => {
   }, []);
   const history = useHistory();
   const updateFlashMessage = useContext(FlashMessageContext).updateFlashMessage;
+  const [tags, setTags] = useState(null);
+  const [tagIds, setTagIds] = useState([]);
+
+  useEffect(() => {
+    axiosAuthClient.get('/tags').then((res) => {
+      setTags(
+        res.data.map((tag) => {
+          return { label: tag.name, value: tag.id };
+        })
+      );
+    });
+  }, []);
 
   const changeInputValue = (itemName, e) => {
     const newInputValue = Object.assign({}, inputValue);
@@ -42,13 +56,12 @@ const PostForm = () => {
   };
 
   const submitPost = async () => {
-    axiosAuthClient
+    const postId = await axiosAuthClient
       .post('/posts', {
         post: Object.assign({}, inputValue, { description: markdown }),
       })
       .then((res) => {
-        history.push(`/posts/${res.data.id}`);
-        updateFlashMessage({ successMessage: '投稿しました' });
+        return res.data.id;
       })
       .catch((err) => {
         if (err.response.status === 400) {
@@ -64,9 +77,26 @@ const PostForm = () => {
           setValidationMessage(newValidationMessage);
         }
       });
+
+    if (!postId) return;
+
+    axiosAuthClient
+      .patch(`/posts/${postId}/taggings`, {
+        tag_ids: tagIds,
+      })
+      .then(() => {
+        history.push(`/posts/${postId}`);
+        updateFlashMessage({ successMessage: '投稿しました' });
+      });
   };
 
-  return (
+  const isLoading = tags === null;
+
+  return isLoading ? (
+    <div style={{ marginTop: 100, textAlign: 'center' }}>
+      <MDSpinner size={70} />
+    </div>
+  ) : (
     <Grid container style={{ paddingTop: 100 }}>
       <Grid item xs={1} lg={3} />
       <Grid item xs={10} lg={6} style={style}>
@@ -104,7 +134,18 @@ const PostForm = () => {
           helperText={validationMessage.repo_url}
         />
         <p style={{ fontSize: 18, margin: 0 }}>
-          4. アプリの概要や工夫点を入力してください。
+          4. 使用した技術を選択してください。(複数選択可)
+        </p>
+        <div style={{ marginBottom: 30 }}>
+          <Select
+            isMulti
+            options={tags}
+            onChange={(arr) => setTagIds(arr.map((e) => e.value))}
+            placeholder='使用技術'
+          />
+        </div>
+        <p style={{ fontSize: 18, margin: 0 }}>
+          5. アプリの概要や工夫点を入力してください。
         </p>
         <SimpleMDE
           value={markdown}
