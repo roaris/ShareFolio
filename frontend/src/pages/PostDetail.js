@@ -11,6 +11,7 @@ import CommentForm from '../components/CommentForm';
 import CreatedAt from '../components/CreatedAt';
 import CommentList from '../components/CommentList';
 import Like from '../components/Like';
+import Tags from '../components/Tags';
 import MDSpinner from 'react-md-spinner';
 
 const PostDetail = (props) => {
@@ -167,6 +168,9 @@ const PostDetail = (props) => {
                     destroyLike={destroyLike}
                   />
                 </div>
+              </div>
+              <div style={{ marginBottom: 10 }}>
+                <Tags names={post.tags.map((tag) => tag.name)} />
               </div>
               アプリ:{' '}
               <a href={post.app_url} className={classes.link}>
