@@ -44,6 +44,7 @@ group :development do
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
   gem 'bullet'
+  gem 'rails-erd'
 end
 
 group :production do
