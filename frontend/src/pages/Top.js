@@ -13,7 +13,9 @@ const Top = () => {
   const [postsAndUsers, setPostsAndUsers] = useState(null);
 
   useEffect(() => {
-    axiosClient.get('/posts/recent').then((res) => setPostsAndUsers(res.data));
+    axiosClient
+      .get('/posts/recent?limit=4')
+      .then((res) => setPostsAndUsers(res.data));
   }, []);
 
   const styles = makeStyles({
