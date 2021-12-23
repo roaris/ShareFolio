@@ -34,7 +34,7 @@ module Api
       end
 
       def recent
-        posts = Post.all.eager_load(:user).preload(:tags).order(id: 'DESC').limit(4)
+        posts = Post.all.eager_load(:user).preload(:tags).order(id: 'DESC').limit(params[:limit])
         posts_and_users = []
         posts.each do |post|
           posts_and_users.push({ post: post.as_json.merge({ tags: post.tags }), user: post.user })
