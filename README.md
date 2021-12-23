@@ -40,8 +40,8 @@ https://github.com/roaris/ShareFolio/blob/master/erd.pdf
 |/api/v1/users/me|GET|ログイン中のユーザー情報を返す|Yes
 |/api/v1/users/me|PATCH|ログイン中のユーザー情報を更新|Yes
 |/api/v1/users/:id/posts|GET|ユーザーの投稿一覧を返す|No
-|/api/v1/posts?page=:page&per=:per|GET|投稿一覧をページネーションで返す|No
-|/api/v1/posts/recent?limit=:limit|GET|直近数件の投稿を取得|No
+|/api/v1/posts|GET|投稿一覧をページネーションで返す|No
+|/api/v1/posts/recent|GET|直近数件の投稿を取得|No
 |/api/v1/posts/:id|GET|投稿詳細を返す|No
 |/api/v1/posts|POST|投稿の新規作成|Yes
 |/api/v1/posts/:id|PATCH|投稿の更新|Yes
