@@ -43,6 +43,7 @@ group :development do
   gem 'rubocop', require: false
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'bullet'
 end
 
 group :production do
