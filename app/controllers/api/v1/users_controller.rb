@@ -47,12 +47,13 @@ module Api
       def posts
         user = User.find(params[:id])
         if user
+          posts = user.posts.preload(:tags)
           if request.headers['Authorization']
-            render status: :ok, json: user.posts.map { |post|
+            render status: :ok, json: posts.map { |post|
               post.as_json.merge({ like_flag: Like.exists?(post_id: post.id, user_id: current_user.id), tags: post.tags })
             }
           else
-            render status: :ok, json: user.posts.map { |post| post.as_json.merge({ tags: post.tags }) }
+            render status: :ok, json: posts.map { |post| post.as_json.merge({ tags: post.tags }) }
           end
         else
           render status: :not_found

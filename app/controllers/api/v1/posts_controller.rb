@@ -14,7 +14,7 @@ module Api
                 end
 
         posts = posts.page(params[:page]).per(params[:per])
-        posts = posts.includes(:user, :tags)
+        posts = posts.eager_load(:user).preload(:tags)
         pagination = pagination(posts)
         posts_and_users = []
 
@@ -34,7 +34,7 @@ module Api
       end
 
       def recent
-        posts = Post.all.includes(:user).order(id: 'DESC').limit(4)
+        posts = Post.all.eager_load(:user).preload(:tags).order(id: 'DESC').limit(4)
         posts_and_users = []
         posts.each do |post|
           posts_and_users.push({ post: post.as_json.merge({ tags: post.tags }), user: post.user })
@@ -45,7 +45,7 @@ module Api
       def show
         post = Post.find(params[:id])
         comments_and_users = []
-        post.comments.includes(:user).each do |comment|
+        post.comments.eager_load(:user).each do |comment|
           user = comment.user
           user_icon_url = user.upload_icon.url || user.default_icon_url
           comments_and_users.push({ comment: comment, user_id: user.id, user_name: user.name, user_icon_url: user_icon_url })
