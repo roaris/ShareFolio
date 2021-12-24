@@ -35,12 +35,9 @@ const CommentForm = (props) => {
           <Grid item xs={2} lg={1}>
             <div style={{ marginTop: 10 }}>
               <Owner
+                userId={user.id}
                 userName={user.name}
-                userIconUrl={
-                  user.upload_icon.url
-                    ? user.upload_icon.url
-                    : user.default_icon_url
-                }
+                userIconUrl={user.icon_url}
               />
             </div>
           </Grid>

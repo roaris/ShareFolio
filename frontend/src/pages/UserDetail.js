@@ -117,14 +117,7 @@ const UserDetail = (props) => {
         <Grid item xs={0} md={2} />
         <Grid item xs={12} md={4}>
           <Grid container alignItems='center' justifyContent='center'>
-            <img
-              src={
-                user.upload_icon.url
-                  ? user.upload_icon.url
-                  : user.default_icon_url
-              }
-              className={classes.icon}
-            />
+            <img src={user.icon_url} className={classes.icon} />
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
