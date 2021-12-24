@@ -14,4 +14,9 @@ class User < ApplicationRecord
   mount_uploader :upload_icon, IconUploader
   validates :default_icon_url, presence: true
   validates :uid, presence: true
+
+  def process
+    icon_url = self.upload_icon.url || default_icon_url
+    self.attributes.except('email', 'uid', 'upload_icon', 'default_icon_url').merge({ icon_url: icon_url })
+  end
 end

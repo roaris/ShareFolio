@@ -22,11 +22,12 @@ module Api
           authenticate_user
           posts.each do |post|
             like_flag = Like.exists?(post_id: post.id, user_id: current_user.id)
-            posts_and_users.push({ post: post.as_json.merge({ like_flag: like_flag, tags: post.tags }), user: post.user })
+            posts_and_users.push({ post: post.as_json.merge({ like_flag: like_flag, tags: post.tags }),
+                                   user: post.user.process })
           end
         else
           posts.each do |post|
-            posts_and_users.push({ post: post.as_json.merge({ tags: post.tags }), user: post.user })
+            posts_and_users.push({ post: post.as_json.merge({ tags: post.tags }), user: post.user.process })
           end
         end
 
@@ -37,7 +38,7 @@ module Api
         posts = Post.all.eager_load(:user).preload(:tags).order(id: 'DESC').limit(params[:limit])
         posts_and_users = []
         posts.each do |post|
-          posts_and_users.push({ post: post.as_json.merge({ tags: post.tags }), user: post.user })
+          posts_and_users.push({ post: post.as_json.merge({ tags: post.tags }), user: post.user.process })
         end
         render status: :ok, json: posts_and_users
       end
@@ -46,20 +47,18 @@ module Api
         post = Post.find(params[:id])
         comments_and_users = []
         post.comments.eager_load(:user).each do |comment|
-          user = comment.user
-          user_icon_url = user.upload_icon.url || user.default_icon_url
-          comments_and_users.push({ comment: comment, user_id: user.id, user_name: user.name, user_icon_url: user_icon_url })
+          comments_and_users.push({ comment: comment, user: comment.user.process })
         end
 
         if request.headers['Authorization']
           authenticate_user
           like_flag = Like.exists?(post_id: post.id, user_id: current_user.id)
           render staus: :ok,
-                 json: { post: post.as_json.merge({ like_flag: like_flag, tags: post.tags }), user: post.user,
+                 json: { post: post.as_json.merge({ like_flag: like_flag, tags: post.tags }), user: post.user.process,
                          comments_and_users: comments_and_users }
         else
           render staus: :ok,
-                 json: { post: post.as_json.merge({ tags: post.tags }), user: post.user,
+                 json: { post: post.as_json.merge({ tags: post.tags }), user: post.user.process,
                          comments_and_users: comments_and_users }
         end
       end
