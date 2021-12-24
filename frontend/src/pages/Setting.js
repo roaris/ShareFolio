@@ -31,11 +31,7 @@ const Setting = () => {
       newInputValue.twitter = res.data.twitter ? res.data.twitter : '';
       newInputValue.github = res.data.github ? res.data.github : '';
       setInputValue(newInputValue);
-      setPreview(
-        res.data.upload_icon.url
-          ? res.data.upload_icon.url
-          : res.data.default_icon_url
-      );
+      setPreview(res.data.icon_url);
     });
   }, []);
 

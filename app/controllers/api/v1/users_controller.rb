@@ -8,7 +8,7 @@ module Api
       def show
         user = User.find(params[:id])
         if user
-          render json: user, status: :ok
+          render json: user.secret_mask, status: :ok
         else
           render status: :not_found
         end
@@ -33,12 +33,12 @@ module Api
       end
 
       def show_me
-        render json: current_user, status: :ok
+        render json: current_user.process, status: :ok
       end
 
       def update_me
         if current_user.update(user_params)
-          render status: :ok, json: current_user
+          render status: :ok, json: current_user.process
         else
           render status: :bad_request, json: current_user.errors
         end

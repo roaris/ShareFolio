@@ -38,11 +38,7 @@ const PostDetail = (props) => {
       setPost(res.data.post);
       setOwnerId(res.data.user.id);
       setOwnerName(res.data.user.name);
-      setOwnerIconUrl(
-        res.data.user.upload_icon.url
-          ? res.data.user.upload_icon.url
-          : res.data.user.default_icon_url
-      );
+      setOwnerIconUrl(res.data.user.icon_url);
       setCommentsAndUsers(res.data.comments_and_users);
       setLikeNum(res.data.post.like_num);
       setLikeFlag(res.data.post.like_flag);
@@ -62,10 +58,11 @@ const PostDetail = (props) => {
         const newCommentsAndUsers = commentsAndUsers.slice();
         newCommentsAndUsers.push({
           comment: res.data,
-          user_name: user.name,
-          user_icon_url: user.upload_icon.url
-            ? user.upload_icon.url
-            : user.default_icon_url,
+          user: {
+            id: user.id,
+            name: user.name,
+            icon_url: user.icon_url,
+          },
         });
         setCommentsAndUsers(newCommentsAndUsers);
         updateFlashMessage({ successMessage: 'コメントをつけました' });
