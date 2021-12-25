@@ -4,6 +4,7 @@ module Api
   module V1
     class PostsController < ApplicationController
       skip_before_action :authenticate_user, only: %i[index recent show]
+      before_action :ensure_correct_user, only: %i[update destroy]
       include Pagination
 
       def index
@@ -91,6 +92,10 @@ module Api
 
       def post_params
         params.require(:post).permit(:app_name, :app_url, :repo_url, :description)
+      end
+
+      def ensure_correct_user
+        render status: :forbidden unless current_user.posts.find_by(id: params[:id])
       end
     end
   end
