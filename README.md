@@ -64,3 +64,9 @@ https://github.com/roaris/ShareFolio/blob/master/erd.pdf
 - いいね機能(issue: [#156](https://github.com/roaris/ShareFolio/issues/156) PR: [#157](https://github.com/roaris/ShareFolio/pull/157),[#160](https://github.com/roaris/ShareFolio/pull/160))
 - タグ付け機能(issue: [#185](https://github.com/roaris/ShareFolio/issues/185) PR: [#187](https://github.com/roaris/ShareFolio/pull/187), [#189](https://github.com/roaris/ShareFolio/pull/189))
 - パフォーマンス改善(issue: [#179](https://github.com/roaris/ShareFolio/issues/179), [#195](https://github.com/roaris/ShareFolio/issues/195) PR: [#180](https://github.com/roaris/ShareFolio/pull/180), [#182](https://github.com/roaris/ShareFolio/issues/182), [#196](https://github.com/roaris/ShareFolio/pull/196))
+
+
+## インフラ構成図
+勉強のためにAWSにもデプロイしようとしています([#208](https://github.com/roaris/ShareFolio/issues/208))
+
+![インフラ構成図](./infra.png)
