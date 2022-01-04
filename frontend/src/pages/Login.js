@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { FlashMessageContext } from '../contexts/FlashMessageContext';
-import { axiosAuthClient } from '../api/axiosClient';
+import { axiosClient } from '../api/axiosClient';
 import {
   auth,
   githubProvider,
@@ -22,7 +22,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const createUser = (userParams, token) => {
-    axiosAuthClient
+    axiosClient
       .post('/users', {
         user: userParams,
         token: token,
