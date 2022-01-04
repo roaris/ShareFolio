@@ -3,8 +3,11 @@
 [![test](https://github.com/roaris/ShareFolio/actions/workflows/test.yml/badge.svg)](https://github.com/roaris/ShareFolio/actions/workflows/test.yml)
 [![lint](https://github.com/roaris/ShareFolio/actions/workflows/lint.yml/badge.svg)](https://github.com/roaris/ShareFolio/actions/workflows/lint.yml)
 
-https://sh4r3f0110.herokuapp.com/ のソースコードです。  
+https://sh4r3f0110.herokuapp.com/ のソースコードです。
+
 Webエンジニアを目指す人が気軽に自分の制作物を投稿して、他の人からコメントをもらえたらいいなと思って作りました。
+
+<img src="intro.png" width="1000" >
 
 ## バージョン
 - npm 6.14.14
@@ -52,6 +55,14 @@ https://github.com/roaris/ShareFolio/blob/master/erd.pdf
 |/api/v1/posts/:id/taggings|PATCH|投稿へのタグ付け|Yes
 |/api/v1/tags|GET|タグ一覧を返す|No
 
+
+## インフラ構成図
+勉強のためにAWSにもデプロイしました([#208](https://github.com/roaris/ShareFolio/issues/208))
+
+[sharefolio.click](https://sharefolio.click)
+
+<img src="infra.png" width="1000" >
+
 ## 工夫した点
 ### フロントエンド
 - アプリの説明文をマークダウンエディタで記述できるようにした(issue: [#51](https://github.com/roaris/ShareFolio/pull/51) PR: [#74](https://github.com/roaris/ShareFolio/pull/74))
@@ -64,9 +75,3 @@ https://github.com/roaris/ShareFolio/blob/master/erd.pdf
 - いいね機能(issue: [#156](https://github.com/roaris/ShareFolio/issues/156) PR: [#157](https://github.com/roaris/ShareFolio/pull/157),[#160](https://github.com/roaris/ShareFolio/pull/160))
 - タグ付け機能(issue: [#185](https://github.com/roaris/ShareFolio/issues/185) PR: [#187](https://github.com/roaris/ShareFolio/pull/187), [#189](https://github.com/roaris/ShareFolio/pull/189))
 - パフォーマンス改善(issue: [#179](https://github.com/roaris/ShareFolio/issues/179), [#195](https://github.com/roaris/ShareFolio/issues/195) PR: [#180](https://github.com/roaris/ShareFolio/pull/180), [#182](https://github.com/roaris/ShareFolio/issues/182), [#196](https://github.com/roaris/ShareFolio/pull/196))
-
-
-## インフラ構成図
-勉強のためにAWSにもデプロイしようとしています([#208](https://github.com/roaris/ShareFolio/issues/208))
-
-![インフラ構成図](./infra.png)
