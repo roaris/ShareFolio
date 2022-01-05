@@ -3,7 +3,7 @@
 module Api
   module V1
     class CommentsController < ApplicationController
-      before_action :ensure_correct_user, only: %i[update, destroy]
+      before_action :ensure_correct_user, only: %i[update destroy]
 
       def create
         comment = current_user.comments.build(comment_params.merge({ post_id: params[:post_id] }))
