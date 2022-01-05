@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const CommentEdit = (props) => {
   const user = useContext(AuthContext).user;
-  const [markdown, setMarkdown] = useState('');
+  const [markdown, setMarkdown] = useState(props.defaultMarkdown);
   const markdownOption = useMemo(() => {
     return {
       toolbar: ['preview'],
