@@ -39,6 +39,7 @@ const Comment = (props) => {
         <div style={{ marginBottom: 30 }}>
           <CommentEdit
             editComment={props.editComment}
+            defaultMarkdown={props.commentAndUser.comment.content}
             handleClose={() => setEditOpen(false)}
           />
         </div>
