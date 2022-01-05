@@ -12,6 +12,9 @@ const CommentList = (props) => {
         <div key={i}>
           <Comment
             commentAndUser={commentAndUser}
+            editComment={(markdown) =>
+              props.editComment(commentAndUser.comment.id, i, markdown)
+            }
             deleteComment={() =>
               props.deleteComment(commentAndUser.comment.id, i)
             }
