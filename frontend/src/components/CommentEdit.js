@@ -55,7 +55,7 @@ const CommentEdit = (props) => {
           ) : (
             <Button variant='contained' disabled style={{ marginRight: 50 }}>
               <SendIcon />
-              送信
+              更新
             </Button>
           )}
           <Button
