@@ -1,3 +1,5 @@
+import React, { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 import Owner from './Owner';
 import CreatedAt from './CreatedAt';
 import marked from 'marked';
@@ -6,6 +8,8 @@ import { makeStyles } from '@mui/styles';
 import Grid from '@mui/material/Grid';
 
 const Comment = (props) => {
+  const loginUser = useContext(AuthContext).user;
+
   const styles = makeStyles({
     comment: {
       marginBottom: 30,
@@ -36,18 +40,26 @@ const Comment = (props) => {
           />
         </div>
       </Grid>
-      <Grid item xs={10} lg={11} className={classes.commentRight}>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(
-              marked(props.commentAndUser.comment.content)
-            ),
-          }}
-          style={{ borderBottom: 'solid 1px #bbb' }}
-        ></div>
-        <div className={classes.commentRightFooter}>
-          <CreatedAt createdAt={props.commentAndUser.comment.created_at} />
+      <Grid item xs={10} lg={11}>
+        <div className={classes.commentRight}>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(
+                marked(props.commentAndUser.comment.content)
+              ),
+            }}
+            style={{ borderBottom: 'solid 1px #bbb' }}
+          ></div>
+          <div className={classes.commentRightFooter}>
+            <CreatedAt createdAt={props.commentAndUser.comment.created_at} />
+          </div>
         </div>
+        {props.commentAndUser.user.id === loginUser.id && (
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <span style={{ marginRight: 10 }}>編集する</span>
+            <span>削除する</span>
+          </div>
+        )}
       </Grid>
     </Grid>
   );
