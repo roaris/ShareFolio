@@ -90,6 +90,15 @@ const PostDetail = (props) => {
     axiosAuthClient.delete(`/posts/${id}/likes`);
   };
 
+  const deleteComment = (commentId, commentIndex) => {
+    axiosAuthClient.delete(`/posts/${id}/comments/${commentId}`).then(() => {
+      const newCommentsAndUsers = commentsAndUsers;
+      newCommentsAndUsers.splice(commentIndex, 1);
+      setCommentsAndUsers(newCommentsAndUsers);
+      updateFlashMessage({ successMessage: '削除しました' });
+    });
+  };
+
   const styles = makeStyles({
     postDetail: {
       marginBottom: 20,
@@ -237,7 +246,10 @@ const PostDetail = (props) => {
           <CommentForm submitComment={submitComment} />
         </div>
         <div style={{ marginTop: 50 }}>
-          <CommentList commentsAndUsers={commentsAndUsers} />
+          <CommentList
+            commentsAndUsers={commentsAndUsers}
+            deleteComment={deleteComment}
+          />
         </div>
       </Grid>
       <Grid item xs={1} sm={1} md={3} lg={3} />

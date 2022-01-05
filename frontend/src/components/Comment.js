@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import Owner from './Owner';
 import CreatedAt from './CreatedAt';
+import DeleteConfirm from './DeleteConfirm';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 import { makeStyles } from '@mui/styles';
@@ -9,6 +10,7 @@ import Grid from '@mui/material/Grid';
 
 const Comment = (props) => {
   const loginUser = useContext(AuthContext).user;
+  const [modalOpen, setModalOpen] = useState(false);
 
   const styles = makeStyles({
     comment: {
@@ -57,7 +59,21 @@ const Comment = (props) => {
         {props.commentAndUser.user.id === loginUser.id && (
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <span style={{ marginRight: 10 }}>編集する</span>
-            <span>削除する</span>
+            <span
+              onClick={() => setModalOpen(true)}
+              style={{ color: 'red', cursor: 'pointer' }}
+            >
+              削除する
+            </span>
+            <DeleteConfirm
+              deletePost={() => {
+                props.deleteComment();
+                setModalOpen(false);
+              }}
+              open={modalOpen}
+              handleClose={() => setModalOpen(false)}
+              title={'このコメントを削除して良いですか？'}
+            />
           </div>
         )}
       </Grid>

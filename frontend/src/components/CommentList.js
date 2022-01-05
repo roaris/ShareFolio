@@ -10,7 +10,12 @@ const CommentList = (props) => {
       )}
       {props.commentsAndUsers.map((commentAndUser, i) => (
         <div key={i}>
-          <Comment commentAndUser={commentAndUser} />
+          <Comment
+            commentAndUser={commentAndUser}
+            deleteComment={() =>
+              props.deleteComment(commentAndUser.comment.id, i)
+            }
+          />
         </div>
       ))}
     </div>
