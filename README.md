@@ -30,6 +30,7 @@ Webエンジニアを目指す人が気軽に自分の制作物を投稿して�
 - ユーザー情報の更新、アイコン画像の更新
 - 投稿へのいいね機能
 - 投稿へのコメント機能 & メール通知
+- 投稿へのコメントの編集、削除
 - 投稿へのタグ付け機能 & タグ検索
 
 ## ER図
@@ -49,12 +50,13 @@ https://github.com/roaris/ShareFolio/blob/master/erd.pdf
 |/api/v1/posts|POST|投稿の新規作成|Yes
 |/api/v1/posts/:id|PATCH|投稿の更新|Yes
 |/api/v1/posts/:id|DELETE|投稿の削除|Yes
-|/api/v1/posts/:id/comments|POST|コメントの投稿|Yes
+|/api/v1/posts/:post_id/comments|POST|コメントの投稿|Yes
+|/api/v1/posts/:post_id/comments/:id|PATCH|コメントの更新|Yes
+|/api/v1/posts/:post_id/comments/:id|DELETE|コメントの削除|Yes
 |/api/v1/posts/:id/likes|POST|投稿にいいねする|Yes
 |/api/v1/posts/:id/likes|DELETE|いいね取り消し|Yes
 |/api/v1/posts/:id/taggings|PATCH|投稿へのタグ付け|Yes
 |/api/v1/tags|GET|タグ一覧を返す|No
-
 
 ## インフラ構成図
 勉強のためにAWSにもデプロイしました([#208](https://github.com/roaris/ShareFolio/issues/208))
