@@ -17,7 +17,7 @@ Rails.application.routes.draw do
         collection do
           get :recent
         end
-        resources :comments, only: [:create]
+        resources :comments, only: %i[create destroy]
         resources :likes, only: [:create] do
           collection do
             delete '', to: 'likes#destroy'

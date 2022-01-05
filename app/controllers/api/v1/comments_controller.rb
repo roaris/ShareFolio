@@ -3,6 +3,8 @@
 module Api
   module V1
     class CommentsController < ApplicationController
+      before_action :ensure_correct_user, only: %i[destroy]
+
       def create
         comment = current_user.comments.build(comment_params.merge({ post_id: params[:post_id] }))
         if comment.save
@@ -13,10 +15,20 @@ module Api
         end
       end
 
+      def destroy
+        comment = Comment.find(params[:id])
+        comment.destroy
+        render status: :no_content
+      end
+
       private
 
       def comment_params
         params.require(:comment).permit(:content)
+      end
+
+      def ensure_correct_user
+        render status: :forbidden unless current_user.comments.find_by(id: params[:id])
       end
     end
   end
