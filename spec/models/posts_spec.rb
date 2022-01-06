@@ -41,7 +41,7 @@ RSpec.describe Post, type: :model do
   end
 
   it 'is invalid with an invalid app url' do
-    invalid_urls = %w[httpexample.com httpsexample.com example.com aaahttp://example.com]
+    invalid_urls = %w[http:/ http:// http://example http://example. http://.com ahttp://example.com]
     invalid_urls.each do |invalid_url|
       post = build(:post, app_url: invalid_url)
       expect(post).to be_invalid
@@ -67,7 +67,7 @@ RSpec.describe Post, type: :model do
   end
 
   it 'is invalid with an invalid repo url' do
-    invalid_urls = %w[httpexample.com httpsexample.com example.com aaahttp://example.com]
+    invalid_urls = %w[http:/ http:// http://example http://example. http://.com ahttp://example.com]
     invalid_urls.each do |invalid_url|
       post = build(:post, repo_url: invalid_url)
       expect(post).to be_invalid
