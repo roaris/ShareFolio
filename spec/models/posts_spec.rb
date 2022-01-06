@@ -32,6 +32,22 @@ RSpec.describe Post, type: :model do
     expect(post).to be_invalid
   end
 
+  it 'is valid with a valid app url' do
+    valid_urls = %w[http://example.com https://example.com https://sub.example.com]
+    valid_urls.each do |valid_url|
+      post = build(:post, app_url: valid_url)
+      expect(post).to be_valid
+    end
+  end
+
+  it 'is invalid with an invalid app url' do
+    invalid_urls = %w[http:/ http:// http://example http://example. http://.com ahttp://example.com]
+    invalid_urls.each do |invalid_url|
+      post = build(:post, app_url: invalid_url)
+      expect(post).to be_invalid
+    end
+  end
+
   it 'is valid with no repo_url' do
     post = build(:post, repo_url: nil)
     expect(post).to be_valid
@@ -40,6 +56,22 @@ RSpec.describe Post, type: :model do
   it 'is invalid with a too long repo_url' do
     post = build(:post, repo_url: 'a' * 256)
     expect(post).to be_invalid
+  end
+
+  it 'is valid with a valid repo url' do
+    valid_urls = %w[http://example.com https://example.com https://sub.example.com]
+    valid_urls.each do |valid_url|
+      post = build(:post, repo_url: valid_url)
+      expect(post).to be_valid
+    end
+  end
+
+  it 'is invalid with an invalid repo url' do
+    invalid_urls = %w[http:/ http:// http://example http://example. http://.com ahttp://example.com]
+    invalid_urls.each do |invalid_url|
+      post = build(:post, repo_url: invalid_url)
+      expect(post).to be_invalid
+    end
   end
 
   it 'is invalid with an empty description' do
