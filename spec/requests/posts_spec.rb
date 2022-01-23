@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe '/api/v1/posts', type: :request do
   describe 'index' do
-    it 'accept an auth user' do
+    it 'accept an unauth user' do
       create_list(:post, 10)
       get '/api/v1/posts?page=1&per=6', headers: xhr_header
       expect(response.status).to eq(200)
@@ -14,11 +14,6 @@ RSpec.describe '/api/v1/posts', type: :request do
       expect(json(response)['posts_and_users'].length).to eq(4)
     end
 
-    it 'accept an unauth user' do
-      get '/api/v1/posts', headers: xhr_header
-      expect(response.status).to eq(200)
-    end
-
     it 'protect from CSRF' do
       get '/api/v1/posts'
       expect(response.status).to eq(403)
@@ -26,7 +21,7 @@ RSpec.describe '/api/v1/posts', type: :request do
   end
 
   describe 'recent' do
-    it 'accpet an auth user' do
+    it 'accpet an unauth user' do
       create_list(:post, 10)
       get '/api/v1/posts/recent?limit=4', headers: xhr_header
       expect(response.status).to eq(200)
@@ -36,10 +31,6 @@ RSpec.describe '/api/v1/posts', type: :request do
       expect(json(response).length).to eq(10)
     end
 
-    it 'accept an unauth user' do
-      get '/api/v1/posts/recent?limit=4', headers: xhr_header
-      expect(response.status).to eq(200)
-    end
 
     it 'protect from CSRF' do
       get '/api/v1/posts/recent?limit=4'
@@ -50,7 +41,7 @@ RSpec.describe '/api/v1/posts', type: :request do
   describe 'show' do
     let!(:post) { create(:post) }
 
-    it 'accept an auth user' do
+    it 'accept an unauth user' do
       get "/api/v1/posts/#{post.id}", headers: xhr_header
       expect(response.status).to eq(200)
       expect(json(response)['post']['app_name']).to eq(post.app_name)
@@ -58,11 +49,6 @@ RSpec.describe '/api/v1/posts', type: :request do
       expect(json(response)['post']['repo_url']).to eq(post.repo_url)
       expect(json(response)['post']['description']).to eq(post.description)
       expect(json(response)['user']['name']).to eq(post.user.name)
-    end
-
-    it 'accept an unauth user' do
-      get "/api/v1/posts/#{post.id}", headers: xhr_header
-      expect(response.status).to eq(200)
     end
 
     it 'protect from CSRF' do
