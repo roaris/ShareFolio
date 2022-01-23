@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module TestHelper
+  def login_as(user)
+    allow_any_instance_of(Firebase::Auth::Authenticable).to receive(:authenticate_entity).and_return(user)
+  end
+
   def xhr_header
     { 'X-Requested-With': 'XMLHttpRequest' }
   end
@@ -17,8 +21,8 @@ module TestHelper
     {
       post: {
         app_name: 'test_app',
-        app_url: 'test_app_url',
-        repo_url: 'test_repo_url',
+        app_url: 'https://example.com/app',
+        repo_url: 'https://example.com/repo',
         description: 'test_description',
       },
     }
