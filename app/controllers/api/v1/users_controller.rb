@@ -6,7 +6,7 @@ module Api
       skip_before_action :authenticate_user, only: %i[show create posts]
 
       def show
-        user = User.find(params[:id])
+        user = User.find_by(id: params[:id])
         if user
           render json: user.secret_mask, status: :ok
         else
