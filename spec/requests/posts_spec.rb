@@ -31,7 +31,6 @@ RSpec.describe '/api/v1/posts', type: :request do
       expect(json(response).length).to eq(10)
     end
 
-
     it 'protect from CSRF' do
       get '/api/v1/posts/recent?limit=4'
       expect(response.status).to eq(403)

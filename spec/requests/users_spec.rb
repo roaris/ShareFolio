@@ -14,7 +14,7 @@ RSpec.describe '/api/v1/users', type: :request do
     end
 
     it 'return not found' do
-      get "/api/v1/users/#{user.id+1}", headers: xhr_header
+      get "/api/v1/users/#{user.id + 1}", headers: xhr_header
       expect(response.status).to eq(404)
     end
 
@@ -40,7 +40,7 @@ RSpec.describe '/api/v1/users', type: :request do
 
     it 'protect from CSRF' do
       login_as(user)
-      get "/api/v1/users/me"
+      get '/api/v1/users/me'
       expect(response.status).to eq(403)
     end
   end

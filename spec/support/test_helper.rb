@@ -40,8 +40,8 @@ module TestHelper
   def default_comment_params
     {
       comment: {
-        content: 'test'
-      }
+        content: 'test',
+      },
     }
   end
 end
