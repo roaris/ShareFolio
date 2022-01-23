@@ -82,7 +82,7 @@ RSpec.describe '/api/v1/posts', type: :request do
 
     it 'protect from CSRF' do
       login_as(user)
-      get '/api/v1/posts', params: default_post_params.to_json, headers: json_header
+      post '/api/v1/posts', params: default_post_params.to_json, headers: json_header
       expect(response.status).to eq(403)
     end
   end
@@ -114,7 +114,7 @@ RSpec.describe '/api/v1/posts', type: :request do
 
     it 'protect from CSRF' do
       login_as(post.user)
-      get "/api/v1/posts/#{post.id}", params: default_post_params.to_json, headers: json_header
+      patch "/api/v1/posts/#{post.id}", params: default_post_params.to_json, headers: json_header
       expect(response.status).to eq(403)
     end
   end
@@ -131,13 +131,13 @@ RSpec.describe '/api/v1/posts', type: :request do
 
     it 'reject a not owner' do
       login_as(user)
-      patch "/api/v1/posts/#{post.id}", headers: xhr_header
+      delete "/api/v1/posts/#{post.id}", headers: xhr_header
       expect(response.status).to eq(403)
     end
 
     it 'protect from CSRF' do
       login_as(post.user)
-      get "/api/v1/posts/#{post.id}"
+      delete "/api/v1/posts/#{post.id}"
       expect(response.status).to eq(403)
     end
   end
