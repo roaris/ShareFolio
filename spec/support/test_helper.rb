@@ -36,4 +36,12 @@ module TestHelper
       },
     }
   end
+
+  def default_comment_params
+    {
+      comment: {
+        content: 'test'
+      }
+    }
+  end
 end
